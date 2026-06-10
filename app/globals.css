@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f7faff;
+  --foreground: #0b1728;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--foreground);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(29, 78, 216, 0.08), transparent 30%),
+    radial-gradient(circle at 88% 12%, rgba(15, 118, 110, 0.10), transparent 32%),
+    linear-gradient(180deg, #ffffff 0%, #f7faff 42%, #eef5fc 100%);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: rgba(29, 78, 216, 0.16);
+}
+
+@layer components {
+  .site-container {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+
+  .legal-copy a {
+    @apply font-semibold text-verrion-blue underline underline-offset-4;
+  }
+
+  .eyebrow {
+    @apply text-xs font-bold uppercase tracking-[0.18em] text-verrion-blue;
+  }
+
+  .panel {
+    @apply rounded-[1.5rem] border border-line bg-white shadow-soft backdrop-blur;
+  }
+
+  .button-primary {
+    @apply inline-flex min-h-12 items-center justify-center rounded-full bg-navy px-6 text-sm font-semibold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-[#071b31] focus:outline-none focus:ring-4 focus:ring-verrion-blue/20;
+  }
+
+  .button-secondary {
+    @apply inline-flex min-h-12 items-center justify-center rounded-full border border-line bg-white px-6 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:border-verrion-blue/40 hover:bg-surface focus:outline-none focus:ring-4 focus:ring-verrion-blue/15;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-line bg-white px-3 py-1 text-xs font-semibold text-muted;
+  }
+
+  .mono-label {
+    @apply font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-muted;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
