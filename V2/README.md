@@ -4,9 +4,9 @@ This folder is an isolated static prototype for a revised Verrion Systems Ltd ho
 
 ## What V2 Changes
 
-- Leads with a concrete buyer outcome: "Quality investigations with AI controls built in."
+- Leads with a concrete pharma-professional outcome: "Quality investigations with AI controls built in."
 - Moves away from broad AI phrasing such as "AI compliance-native" and toward pharma QA language: evidence packs, SOP expectations, RCA/CAPA rationale, audit history, reviewer decisions and validation-readiness.
-- Replaces repeated rounded card grids with a stronger first-viewport product surface, a three-part buyer problem section, a workflow timeline, a control-record table, focused module panels and a narrower pilot CTA.
+- Replaces repeated rounded card grids with a stronger first-viewport product surface, a three-part pharma-leader problem section, a workflow timeline, a control-record table, focused module panels and a narrower pilot CTA.
 - Makes the AI governance proof more explicit: sanitisation, prompt/model versioning, human accept/edit/reject, AI-assisted report flags and pilot boundaries.
 - Avoids overclaiming compliance. The copy says private pilots evaluate workflow fit and validation readiness, and that customers remain responsible for validating intended GxP use.
 
