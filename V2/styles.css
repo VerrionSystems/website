@@ -871,7 +871,7 @@ h1 {
   font-weight: 750;
 }
 
-@media (max-width: 1120px) {
+@media (max-width: 1240px) {
   .hero {
     grid-template-columns: 1fr;
   }
