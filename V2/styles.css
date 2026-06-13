@@ -107,7 +107,7 @@ svg {
 
 .nav-links {
   display: flex;
-  gap: 28px;
+  gap: 22px;
   color: var(--muted);
   font-size: 13px;
   font-weight: 700;
