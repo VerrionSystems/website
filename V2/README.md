@@ -1,12 +1,13 @@
 # Verrion Systems Website V2 Prototype
 
-This folder is an isolated static prototype for a revised Verrion Systems Ltd homepage. It does not modify the current Next.js app.
+This folder is an isolated static prototype for a revised Verrion Systems Ltd website direction. It does not modify the current Next.js app.
 
 ## What V2 Changes
 
 - Leads with a concrete pharma-professional outcome: "Quality investigations with AI controls built in."
 - Moves away from broad AI phrasing such as "AI compliance-native" and toward pharma QA language: evidence packs, SOP expectations, RCA/CAPA rationale, audit history, reviewer decisions and validation-readiness.
 - Replaces repeated rounded card grids with a stronger first-viewport product surface, a three-part pharma-leader problem section, a workflow timeline, a control-record table, focused module panels and a narrower pilot CTA.
+- Adds deeper Deviation Investigator and SOP Intelligence subpages for pharma professionals who need to assess module fit without seeing proprietary implementation detail.
 - Makes the AI governance proof more explicit: sanitisation, prompt/model versioning, human accept/edit/reject, AI-assisted report flags and pilot boundaries.
 - Avoids overclaiming compliance. The copy says private pilots evaluate workflow fit and validation readiness, and that customers remain responsible for validating intended GxP use.
 
@@ -16,7 +17,7 @@ The current site already has useful substance, but it repeats similar governance
 
 Recommended public positioning:
 
-> Verrion helps GMP quality teams run deviation and SOP work with controlled AI support, evidence discipline and human accountability.
+> Verrion Systems helps GMP quality teams run deviation and SOP work with controlled AI support, evidence discipline and human accountability.
 
 Recommended proof points:
 
@@ -32,6 +33,8 @@ Recommended proof points:
 ## Files
 
 - `index.html` - standalone V2 homepage prototype.
+- `deviation.html` - deeper Deviation Investigator module page.
+- `sop-intelligence.html` - deeper SOP Intelligence module page.
 - `styles.css` - page styling and responsive layout.
 - `assets/concept-direction.png` - generated visual direction reference used for the prototype.
 
