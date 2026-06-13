@@ -8,6 +8,7 @@
       name="description"
       content="Verrion Systems V2 landing page concept for GMP quality teams evaluating controlled AI support in deviation investigation and SOP intelligence workflows."
     />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body id="page-top">
@@ -58,77 +59,134 @@
           </dl>
         </div>
 
-        <aside class="product-surface" aria-label="Product workflow preview">
-          <div class="surface-topbar">
-            <span>DEV-0247</span>
-            <strong>Fill-weight excursion review</strong>
-            <em>QA review</em>
+        <aside class="product-surface traceability-surface" aria-label="Evidence-to-decision traceability map">
+          <div class="trace-topbar">
+            <span>PCS workflow map</span>
+            <strong>Evidence-to-decision traceability</strong>
+            <em>Governance recorded</em>
           </div>
-          <div class="surface-grid">
-            <section class="case-panel">
-              <div class="panel-heading">
-                <span>Case frame</span>
-                <strong>Medium severity</strong>
+
+          <div class="trace-canvas">
+            <section class="trace-shared">
+              <div>
+                <span>Shared input</span>
+                <strong>Regulatory framework</strong>
               </div>
-              <div class="case-summary">
-                <h2>Line 3 fill-weight trend breached alert limit during batch review.</h2>
-                <p>Event facts, containment, affected scope and initial impact questions are separated from draft conclusions.</p>
-              </div>
-              <ul class="evidence-list">
-                <li><span></span>Batch record extract linked</li>
-                <li><span></span>Equipment log pending review</li>
-                <li><span></span>SOP clause 8.4 attached</li>
-                <li><span></span>Operator interview outstanding</li>
-              </ul>
+              <p>FDA, EU GMP and UK MHRA context can support both module workflows.</p>
             </section>
 
-            <section class="reasoning-panel">
-              <div class="panel-heading">
-                <span>Reasoning path</span>
-                <strong>4 open gaps</strong>
-              </div>
-              <article class="sop-extract">
-                <small>SOP expectation</small>
-                <p>Line clearance checks and fill-weight trend review must be completed before batch disposition.</p>
-              </article>
-              <article class="ai-note">
-                <small>AI-assisted questions for human review</small>
-                <ol>
-                  <li>Which control failed: set-up, monitoring, escalation or documentation?</li>
-                  <li>Does the evidence support product impact scope across adjacent batches?</li>
-                  <li>Is the proposed CAPA linked to a failed control rather than the symptom?</li>
-                </ol>
-              </article>
-            </section>
+            <div class="trace-map">
+              <div class="module-lanes">
+                <section class="trace-lane deviation-lane">
+                  <div class="trace-lane-heading">
+                    <span>Module 01</span>
+                    <strong>Deviation Investigator</strong>
+                  </div>
+                  <div class="node-grid">
+                    <span>Event facts</span>
+                    <span>Evidence pack</span>
+                    <span>SOP context</span>
+                    <span>Severity</span>
+                    <span>RCA/CAPA</span>
+                  </div>
+                </section>
 
-            <section class="control-panel">
-              <div class="panel-heading">
-                <span>AI governance log</span>
-                <strong>Recorded</strong>
+                <section class="trace-lane sop-lane">
+                  <div class="trace-lane-heading">
+                    <span>Module 02</span>
+                    <strong>SOP Intelligence</strong>
+                  </div>
+                  <div class="sop-source-row">
+                    <span>SOP source</span>
+                    <span>Clause expectations</span>
+                    <span>Gap findings</span>
+                    <span>Owner review</span>
+                  </div>
+                  <div class="analysis-chip-panel" aria-label="SOP Intelligence analysis types">
+                    <small>SOP analysis types</small>
+                    <div>
+                      <span>STPA</span>
+                      <span>Compliance check</span>
+                      <span>Document comparison</span>
+                      <span>Policy compliance</span>
+                      <span>Audit gap</span>
+                      <span>SOP simplification</span>
+                    </div>
+                  </div>
+                </section>
+
+                <section class="trace-loop">
+                  <div>
+                    <span>AI support loop</span>
+                    <strong>Missing context flagged</strong>
+                    <p>User adds evidence or SOP context, then re-runs the analysis.</p>
+                  </div>
+                  <ol>
+                    <li>Context reviewed</li>
+                    <li>Gap flagged</li>
+                    <li>Add evidence</li>
+                    <li>Re-run</li>
+                  </ol>
+                </section>
               </div>
-              <dl class="control-log">
-                <div>
-                  <dt>Sanitisation</dt>
-                  <dd>Completed before model support</dd>
+
+              <section class="decision-record">
+                <div class="decision-heading">
+                  <span>Output</span>
+                  <strong>Quality decision record</strong>
                 </div>
-                <div>
-                  <dt>Prompt version</dt>
-                  <dd>pcs-dev-r1.6</dd>
+                <div class="markup-pane">
+                  <small>Human correction markup</small>
+                  <p><del>Cause limited to operator set-up.</del></p>
+                  <p><ins>Cause updated to failed monitoring escalation, with SOP clause and equipment log linked.</ins></p>
                 </div>
-                <div>
-                  <dt>Model route</dt>
-                  <dd>Hosted pilot boundary</dd>
-                </div>
-                <div>
-                  <dt>Reviewer decision</dt>
-                  <dd>Accept, edit or reject required</dd>
-                </div>
-              </dl>
-              <div class="signature-box">
-                <span>Human accountability</span>
-                <strong>QA decision remains with authorised reviewers.</strong>
+                <dl class="review-states">
+                  <div>
+                    <dt>Accepted</dt>
+                    <dd>Evidence links</dd>
+                  </div>
+                  <div>
+                    <dt>Edited</dt>
+                    <dd>RCA wording</dd>
+                  </div>
+                  <div>
+                    <dt>Rejected</dt>
+                    <dd>Unsupported claim</dd>
+                  </div>
+                  <div>
+                    <dt>Reviewer rationale</dt>
+                    <dd>Recorded</dd>
+                  </div>
+                </dl>
+              </section>
+            </div>
+
+            <dl class="governance-strip" aria-label="AI governance record">
+              <div>
+                <dt>Sanitisation</dt>
+                <dd>Before AI use</dd>
               </div>
-            </section>
+              <div>
+                <dt>Prompt version</dt>
+                <dd>Recorded</dd>
+              </div>
+              <div>
+                <dt>Model route</dt>
+                <dd>Boundary set</dd>
+              </div>
+              <div>
+                <dt>AI content flag</dt>
+                <dd>Visible</dd>
+              </div>
+              <div>
+                <dt>Reviewer decision</dt>
+                <dd>Required</dd>
+              </div>
+              <div>
+                <dt>Audit trail</dt>
+                <dd>Immutable</dd>
+              </div>
+            </dl>
           </div>
         </aside>
       </section>
