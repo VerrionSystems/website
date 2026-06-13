@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { contactHref } from "../contact-links";
 import { BulletList, LegalPage, Section } from "../legal-content";
 
 export const metadata: Metadata = {
-  title: "Privacy Notice | Verrion Systems",
-  description: "Minimal privacy notice for Verrion Systems public website and early private pilot enquiries.",
+  title: "Privacy Notice | Verrion Systems Ltd",
+  description: "Minimal privacy notice for Verrion Systems Ltd public website and early private pilot enquiries.",
 };
 
 export default function PrivacyPage() {
@@ -11,9 +12,9 @@ export default function PrivacyPage() {
     <LegalPage title="Privacy Notice" updated="10 June 2026">
       <Section title="Who we are">
         <p>
-          Verrion Systems Ltd provides specialist GMP quality software, including Pharma Compliance Suite, Verrion Deviation Investigator, and SOP Intelligence. This notice explains how we handle personal data from public website visitors, demo enquiries, and early pilot discussions.
+          Verrion Systems Ltd provides specialist GMP quality software, including Pharma Compliance Suite, Verrion Systems Deviation Investigator, and SOP Intelligence. This notice explains how we handle personal data from public website visitors, demo enquiries, and early pilot discussions.
         </p>
-        <p>Contact: <a href="mailto:hello@verrionsystems.com">hello@verrionsystems.com</a>.</p>
+        <p>Contact: <a href={contactHref("Privacy question")}>hello@verrionsystems.com</a>.</p>
       </Section>
 
       <Section title="What we collect">
@@ -37,7 +38,7 @@ export default function PrivacyPage() {
           items={[
             "Respond to enquiries and demo requests.",
             "Arrange meetings and follow-up discussions.",
-            "Assess whether Verrion software may be relevant to a prospective customer or partner.",
+            "Assess whether Verrion Systems software may be relevant to a prospective customer or partner.",
             "Maintain basic business records and protect the website and company systems.",
           ]}
         />
@@ -45,7 +46,7 @@ export default function PrivacyPage() {
 
       <Section title="Legal basis">
         <p>
-          For UK GDPR purposes, we normally process enquiry and business-contact data on the basis of legitimate interests: responding to business enquiries, operating the website, and developing Verrion Systems. Where a pilot or contract is being discussed, processing may also be necessary to take steps before entering into a contract.
+          For UK GDPR purposes, we normally process enquiry and business-contact data on the basis of legitimate interests: responding to business enquiries, operating the website, and developing Verrion Systems Ltd. Where a pilot or contract is being discussed, processing may also be necessary to take steps before entering into a contract.
         </p>
       </Section>
 

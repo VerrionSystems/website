@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Verrion Systems | Deviation investigation and SOP intelligence for GMP teams",
+  title: "Verrion Systems Ltd | AI compliance-native software for GMP quality teams",
   description:
-    "Pharma Compliance Suite combines Verrion Deviation Investigator and SOP Intelligence to help approved investigators connect evidence, SOP expectations, RCA/CAPA reasoning, review controls, and exportable outputs with sanitisation-first AI support.",
+    "Pharma Compliance Suite brings controlled AI into GMP quality workflows with EU-aware data handling, sanitisation before AI support, prompt and model versioning, AI content flags, human review, SOP Intelligence, Deviation Investigator, and an AI regulations compliance matrix.",
   metadataBase: new URL("https://www.verrionsystems.com"),
   openGraph: {
-    title: "Deviation investigation and SOP intelligence for GMP teams | Verrion Systems",
+    title: "AI compliance-native software for GMP quality teams | Verrion Systems Ltd",
     description:
-      "Structured investigation discipline without another broad eQMS: evidence-linked RCA/CAPA support, SOP Intelligence, sanitisation-first AI, human review, audit history, and controlled export/e-signature posture.",
+      "Pharma Compliance Suite combines Deviation Investigator, SOP Intelligence, sanitisation-first AI support, prompt/model versioning, AI-assisted content flags, human review controls, and a maintained AI regulations compliance matrix.",
     url: "https://www.verrionsystems.com",
-    siteName: "Verrion Systems",
+    siteName: "Verrion Systems Ltd",
     locale: "en_GB",
     type: "website",
   },

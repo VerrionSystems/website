@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { contactHref } from "../contact-links";
 import { BulletList, LegalPage, Section } from "../legal-content";
 
 export const metadata: Metadata = {
-  title: "Terms of Use | Verrion Systems",
-  description: "Minimal terms for using the Verrion Systems public website and requesting private demos or pilot information.",
+  title: "Terms of Use | Verrion Systems Ltd",
+  description: "Minimal terms for using the Verrion Systems Ltd public website and requesting private demos or pilot information.",
 };
 
 export default function TermsPage() {
@@ -11,19 +12,19 @@ export default function TermsPage() {
     <LegalPage title="Terms of Use" updated="10 June 2026">
       <Section title="Scope">
         <p>
-          These terms apply to the public Verrion Systems website and to general enquiries made through it. They do not govern a paid pilot, production subscription, software licence, data processing arrangement, validation package, or support commitment. Those require separate written terms.
+          These terms apply to the public Verrion Systems Ltd website and to general enquiries made through it. They do not govern a paid pilot, production subscription, software licence, data processing arrangement, validation package, or support commitment. Those require separate written terms.
         </p>
       </Section>
 
       <Section title="Website information">
         <p>
-          The website describes Verrion Systems products and intended pilot posture at a high level. It is provided for general business information only. Product features, controls, hosting arrangements, pilot scope, pricing, and availability may change as the product develops and as customer requirements are assessed.
+          The website describes Verrion Systems Ltd products and intended pilot posture at a high level. It is provided for general business information only. Product features, controls, hosting arrangements, pilot scope, pricing, and availability may change as the product develops and as customer requirements are assessed.
         </p>
       </Section>
 
       <Section title="No regulated-use advice">
         <p>
-          Verrion Systems does not provide medical, legal, regulatory, quality, validation, or compliance advice through this website. Any regulated use of Verrion software remains subject to the customer’s own governance, supplier qualification, risk assessment, intended-use assessment, validation, data protection review, and procedural controls.
+          Verrion Systems Ltd does not provide medical, legal, regulatory, quality, validation, or compliance advice through this website. Any regulated use of Verrion Systems software remains subject to the customer’s own governance, supplier qualification, risk assessment, intended-use assessment, validation, data protection review, and procedural controls.
         </p>
       </Section>
 
@@ -35,7 +36,7 @@ export default function TermsPage() {
 
       <Section title="Enquiries and demo requests">
         <p>
-          If you request a demo or pilot information, Verrion Systems may respond by email and may ask for further context to assess fit. A demo request does not create a contract, support obligation, exclusivity arrangement, or commitment to provide software access.
+          If you request a demo or pilot information, Verrion Systems Ltd may respond by email and may ask for further context to assess fit. A demo request does not create a contract, support obligation, exclusivity arrangement, or commitment to provide software access.
         </p>
       </Section>
 
@@ -51,18 +52,18 @@ export default function TermsPage() {
 
       <Section title="Intellectual property">
         <p>
-          The website, product names, text, design, and product concepts are owned by or licensed to Verrion Systems Ltd unless otherwise stated. You may view the website for normal business evaluation. You may not copy, reverse engineer, republish, or present Verrion materials as your own.
+          The website, product names, text, design, and product concepts are owned by or licensed to Verrion Systems Ltd unless otherwise stated. You may view the website for normal business evaluation. You may not copy, reverse engineer, republish, or present Verrion Systems materials as your own.
         </p>
       </Section>
 
       <Section title="Availability and liability">
         <p>
-          The website is provided on an as-is basis and may be changed, withdrawn, or unavailable without notice. To the fullest extent permitted by law, Verrion Systems is not liable for decisions made solely on the basis of public website content.
+          The website is provided on an as-is basis and may be changed, withdrawn, or unavailable without notice. To the fullest extent permitted by law, Verrion Systems Ltd is not liable for decisions made solely on the basis of public website content.
         </p>
       </Section>
 
       <Section title="Contact">
-        <p>Questions about these terms can be sent to <a href="mailto:hello@verrionsystems.com">hello@verrionsystems.com</a>.</p>
+        <p>Questions about these terms can be sent to <a href={contactHref("Terms question")}>hello@verrionsystems.com</a>.</p>
       </Section>
     </LegalPage>
   );

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import { contactHref } from "../contact-links";
 import { BulletList, LegalPage, Section } from "../legal-content";
 
 export const metadata: Metadata = {
-  title: "Data Handling | Verrion Systems",
-  description: "Data handling summary for Verrion Systems private demos and early hosted pilot discussions.",
+  title: "Data Handling | Verrion Systems Ltd",
+  description: "Data handling summary for Verrion Systems Ltd private demos and early hosted pilot discussions.",
 };
 
 export default function DataHandlingPage() {
@@ -11,7 +12,7 @@ export default function DataHandlingPage() {
     <LegalPage title="Data Handling Summary" updated="10 June 2026">
       <Section title="Purpose of this summary">
         <p>
-          This page gives a plain-English summary of the intended data handling posture for Verrion Systems demos and early hosted pilot discussions. It is not a substitute for a customer-specific data processing agreement, security review, supplier qualification, or validation assessment.
+          This page gives a plain-English summary of the intended data handling posture for Verrion Systems Ltd demos and early hosted pilot discussions. It is not a substitute for a customer-specific data processing agreement, security review, supplier qualification, or validation assessment.
         </p>
       </Section>
 
@@ -60,7 +61,7 @@ export default function DataHandlingPage() {
 
       <Section title="Customer validation responsibility">
         <p>
-          Verrion software can support structured investigation, SOP alignment, review, and evidence handling. The customer remains responsible for determining intended use and completing any required GxP validation, supplier qualification, procedural controls, data protection review, training, and release governance before production use.
+          Verrion Systems software can support structured investigation, SOP alignment, review, and evidence handling. The customer remains responsible for determining intended use and completing any required GxP validation, supplier qualification, procedural controls, data protection review, training, and release governance before production use.
         </p>
       </Section>
 
@@ -70,14 +71,8 @@ export default function DataHandlingPage() {
         </p>
       </Section>
 
-      <Section title="Independence statement">
-        <p>
-          Verrion Systems and Pharma Compliance Suite are developed independently. They are not derived from Baxter systems, data, SOPs, deviations, processes, or confidential know-how.
-        </p>
-      </Section>
-
       <Section title="Contact">
-        <p>Data handling questions can be sent to <a href="mailto:hello@verrionsystems.com">hello@verrionsystems.com</a>.</p>
+        <p>Data handling questions can be sent to <a href={contactHref("Data handling question")}>hello@verrionsystems.com</a>.</p>
       </Section>
     </LegalPage>
   );

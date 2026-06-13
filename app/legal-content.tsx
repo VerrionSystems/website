@@ -5,10 +5,10 @@ export function LegalPage({ title, updated, children }: { title: string; updated
   return (
     <main className="site-container py-10 sm:py-14">
       <header className="flex flex-col gap-5 border-b border-line pb-8 sm:flex-row sm:items-center sm:justify-between">
-        <Link href="/" className="flex items-center gap-3" aria-label="Verrion Systems home">
+        <Link href="/" className="flex items-center gap-3" aria-label="Verrion Systems Ltd home">
           <span className="grid size-10 place-items-center rounded-xl bg-navy text-sm font-bold text-white shadow-soft">V</span>
           <span>
-            <span className="block text-sm font-bold tracking-tight text-ink">Verrion Systems</span>
+            <span className="block text-sm font-bold tracking-tight text-ink">Verrion Systems Ltd</span>
             <span className="block text-xs text-muted">GMP quality platform</span>
           </span>
         </Link>

@@ -1,6 +1,6 @@
 # Verrion Systems Site
 
-Public marketing site for Verrion Systems and the Pharma Compliance Suite / Verrion Deviation Investigator launch motion.
+Public marketing site for Verrion Systems and the Pharma Compliance Suite / Verrion Systems Deviation Investigator launch motion.
 
 ## Local development
 
@@ -18,6 +18,12 @@ npm audit --audit-level=high
 ```
 
 `npm run build` creates a static export in `out/` for Hostinger-style static hosting.
+
+`npm audit` may report a moderate PostCSS advisory through Next.js' bundled
+PostCSS dependency. Do not run `npm audit fix --force` for this advisory: the
+current audit metadata proposes a breaking downgrade to Next 9. Track the
+advisory until Next ships a patched bundled dependency. The current public site
+does not process user-supplied CSS.
 
 ## Deployment posture
 
