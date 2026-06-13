@@ -32,9 +32,12 @@ Recommended proof points:
 
 ## Files
 
-- `index.html` - standalone V2 homepage prototype.
+- `index.html` - standalone homepage prototype.
 - `deviation.html` - deeper Deviation Investigator module page.
 - `sop-intelligence.html` - deeper SOP Intelligence module page.
+- `privacy.html` - V2 static privacy notice for preview.
+- `terms.html` - V2 static terms of use page for preview.
+- `data-handling.html` - V2 static data handling summary for preview.
 - `styles.css` - page styling and responsive layout.
 - `assets/concept-direction.png` - generated visual direction reference used for the prototype.
 
