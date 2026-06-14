@@ -160,14 +160,14 @@ section[id] {
 }
 
 .pilot-copy[id] {
-  scroll-margin-top: 18px;
+  scroll-margin-top: 0;
 }
 
 @supports selector(body:has(.pilot-copy:target)) {
   body:has(.pilot-copy:target) main::after {
     content: "";
     display: block;
-    height: clamp(220px, 22vh, 320px);
+    height: clamp(320px, 32vh, 480px);
   }
 }
 
@@ -1556,7 +1556,7 @@ h1 {
   display: grid;
   grid-template-columns: minmax(0, 0.95fr) minmax(360px, 0.78fr);
   gap: 48px;
-  padding: 78px 0 88px;
+  padding: 72px 0 46px;
   border-top: 1px solid var(--line);
   align-items: start;
 }
