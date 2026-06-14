@@ -675,6 +675,10 @@ h1 {
   align-items: center;
 }
 
+.trace-stack-connector {
+  display: none;
+}
+
 .module-flows {
   display: grid;
   gap: 14px;
@@ -2172,43 +2176,39 @@ h1 {
     gap: 28px;
   }
 
-  .trace-workflow > * {
+  .trace-stack-connector {
     position: relative;
+    z-index: 6;
+    display: block;
+    width: 22px;
+    height: 28px;
+    margin: -14px 0;
+    justify-self: center;
+    pointer-events: none;
   }
 
-  .trace-workflow > *:not(:last-child)::after {
+  .trace-stack-connector::before {
     content: "";
     position: absolute;
-    z-index: 6;
-    right: auto;
-    bottom: -21px;
+    top: 0;
     left: 50%;
-    display: block;
     width: 3px;
-    height: 20px;
-    border: 0;
+    height: 18px;
     background: #1d4ed8;
     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.96);
-    pointer-events: none;
     transform: translateX(-50%);
   }
 
-  .trace-workflow > *:not(:last-child)::before {
+  .trace-stack-connector::after {
     content: "";
     position: absolute;
-    z-index: 7;
-    right: auto;
-    bottom: -28px;
-    left: calc(50% - 6px);
-    display: block;
-    width: 0;
-    height: 0;
-    border-top: 8px solid #1d4ed8;
-    border-right: 6px solid transparent;
-    border-bottom: 0;
-    border-left: 6px solid transparent;
+    bottom: 2px;
+    left: 50%;
+    border-top: 9px solid #1d4ed8;
+    border-right: 7px solid transparent;
+    border-left: 7px solid transparent;
     filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.96));
-    pointer-events: none;
+    transform: translateX(-50%);
   }
 }
 
