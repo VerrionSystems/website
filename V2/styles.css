@@ -2167,15 +2167,83 @@ h1 {
   }
 }
 
+@media (max-width: 1500px) {
+  .trace-workflow {
+    gap: 28px;
+  }
+
+  .trace-workflow > * {
+    position: relative;
+  }
+
+  .trace-workflow > *:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    z-index: 6;
+    right: auto;
+    bottom: -21px;
+    left: 50%;
+    display: block;
+    width: 3px;
+    height: 20px;
+    border: 0;
+    background: #1d4ed8;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.96);
+    pointer-events: none;
+    transform: translateX(-50%);
+  }
+
+  .trace-workflow > *:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    z-index: 7;
+    right: auto;
+    bottom: -28px;
+    left: calc(50% - 6px);
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 8px solid #1d4ed8;
+    border-right: 6px solid transparent;
+    border-bottom: 0;
+    border-left: 6px solid transparent;
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.96));
+    pointer-events: none;
+  }
+}
+
 @media (max-width: 860px) {
   .site-header {
     position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    align-items: start;
     width: min(100% - 28px, var(--max));
   }
 
-  .nav-links,
+  .brand {
+    min-width: 0;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .nav-links a {
+    padding: 4px 0;
+  }
+
   .header-cta {
-    display: none;
+    display: inline-flex;
+    justify-self: start;
+    min-height: 38px;
+    padding: 0 16px;
+    font-size: 12px;
   }
 
   .hero,
@@ -2267,12 +2335,36 @@ h1 {
   }
 
   .workflow-steps {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
+    gap: 28px;
   }
 
-  .workflow-card:not(:last-child)::before,
   .workflow-card:not(:last-child)::after {
-    display: none;
+    display: block;
+    top: auto;
+    right: auto;
+    bottom: -22px;
+    left: 50%;
+    width: 3px;
+    height: 20px;
+    transform: translateX(-50%);
+  }
+
+  .workflow-card:not(:last-child)::before {
+    display: block;
+    top: auto;
+    right: auto;
+    bottom: -28px;
+    left: calc(50% - 6px);
+    border-top: 8px solid var(--teal);
+    border-right: 6px solid transparent;
+    border-bottom: 0;
+    border-left: 6px solid transparent;
+  }
+
+  .sop-flow .workflow-card:not(:last-child)::before {
+    border-top-color: #1d4ed8;
+    border-left-color: transparent;
   }
 
   .sop-analysis-card {
