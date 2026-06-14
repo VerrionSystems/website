@@ -159,6 +159,18 @@ section[id] {
   scroll-margin-top: 32px;
 }
 
+.pilot-copy[id] {
+  scroll-margin-top: 18px;
+}
+
+@supports selector(body:has(.pilot-copy:target)) {
+  body:has(.pilot-copy:target) main::after {
+    content: "";
+    display: block;
+    height: clamp(220px, 22vh, 320px);
+  }
+}
+
 .hero {
   display: grid;
   gap: 26px;
@@ -1679,8 +1691,24 @@ h1 {
   align-items: center;
 }
 
+.module-hero .hero-copy {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  align-items: start;
+}
+
 .module-hero h1 {
-  max-width: 740px;
+  max-width: 700px;
+  font-size: clamp(46px, 4.6vw, 66px);
+  line-height: 0.98;
+}
+
+.module-hero .hero-lede {
+  max-width: 640px;
+}
+
+.module-hero .hero-actions {
+  margin-top: 28px;
 }
 
 .module-surface {
