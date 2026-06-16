@@ -1274,7 +1274,7 @@ h1 {
 .trace-map-connectors {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 4;
   width: 1028px;
   height: 760px;
   overflow: visible;
@@ -1295,8 +1295,8 @@ h1 {
 }
 
 .review-connector {
-  stroke: rgba(29, 78, 216, 0.72);
-  stroke-width: 2;
+  stroke: rgba(29, 78, 216, 0.76);
+  stroke-width: 2.2;
   stroke-dasharray: 5 6;
 }
 
