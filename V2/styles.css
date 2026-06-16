@@ -1670,8 +1670,8 @@ h1 {
 }
 
 .review-feedback-connectors path {
-  stroke: rgba(180, 35, 24, 0.66);
-  stroke-width: 2.2;
+  stroke: rgba(180, 35, 24, 0.58);
+  stroke-width: 1.8;
 }
 
 .reject-note {
