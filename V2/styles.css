@@ -1290,7 +1290,7 @@ h1 {
 
 .framework-connector {
   stroke: rgba(15, 118, 110, 0.62);
-  stroke-width: 2;
+  stroke-width: 1.8;
   stroke-dasharray: 5 6;
 }
 
@@ -1645,7 +1645,7 @@ h1 {
 .reject-note {
   position: absolute;
   top: 124px;
-  left: 378px;
+  left: 339px;
   z-index: 2;
   width: 360px;
   margin: 0;
