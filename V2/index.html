@@ -9,7 +9,7 @@
       content="Verrion Systems V2 landing page concept for GMP quality teams evaluating controlled AI support in deviation investigation and SOP intelligence workflows."
     />
     <link rel="icon" href="./favicon.png" type="image/png" />
-    <link rel="stylesheet" href="./styles.css?v=20260616-1" />
+    <link rel="stylesheet" href="./styles.css?v=20260616-2" />
   </head>
   <body id="page-top">
     <header class="site-header" aria-label="Primary">
@@ -69,370 +69,235 @@
           </div>
 
           <div class="trace-canvas">
-            <section class="trace-shared">
-              <div class="trace-icon trace-icon-shared" aria-hidden="true">
-                <svg viewBox="0 0 24 24" focusable="false">
-                  <path d="M12 3v18" />
-                  <path d="M5 7h14" />
-                  <path d="M7 7l-4 7h8l-4-7Z" />
-                  <path d="M17 7l-4 7h8l-4-7Z" />
-                </svg>
-              </div>
-              <div>
-                <span>Shared input used by both modules</span>
-                <strong>Regulatory framework</strong>
-                <p>FDA, EU GMP and UK MHRA requirements, guidance and expectations.</p>
-              </div>
-              <small>Updated 12 May 2026</small>
-            </section>
+            <div class="trace-map-shell" aria-label="Deviation Investigator and SOP Intelligence workflow map">
+              <svg class="trace-map-connectors" viewBox="0 0 1028 760" aria-hidden="true" focusable="false">
+                <defs>
+                  <marker id="map-arrow-teal" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+                    <path d="M0 0 10 5 0 10z" fill="rgba(15,118,110,.82)" />
+                  </marker>
+                  <marker id="map-arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+                    <path d="M0 0 10 5 0 10z" fill="rgba(29,78,216,.82)" />
+                  </marker>
+                  <marker id="map-arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+                    <path d="M0 0 10 5 0 10z" fill="rgba(180,35,24,.82)" />
+                  </marker>
+                </defs>
+                <path class="framework-connector" d="M514 96 V118 H250 V143" marker-end="url(#map-arrow-teal)" />
+                <path class="framework-connector" d="M514 96 V118 H778 V143" marker-end="url(#map-arrow-teal)" />
+                <path class="review-connector" d="M191 426 V565" marker-end="url(#map-arrow-blue)" />
+                <path class="review-connector" d="M428 426 V565" marker-end="url(#map-arrow-blue)" />
+                <path class="review-connector" d="M936 532 V565" marker-end="url(#map-arrow-blue)" />
+              </svg>
 
-            <div class="trace-workflow">
-              <div class="module-flows">
-                <section class="trace-module deviation-flow">
-                  <div class="module-rail">
-                    <div class="module-rail-icon" aria-hidden="true">
+              <section class="shared-input-card">
+                <span class="trace-icon trace-icon-shared" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M3 12a9 9 0 0 1 18 0" />
+                    <path d="M3 12h18" />
+                    <path d="M12 12v7a3 3 0 0 0 6 0" />
+                    <path d="M12 3v2" />
+                    <path d="M6.5 12c1.1-2.2 2.9-3.3 5.5-3.3S16.4 9.8 17.5 12" />
+                  </svg>
+                </span>
+                <div>
+                  <span>Shared input used by both modules</span>
+                  <strong>Regulatory framework</strong>
+                  <p>FDA, EU GMP and UK MHRA requirements, guidance and expectations.</p>
+                </div>
+              </section>
+
+              <section class="control-module deviation-module" aria-label="Deviation Investigator tiles">
+                <h3>Deviation Investigator</h3>
+                <div class="map-tile-grid deviation-tiles">
+                  <article class="control-tile">
+                    <span class="trace-icon" aria-hidden="true">
                       <svg viewBox="0 0 24 24" focusable="false">
-                        <path d="M8 4h8l1 3h3v14H4V7h3l1-3Z" />
-                        <path d="M8 11h8" />
-                        <path d="M8 15h6" />
+                        <path d="M7 3h7l4 4v14H7V3Z" />
+                        <path d="M14 3v5h5" />
+                        <path d="M10 12h6" />
+                        <path d="M10 16h4" />
                       </svg>
-                    </div>
-                    <strong>Deviation Investigator</strong>
-                    <p>Investigate events and assess root cause.</p>
-                  </div>
-
-                  <ol class="workflow-steps" aria-label="Deviation Investigator workflow">
-                    <li class="workflow-card">
-                      <span class="trace-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" focusable="false">
-                          <path d="M7 3h7l4 4v14H7V3Z" />
-                          <path d="M14 3v5h5" />
-                          <path d="M10 12h6" />
-                          <path d="M10 16h4" />
-                        </svg>
-                      </span>
-                      <h3>Event facts</h3>
-                      <ul>
-                        <li>What happened</li>
-                        <li>When and where</li>
-                        <li>Initial impact</li>
-                      </ul>
-                      <mark class="status-complete">Framed</mark>
-                    </li>
-                    <li class="workflow-card">
-                      <span class="trace-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" focusable="false">
-                          <path d="M9 12l6-6a4 4 0 0 1 6 6l-8 8a5 5 0 0 1-7-7l7-7" />
-                        </svg>
-                      </span>
-                      <h3>Evidence pack</h3>
-                      <ul>
-                        <li>Documents</li>
-                        <li>Interviews</li>
-                        <li>Logs and data</li>
-                      </ul>
-                      <mark class="status-complete">6 items linked</mark>
-                    </li>
-                    <li class="workflow-card">
-                      <span class="trace-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" focusable="false">
-                          <path d="M4 5c3-2 5-2 8 0v15c-3-2-5-2-8 0V5Z" />
-                          <path d="M12 5c3-2 5-2 8 0v15c-3-2-5-2-8 0V5Z" />
-                        </svg>
-                      </span>
-                      <h3>SOP context</h3>
-                      <ul>
-                        <li>Linked SOPs</li>
-                        <li>Relevant clauses</li>
-                        <li>Procedure intent</li>
-                      </ul>
-                      <mark class="status-complete">8 clauses linked</mark>
-                    </li>
-                    <li class="workflow-card">
-                      <span class="trace-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" focusable="false">
-                          <path d="M5 16a7 7 0 1 1 14 0" />
-                          <path d="M12 16l4-6" />
-                          <path d="M8 20h8" />
-                        </svg>
-                      </span>
-                      <h3>Severity</h3>
-                      <ul>
-                        <li>Potential impact</li>
-                        <li>Risk assessment</li>
-                        <li>Escalation need</li>
-                      </ul>
-                      <mark class="status-open">Medium</mark>
-                    </li>
-                    <li class="workflow-card">
-                      <span class="trace-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" focusable="false">
-                          <circle cx="12" cy="12" r="8" />
-                          <circle cx="12" cy="12" r="3" />
-                          <path d="M16 8l4-4" />
-                          <path d="M18 4h2v2" />
-                        </svg>
-                      </span>
-                      <h3>RCA / CAPA</h3>
-                      <ul>
-                        <li>Cause analysis</li>
-                        <li>Corrective actions</li>
-                        <li>Effectiveness checks</li>
-                      </ul>
-                      <mark class="status-open">2 open</mark>
-                    </li>
-                  </ol>
-                </section>
-
-                <section class="trace-module sop-flow">
-                  <div class="module-rail">
-                    <div class="module-rail-icon" aria-hidden="true">
+                    </span>
+                    <strong>Facts</strong>
+                    <span class="status-dot"></span>
+                  </article>
+                  <article class="control-tile">
+                    <span class="trace-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.2 1.2" />
+                        <path d="M14 11a5 5 0 0 0-7.1-.1l-2 2a5 5 0 0 0 7.1 7.1l1.2-1.2" />
+                      </svg>
+                    </span>
+                    <strong>Evidence</strong>
+                  </article>
+                  <article class="control-tile">
+                    <span class="trace-icon" aria-hidden="true">
                       <svg viewBox="0 0 24 24" focusable="false">
                         <path d="M4 5c3-2 5-2 8 0v15c-3-2-5-2-8 0V5Z" />
                         <path d="M12 5c3-2 5-2 8 0v15c-3-2-5-2-8 0V5Z" />
                       </svg>
+                    </span>
+                    <strong>SOP context</strong>
+                    <span class="status-dot"></span>
+                  </article>
+                  <article class="control-tile">
+                    <span class="trace-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <path d="M5 16a7 7 0 1 1 14 0" />
+                        <path d="M12 16l4-6" />
+                        <path d="M8 20h8" />
+                      </svg>
+                    </span>
+                    <strong>Severity</strong>
+                  </article>
+                  <article class="control-tile">
+                    <span class="trace-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <circle cx="12" cy="12" r="8" />
+                        <circle cx="12" cy="12" r="3" />
+                        <path d="M17 7l3-3" />
+                        <path d="M20 4v4h-4" />
+                      </svg>
+                    </span>
+                    <strong>RCA / CAPA</strong>
+                    <span class="status-dot"></span>
+                  </article>
+                  <article class="control-tile attention-tile">
+                    <span class="trace-icon warning-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" />
+                        <path d="M12 9v4" />
+                        <path d="M12 17h.01" />
+                      </svg>
+                    </span>
+                    <strong>Missing context</strong>
+                    <span class="status-dot amber"></span>
+                  </article>
+                  <article class="control-tile">
+                    <span class="trace-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <ellipse cx="12" cy="5" rx="8" ry="3" />
+                        <path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5" />
+                        <path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3" />
+                      </svg>
+                    </span>
+                    <strong>Metadata</strong>
+                    <span class="status-dot"></span>
+                  </article>
+                  <article class="control-tile decision-tile">
+                    <span class="trace-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        <path d="m9 12 2 2 4-5" />
+                      </svg>
+                    </span>
+                    <strong>Decision record</strong>
+                    <span class="status-dot blue"></span>
+                  </article>
+                </div>
+              </section>
+
+              <section class="control-module sop-module" aria-label="SOP Intelligence tiles">
+                <h3>SOP Intelligence</h3>
+                <div class="map-tile-grid sop-tiles">
+                  <article class="control-tile">
+                    <span class="trace-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <path d="M7 3h7l4 4v14H7V3Z" />
+                        <path d="M14 3v5h5" />
+                        <path d="M10 12h6" />
+                        <path d="M10 16h4" />
+                      </svg>
+                    </span>
+                    <strong>Source</strong>
+                  </article>
+                  <article class="control-tile">
+                    <span class="trace-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <path d="M8 6h13" />
+                        <path d="M8 12h13" />
+                        <path d="M8 18h13" />
+                        <path d="M3 6h.01" />
+                        <path d="M3 12h.01" />
+                        <path d="M3 18h.01" />
+                      </svg>
+                    </span>
+                    <strong>Clauses</strong>
+                  </article>
+                  <article class="control-tile">
+                    <span class="trace-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <circle cx="11" cy="11" r="7" />
+                        <path d="m21 21-4.3-4.3" />
+                      </svg>
+                    </span>
+                    <strong>Gaps</strong>
+                    <span class="status-dot amber"></span>
+                  </article>
+                  <article class="control-tile analysis-tile">
+                    <span class="trace-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <path d="M4 19V5" />
+                        <path d="M4 19h16" />
+                        <path d="M8 16V9" />
+                        <path d="M12 16V7" />
+                        <path d="M16 16v-4" />
+                      </svg>
+                    </span>
+                    <strong>Analysis types</strong>
+                    <div class="analysis-grid" aria-label="SOP analysis types">
+                      <span>STPA</span>
+                      <span>Compliance check</span>
+                      <span>Document comparison</span>
+                      <span>Policy compliance</span>
+                      <span>Audit gap</span>
+                      <span>SOP simplification</span>
                     </div>
-                    <strong>SOP Intelligence</strong>
-                    <p>Analyse SOPs and identify gaps.</p>
-                  </div>
-
-                  <ol class="workflow-steps sop-steps" aria-label="SOP Intelligence workflow">
-                    <li class="workflow-card">
-                      <span class="trace-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" focusable="false">
-                          <path d="M7 3h7l4 4v14H7V3Z" />
-                          <path d="M14 3v5h5" />
-                          <path d="M10 12h6" />
-                          <path d="M10 16h4" />
-                        </svg>
-                      </span>
-                      <h3>SOP source</h3>
-                      <ul>
-                        <li>SOP library</li>
-                        <li>Work instructions</li>
-                        <li>Policies and standards</li>
-                      </ul>
-                      <mark class="status-soft">12 sources</mark>
-                    </li>
-                    <li class="workflow-card">
-                      <span class="trace-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" focusable="false">
-                          <path d="M7 7h12" />
-                          <path d="M7 12h12" />
-                          <path d="M7 17h12" />
-                          <path d="M4 7h.01" />
-                          <path d="M4 12h.01" />
-                          <path d="M4 17h.01" />
-                        </svg>
-                      </span>
-                      <h3>Clause expectations</h3>
-                      <ul>
-                        <li>Extracted controls</li>
-                        <li>Expected evidence</li>
-                        <li>Process mapping</li>
-                      </ul>
-                      <mark class="status-soft">182 clauses</mark>
-                    </li>
-                    <li class="workflow-card sop-analysis-card">
-                      <span class="trace-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" focusable="false">
-                          <path d="M5 19V9" />
-                          <path d="M12 19V5" />
-                          <path d="M19 19v-7" />
-                          <path d="M3 19h18" />
-                        </svg>
-                      </span>
-                      <h3>SOP analysis</h3>
-                      <small>Select analysis type</small>
-                      <div class="analysis-grid">
-                        <span>STPA</span>
-                        <span>Compliance check</span>
-                        <span>Document comparison</span>
-                        <span>Policy compliance</span>
-                        <span>Audit gap</span>
-                        <span>SOP simplification</span>
-                      </div>
-                    </li>
-                    <li class="workflow-card">
-                      <span class="trace-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" focusable="false">
-                          <circle cx="11" cy="11" r="7" />
-                          <path d="M16 16l5 5" />
-                        </svg>
-                      </span>
-                      <h3>Gap findings</h3>
-                      <ul>
-                        <li>Control gaps</li>
-                        <li>Ambiguities</li>
-                        <li>Exceptions</li>
-                      </ul>
-                      <mark class="status-open">5 gaps</mark>
-                    </li>
-                    <li class="workflow-card">
-                      <span class="trace-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" focusable="false">
-                          <circle cx="12" cy="8" r="4" />
-                          <path d="M4 21a8 8 0 0 1 16 0" />
-                        </svg>
-                      </span>
-                      <h3>Owner review</h3>
-                      <ul>
-                        <li>SOP owner review</li>
-                        <li>Comments</li>
-                        <li>Disposition</li>
-                      </ul>
-                      <mark class="status-open">Pending</mark>
-                    </li>
-                  </ol>
-                </section>
-              </div>
-
-              <span class="trace-stack-connector" aria-hidden="true"></span>
-
-              <section class="missing-context-card">
-                <span class="trace-icon warning-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" focusable="false">
-                    <path d="M12 4l9 16H3L12 4Z" />
-                    <path d="M12 9v5" />
-                    <path d="M12 17h.01" />
-                  </svg>
-                </span>
-                <strong>Missing context flagged</strong>
-                <p>Evidence around control execution is incomplete.</p>
-                <mark class="status-open">3 gaps</mark>
-              </section>
-
-              <span class="trace-stack-connector" aria-hidden="true"></span>
-
-              <aside class="run-metadata" aria-label="AI run metadata">
-                <strong>AI run metadata</strong>
-                <dl>
-                  <div>
-                    <dt>Prompt version</dt>
-                    <dd>pcs-dev-v1.6</dd>
-                  </div>
-                  <div>
-                    <dt>Model route</dt>
-                    <dd>Hosted pilot boundary</dd>
-                  </div>
-                  <div>
-                    <dt>Run ID</dt>
-                    <dd>run_7f2c-9e11</dd>
-                  </div>
-                </dl>
-              </aside>
-
-              <span class="trace-stack-connector" aria-hidden="true"></span>
-
-              <section class="decision-core">
-                <div class="decision-shield" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" focusable="false">
-                    <path d="M12 3l8 4v5c0 5-3 8-8 10-5-2-8-5-8-10V7l8-4Z" />
-                    <path d="M8 12l3 3 5-6" />
-                  </svg>
+                  </article>
+                  <article class="control-tile decision-tile owner-review-tile">
+                    <span class="trace-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <circle cx="12" cy="8" r="4" />
+                        <path d="M4 22c1.2-4 4-6 8-6s6.8 2 8 6" />
+                      </svg>
+                    </span>
+                    <strong>Owner review</strong>
+                    <p class="markup-example"><del>AI: ready for record</del><ins>Reviewer: add evidence gap</ins></p>
+                    <span class="status-dot blue"></span>
+                  </article>
                 </div>
-                <strong>Quality decision record</strong>
-                <span>Human decision controls outcome</span>
               </section>
 
-              <span class="trace-stack-connector" aria-hidden="true"></span>
-
-              <section class="human-review-panel">
-                <div class="panel-title">
+              <section class="review-rail" aria-label="Human review and correction controls">
+                <svg class="review-feedback-connectors" viewBox="0 0 988 104" aria-hidden="true" focusable="false">
+                  <path class="reject-note-line" d="M512 34 V48 H538 V56" marker-end="url(#map-arrow-red)" />
+                  <path class="note-review-line" d="M358 76 H120 V42" marker-end="url(#map-arrow-red)" />
+                </svg>
+                <div class="review-rail-title">
+                  <span class="trace-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="M4 5h16v12H8l-4 4z" />
+                      <path d="M8 9h8" />
+                      <path d="M8 13h5" />
+                    </svg>
+                  </span>
                   <span>Human review and corrections</span>
-                  <small>Source: DEV-0247&nbsp;&nbsp; Clause: SOP-008 8.4</small>
                 </div>
-                <article>
-                  <small>AI-supported finding (original)</small>
-                  <p><del>Line clearance checks must be completed before batch disposition.</del></p>
-                </article>
-                <article class="correction-box">
-                  <small>Human correction</small>
-                  <p>Line clearance checks <ins>and fill-weight trend review</ins> must be completed before batch disposition.</p>
-                </article>
-                <article class="rationale-box">
-                  <small>Reviewer rationale</small>
-                  <p>Clarified to include fill-weight trend review per procedure intent and batch disposition timing.</p>
-                </article>
-                <dl class="review-tags">
-                  <div>
-                    <dt>Accepted</dt>
-                    <dd>Evidence links</dd>
+                <div class="review-flow">
+                  <span class="review-step">Review AI output</span>
+                  <span class="flow-arrow">-&gt;</span>
+                  <div class="review-actions">
+                    <span>Approve</span>
+                    <span>Edit</span>
+                    <span class="reject-action">Reject</span>
+                    <span>Comment</span>
                   </div>
-                  <div>
-                    <dt>Edited</dt>
-                    <dd>Finding wording</dd>
-                  </div>
-                  <div>
-                    <dt>Rejected</dt>
-                    <dd>Unsupported claim</dd>
-                  </div>
-                </dl>
+                  <span class="flow-arrow">-&gt;</span>
+                  <span class="review-step">Disposition / record</span>
+                </div>
+                <p class="reject-note">Reject sends the event back for context, correction or re-run before disposition.</p>
               </section>
-
-              <span class="trace-stack-connector" aria-hidden="true"></span>
-
-              <aside class="export-panel" aria-label="Export and audit output">
-                <strong>Export and output</strong>
-                <ul class="export-list">
-                  <li>Investigation report <span>v1.0 PDF</span></li>
-                  <li>SOP gap report <span>v1.0 PDF</span></li>
-                  <li>Review dossier <span>v1.0 PDF</span></li>
-                </ul>
-                <strong>Audit log</strong>
-                <ol class="audit-list">
-                  <li>AI run completed</li>
-                  <li>Missing context flagged</li>
-                  <li>Additional evidence added</li>
-                  <li>Re-run completed</li>
-                  <li>Human review completed</li>
-                </ol>
-              </aside>
             </div>
-
-            <section class="governance-section" aria-label="AI governance and control record">
-              <span>AI governance and control applies to both modules</span>
-              <dl class="governance-strip">
-                <div>
-                  <dt>Sanitisation</dt>
-                  <dd>Identifiers removed; scope minimised.</dd>
-                  <mark class="status-complete">Completed</mark>
-                </div>
-                <div>
-                  <dt>Prompt version</dt>
-                  <dd>Deviation and SOP analysis prompt recorded.</dd>
-                  <mark class="status-complete">Active</mark>
-                </div>
-                <div>
-                  <dt>Model route</dt>
-                  <dd>Hosted pilot boundary controlled.</dd>
-                  <mark class="status-complete">Controlled</mark>
-                </div>
-                <div>
-                  <dt>AI content flag</dt>
-                  <dd>AI-generated sections flagged for review.</dd>
-                  <mark class="status-open">Flagged</mark>
-                </div>
-                <div>
-                  <dt>Reviewer decision</dt>
-                  <dd>Accept, edit or reject recorded.</dd>
-                  <mark class="status-complete">Recorded</mark>
-                </div>
-                <div>
-                  <dt>Audit trail</dt>
-                  <dd>All actions time-stamped and exportable.</dd>
-                  <mark class="status-complete">Recorded</mark>
-                </div>
-              </dl>
-            </section>
-
-            <ul class="trace-legend" aria-label="Workflow legend">
-              <li><span class="legend-line deviation"></span>Deviation flow</li>
-              <li><span class="legend-line sop"></span>SOP flow</li>
-              <li><span class="legend-line rerun"></span>Re-run loop</li>
-              <li><span class="legend-dot complete"></span>Complete</li>
-              <li><span class="legend-dot open"></span>Open or attention</li>
-            </ul>
           </div>
         </aside>
       </section>
