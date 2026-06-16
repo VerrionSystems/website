@@ -155,7 +155,7 @@ section[id] {
 .hero {
   display: grid;
   gap: 26px;
-  width: min(1480px, calc(100% - 40px));
+  width: min(var(--max), calc(100% - 40px));
   margin: 0 auto;
   padding: 42px 0 86px;
 }
