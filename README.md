@@ -1,43 +1,72 @@
-# Verrion Systems Site
+# Verrion Systems Website
 
-Public marketing site for Verrion Systems and the Pharma Compliance Suite / Verrion Systems Deviation Investigator launch motion.
+Public marketing site for Verrion Systems and the Pharma Compliance Suite launch motion.
 
-## Local development
+## Live Site Source
+
+The approved static website is now promoted to the repository root:
+
+- `index.html`
+- `deviation.html`
+- `sop-intelligence.html`
+- `privacy.html`
+- `terms.html`
+- `data-handling.html`
+- `styles.css`
+- `assets/`
+- `.htaccess`
+- `robots.txt`
+- `sitemap.xml`
+
+The earlier `V2/` folder is retained as the prototype source/history, but the root files are the launch surface.
+
+## Local Preview
 
 ```bash
-npm install
-npm run dev
+python3 -m http.server 4177
 ```
 
-## Checks
+Then open:
 
-```bash
-npm run typecheck
-npm run build
-npm audit --audit-level=high
+```text
+http://127.0.0.1:4177/
 ```
 
-`npm run build` creates a static export in `out/` for Hostinger-style static hosting.
+## Hostinger Launch Package
 
-`npm audit` may report a moderate PostCSS advisory through Next.js' bundled
-PostCSS dependency. Do not run `npm audit fix --force` for this advisory: the
-current audit metadata proposes a breaking downgrade to Next 9. Track the
-advisory until Next ships a patched bundled dependency. The current public site
-does not process user-supplied CSS.
+Upload the root static files to the Hostinger site's `public_html` directory or configured document root. Include dotfiles such as `.htaccess`; the security headers, cache hints and `.co.uk` redirect are defined there.
 
-## Deployment posture
+The canonical public domain is:
 
-Intended deployment target: Hostinger static hosting for the public marketing site.
+```text
+https://www.verrionsystems.com/
+```
 
-Build locally, then upload the contents of `out/` to the site's Hostinger `public_html` directory or configured document root. Include dotfiles such as `.htaccess` when uploading, because security headers and cache hints are defined there for Apache/LiteSpeed hosting.
+Redirect posture:
 
-Do not change DNS, upload to production, or overwrite an existing live site without Dawid's explicit approval.
+- `verrionsystems.com` -> `https://www.verrionsystems.com/`
+- `verrionsystems.co.uk` -> `https://www.verrionsystems.com/`
+- `www.verrionsystems.co.uk` -> `https://www.verrionsystems.com/`
 
-## Hostinger deployment checklist
+## Hostinger Checklist
 
-1. Run `npm run typecheck`.
-2. Run `npm run build`.
-3. Confirm `out/index.html`, `out/privacy/index.html`, `out/terms/index.html`, and `out/data-handling/index.html` exist.
-4. Upload the full contents of `out/` to `public_html`.
-5. Confirm `https://www.verrionsystems.com/`, `/privacy/`, `/terms/`, and `/data-handling/` return HTTP 200.
-6. Confirm HTTPS and security headers after upload.
+1. Add or assign `verrionsystems.com` to the Hostinger website.
+2. Upload the root static files to `public_html`.
+3. Enable SSL for `verrionsystems.com` and `www.verrionsystems.com`.
+4. Add `verrionsystems.co.uk` as a parked/addon/redirecting domain, or point it to the same document root so `.htaccess` redirects it.
+5. Confirm these URLs return HTTP 200:
+   - `https://www.verrionsystems.com/`
+   - `https://www.verrionsystems.com/deviation.html`
+   - `https://www.verrionsystems.com/sop-intelligence.html`
+   - `https://www.verrionsystems.com/privacy.html`
+   - `https://www.verrionsystems.com/terms.html`
+   - `https://www.verrionsystems.com/data-handling.html`
+6. Confirm these URLs redirect to the canonical `.com` site:
+   - `http://verrionsystems.com/`
+   - `https://verrionsystems.com/`
+   - `http://verrionsystems.co.uk/`
+   - `https://www.verrionsystems.co.uk/`
+
+## Legacy Next Prototype
+
+The `app/` Next.js prototype remains in the repository for now, but it is not the approved launch surface. Do not deploy `out/` unless the approved static root site has first been translated into the Next app.
