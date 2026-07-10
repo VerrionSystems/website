@@ -34,7 +34,7 @@ html {
 
 body {
   margin: 0;
-  min-width: 320px;
+  min-width: 0;
   min-height: 100vh;
   color: var(--ink);
   background: #ffffff;
@@ -1781,6 +1781,41 @@ p {
 
   .dialog-actions {
     display: grid;
+  }
+}
+
+@media (max-width: 320px) {
+  .site-shell {
+    padding-inline: 12px;
+  }
+
+  .header-inner {
+    gap: 8px;
+  }
+
+  .brand-mark {
+    width: 150px;
+  }
+
+  .menu-button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .hero-copy h1 {
+    font-size: 36px;
+  }
+
+  .surface-topbar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dialog-inner {
+    padding: 16px;
+  }
+
+  .dialog-title-row h2 {
+    font-size: 30px;
   }
 }
 
