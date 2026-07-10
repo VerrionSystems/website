@@ -1,13 +1,17 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
+const siteBase = process.env.VITE_SITE_BASE || "/V3/";
+const outputDirectory = process.env.VITE_OUT_DIR || "..";
+const emptyOutputDirectory = process.env.VITE_EMPTY_OUT_DIR === "true";
+
 export default defineConfig({
   root: "source",
-  base: "/V3/",
+  base: siteBase,
   publicDir: false,
   build: {
-    outDir: "..",
-    emptyOutDir: false,
+    outDir: outputDirectory,
+    emptyOutDir: emptyOutputDirectory,
     assetsDir: "assets",
   },
   optimizeDeps: {

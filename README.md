@@ -4,7 +4,7 @@ Public marketing site for Verrion Systems and the Pharma Compliance Suite launch
 
 ## Live Site Source
 
-The approved static website is now promoted to the repository root:
+The approved V3 website is built from `V3/` and promoted to the repository root:
 
 - `index.html`
 - `deviation.html`
@@ -18,7 +18,15 @@ The approved static website is now promoted to the repository root:
 - `robots.txt`
 - `sitemap.xml`
 
-The earlier `V2/` folder is retained as the prototype source/history, but the root files are the launch surface.
+The root files are the production launch surface. `V2/` is retained as prototype history, while `V3/` is the maintained source for the homepage.
+
+To rebuild and promote the V3 homepage to the root:
+
+```bash
+cd V3
+npm install
+npm run promote:root
+```
 
 ## Local Preview
 
@@ -32,9 +40,9 @@ Then open:
 http://127.0.0.1:4177/
 ```
 
-## Hostinger Launch Package
+## Deployment
 
-Upload the root static files to the Hostinger site's `public_html` directory or configured document root. Include dotfiles such as `.htaccess`; the security headers, cache hints and `.co.uk` redirect are defined there.
+GitHub Pages publishes the root static files to the public domain. Hostinger manages the domain and DNS. The root build keeps the existing legal and module pages available alongside the V3 homepage.
 
 The canonical public domain is:
 
@@ -45,27 +53,22 @@ https://www.verrionsystems.com/
 Redirect posture:
 
 - `verrionsystems.com` -> `https://www.verrionsystems.com/`
-- `verrionsystems.co.uk` -> `https://www.verrionsystems.com/`
-- `www.verrionsystems.co.uk` -> `https://www.verrionsystems.com/`
 
-## Hostinger Checklist
+## Launch Checklist
 
-1. Add or assign `verrionsystems.com` to the Hostinger website.
-2. Upload the root static files to `public_html`.
-3. Enable SSL for `verrionsystems.com` and `www.verrionsystems.com`.
-4. Add `verrionsystems.co.uk` as a parked/addon/redirecting domain, or point it to the same document root so `.htaccess` redirects it.
-5. Confirm these URLs return HTTP 200:
+1. Run `npm run promote:root` from `V3/`.
+2. Commit and push the promoted root files to `main`.
+3. Confirm GitHub Pages has completed its deployment.
+4. Confirm these URLs return HTTP 200:
    - `https://www.verrionsystems.com/`
    - `https://www.verrionsystems.com/deviation.html`
    - `https://www.verrionsystems.com/sop-intelligence.html`
    - `https://www.verrionsystems.com/privacy.html`
    - `https://www.verrionsystems.com/terms.html`
    - `https://www.verrionsystems.com/data-handling.html`
-6. Confirm these URLs redirect to the canonical `.com` site:
+5. Confirm these URLs redirect to the canonical `www` site:
    - `http://verrionsystems.com/`
    - `https://verrionsystems.com/`
-   - `http://verrionsystems.co.uk/`
-   - `https://www.verrionsystems.co.uk/`
 
 ## Legacy Next Prototype
 

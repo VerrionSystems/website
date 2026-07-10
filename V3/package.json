@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "node scripts/clean-build.mjs && vite build",
+    "build:root": "VITE_SITE_BASE=/ VITE_OUT_DIR=../root-dist VITE_EMPTY_OUT_DIR=true vite build",
+    "promote:root": "npm run build:root && node scripts/promote-root.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
