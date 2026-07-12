@@ -15,7 +15,10 @@ export const productFamilies = [
       {
         id: "deviation-companion",
         name: "Deviation Companion",
+        pagePath: "./deviation-companion.html",
         icon: "clipboardPen",
+        audience: "For QA intake teams, Investigators and process owners",
+        headline: "Cleaner deviation intake before formal investigation.",
         summary: "Guided intake, approved Q&A and evidence capture.",
         outcome: "Faster, cleaner intake",
         status: "Private pilots",
@@ -29,6 +32,21 @@ export const productFamilies = [
         ],
         boundary:
           "Deviation Companion prepares a draft package for Deviation Investigator. Formal RCA/CAPA, QA submission, qualified review, final approval and report generation remain in Deviation Investigator.",
+        pageValue:
+          "Give Investigators a cleaner starting point without turning early intake into an unreviewed conclusion.",
+        record: {
+          code: "DIC-0118",
+          label: "Guided intake record",
+          title: "Fill-weight excursion intake",
+          state: "Ready for handoff",
+          prompt: "Three required context fields were completed before investigator handoff.",
+          checks: [
+            "Approved question set complete",
+            "Evidence pack linked",
+            "Equipment log added after review",
+            "Draft package ready for handoff",
+          ],
+        },
         journey: [
           ["Capture", "Record the event with approved questions."],
           ["Complete", "Add evidence and resolve missing context."],
@@ -38,7 +56,10 @@ export const productFamilies = [
       {
         id: "deviation-investigator",
         name: "Deviation Investigator",
+        pagePath: "./deviation.html",
         icon: "fileSearch",
+        audience: "For QA Leaders, QPs and Deviation Investigators",
+        headline: "Deviation investigations that can withstand review.",
         summary: "Controlled analysis, RCA/CAPA review and approval.",
         outcome: "Higher quality decisions",
         status: "Private pilots",
@@ -52,6 +73,21 @@ export const productFamilies = [
         ],
         boundary:
           "AI is used for decision support. Quality judgement, approval and disposition remain with authorised human reviewers.",
+        pageValue:
+          "Keep the evidence, challenge and final quality judgement connected from event framing through disposition.",
+        record: {
+          code: "DEV-0247",
+          label: "Investigation readiness record",
+          title: "Fill-weight alert limit breach",
+          state: "Under human review",
+          prompt: "Is the proposed CAPA linked to the failure mode supported by the evidence?",
+          checks: [
+            "Event facts separated from conclusions",
+            "SOP context linked to the record",
+            "Impact and RCA gaps flagged",
+            "Reviewer decision remains required",
+          ],
+        },
         journey: [
           ["Frame", "Separate facts, evidence and draft conclusions."],
           ["Challenge", "Surface gaps in impact and RCA/CAPA reasoning."],
@@ -61,7 +97,10 @@ export const productFamilies = [
       {
         id: "sop-intelligence",
         name: "SOP Intelligence",
+        pagePath: "./sop-intelligence.html",
         icon: "bookOpenCheck",
+        audience: "For QPs, SOP Owners and quality systems leaders",
+        headline: "Make SOP expectations visible before quality reasoning drifts.",
         summary: "Clause-linked expectations and gap analysis.",
         outcome: "Clearer requirements",
         status: "Private pilots",
@@ -75,6 +114,21 @@ export const productFamilies = [
         ],
         boundary:
           "Analyses support interpretation and review. SOP ownership, change control and approval remain with the customer's authorised process.",
+        pageValue:
+          "Turn procedures into reviewable expectations while keeping interpretation, change control and approval with authorised owners.",
+        record: {
+          code: "SOP-QA-014",
+          label: "Procedure expectation review",
+          title: "Line clearance and trend review",
+          state: "Owner review",
+          prompt: "Which controls, evidence expectations and escalation gaps need owner review?",
+          checks: [
+            "Critical controls linked to clauses",
+            "Expected evidence made visible",
+            "Ambiguities and gaps surfaced",
+            "Owner corrections retained",
+          ],
+        },
         journey: [
           ["Select", "Choose the source and analysis purpose."],
           ["Inspect", "Review clause-linked findings and gaps."],

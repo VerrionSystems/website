@@ -7,12 +7,12 @@ Public marketing site for Verrion Systems and the Pharma Compliance Suite launch
 The approved V3 website is built from `V3/` and promoted to the repository root:
 
 - `index.html`
+- `deviation-companion.html`
 - `deviation.html`
 - `sop-intelligence.html`
 - `privacy.html`
 - `terms.html`
 - `data-handling.html`
-- `styles.css`
 - `assets/`
 - `.htaccess`
 - `robots.txt`
@@ -61,6 +61,7 @@ Redirect posture:
 3. Confirm GitHub Pages has completed its deployment.
 4. Confirm these URLs return HTTP 200:
    - `https://www.verrionsystems.com/`
+   - `https://www.verrionsystems.com/deviation-companion.html`
    - `https://www.verrionsystems.com/deviation.html`
    - `https://www.verrionsystems.com/sop-intelligence.html`
    - `https://www.verrionsystems.com/privacy.html`
