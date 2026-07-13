@@ -2,48 +2,29 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,
   ArrowRight,
-  BadgeCheck,
   BookOpen,
-  BookOpenCheck,
   ChartNoAxesColumn,
   Check,
   ChevronDown,
   ChevronRight,
   CircleCheck,
-  ClipboardPenLine,
   Clock3,
   Database,
-  FileSearch,
   FileText,
   Folder,
   History,
   Link2,
   ListChecks,
   LockKeyhole,
-  Menu,
   MessageSquareText,
-  ScanSearch,
   Search,
   Shield,
-  ShieldCheck,
   Umbrella,
   UserRound,
   X,
 } from "lucide-react";
 import { findCatalogueItem, liveModules, productFamilies } from "./catalog";
-import brandLogo from "./assets/verrion-systems-pharma-compliance-suite.svg";
-
-const iconMap = {
-  badgeCheck: BadgeCheck,
-  bookOpenCheck: BookOpenCheck,
-  clipboardPen: ClipboardPenLine,
-  fileSearch: FileSearch,
-  scanSearch: ScanSearch,
-  shieldCheck: ShieldCheck,
-};
-
-const pilotMailto =
-  "mailto:hello@verrionsystems.com?subject=Private%20walkthrough%20request%20-%20Verrion%20Systems&body=Please%20do%20not%20include%20patient%20data%2C%20live%20batch%20records%2C%20confidential%20SOPs%2C%20deviation%20packs%2C%20or%20other%20regulated%20GxP%20material%20in%20this%20email.";
+import { Brand, Footer, Header, iconMap, pilotMailto, StatusBadge } from "./SiteChrome";
 
 const surfaceViews = {
   record: {
@@ -92,55 +73,6 @@ const surfaceNavigation = [
   ["decisions", "Decisions", CircleCheck],
   ["audit", "Audit log", History],
 ];
-
-function Brand() {
-  return (
-    <img
-      className="brand-mark"
-      src={brandLogo}
-      alt="Verrion Systems, Pharma Compliance Suite"
-    />
-  );
-}
-
-function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const closeMenu = () => setMenuOpen(false);
-
-  return (
-    <header className="site-header">
-      <div className="site-shell header-inner">
-        <a className="brand-link" href="#top" aria-label="Verrion Systems home" onClick={closeMenu}>
-          <Brand />
-        </a>
-        <button
-          className="menu-button"
-          type="button"
-          aria-label={menuOpen ? "Close navigation" : "Open navigation"}
-          aria-expanded={menuOpen}
-          aria-controls="primary-navigation"
-          onClick={() => setMenuOpen((current) => !current)}
-        >
-          {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-        </button>
-        <nav
-          id="primary-navigation"
-          className={`primary-navigation ${menuOpen ? "is-open" : ""}`}
-          aria-label="Primary navigation"
-        >
-          <a href="#portfolio" onClick={closeMenu}>Product portfolio</a>
-          <a href="#controls" onClick={closeMenu}>Controls &amp; Data</a>
-          <a href="#why" onClick={closeMenu}>Why Verrion Systems</a>
-          <a href="#pilot" onClick={closeMenu}>Pilot</a>
-        </nav>
-        <a className="button button-primary header-cta" href="#pilot">
-          Book a private walkthrough
-        </a>
-      </div>
-    </header>
-  );
-}
 
 function ProductSurface() {
   const [activeView, setActiveView] = useState("record");
@@ -231,10 +163,6 @@ function Hero() {
       <ProductSurface />
     </section>
   );
-}
-
-function StatusBadge({ children, tone = "pilot" }) {
-  return <span className={`status-badge status-${tone}`}>{children}</span>;
 }
 
 function FamilyIcon({ icon, tone }) {
@@ -384,7 +312,7 @@ function Controls() {
           <p className="section-label">Controls &amp; Data</p>
           <h2 id="controls-title">Make the evidence for AI use inspectable.</h2>
           <p>Quality teams should be able to see what informed a suggestion, what changed and who made the final decision.</p>
-          <a className="text-link" href="../data-handling.html">Read the data handling approach <ArrowRight aria-hidden="true" /></a>
+          <a className="text-link" href="./data-handling.html">Read the data handling approach <ArrowRight aria-hidden="true" /></a>
         </div>
         <div className="control-list">
           {controlItems.map(({ icon: Icon, title, copy }) => (
@@ -442,24 +370,6 @@ function Pilot() {
         </div>
       </div>
     </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="site-footer">
-      <div className="site-shell footer-inner">
-        <a href="#top" aria-label="Return to the top of the page"><Brand /></a>
-        <p>Controlled software for pharmaceutical quality, validation and accountable AI use.</p>
-        <nav aria-label="Legal and contact links">
-          <a href="../privacy.html">Privacy</a>
-          <a href="../terms.html">Terms</a>
-          <a href="../data-handling.html">Data handling</a>
-          <a href={pilotMailto}>Contact</a>
-        </nav>
-        <small>&copy; {new Date().getFullYear()} Verrion Systems Ltd.</small>
-      </div>
-    </footer>
   );
 }
 
@@ -524,8 +434,17 @@ function ProductDetailDialog({ selection, onClose }) {
           </aside>
         </div>
         <div className="dialog-actions">
-          <a className="button button-primary" href="#pilot" onClick={onClose}>{kind === "module" ? "Discuss this module" : "Discuss the roadmap"}</a>
-          <button className="button button-secondary" type="button" onClick={onClose}>Back to portfolio</button>
+          {kind === "module" && item.pagePath ? (
+            <>
+              <a className="button button-primary" href={item.pagePath}>Explore full module</a>
+              <a className="button button-secondary" href="#pilot" onClick={onClose}>Discuss this module</a>
+            </>
+          ) : (
+            <>
+              <a className="button button-primary" href="#pilot" onClick={onClose}>Discuss the roadmap</a>
+              <button className="button button-secondary" type="button" onClick={onClose}>Back to portfolio</button>
+            </>
+          )}
         </div>
       </div>
     </dialog>
