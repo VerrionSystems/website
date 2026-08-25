@@ -4,8 +4,8 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 const siteBase = process.env.VITE_SITE_BASE || "/V3/";
-const outputDirectory = process.env.VITE_OUT_DIR || "..";
-const emptyOutputDirectory = process.env.VITE_EMPTY_OUT_DIR === "true";
+const outputDirectory = process.env.VITE_OUT_DIR || "../dist";
+const emptyOutputDirectory = process.env.VITE_EMPTY_OUT_DIR !== "false";
 const sourceDirectory = fileURLToPath(new URL("./source", import.meta.url));
 const pageNames = [
   "index",
@@ -22,6 +22,7 @@ const pageInputs = Object.fromEntries(
 
 export default defineConfig({
   root: "source",
+  appType: "mpa",
   base: siteBase,
   publicDir: false,
   build: {
@@ -36,11 +37,15 @@ export default defineConfig({
     include: ["react", "react-dom/client"],
   },
   server: {
-    host: "0.0.0.0",
+    host: "127.0.0.1",
     allowedHosts: ["terminal.local"],
     warmup: {
       clientFiles: ["./src/main.jsx"],
     },
+  },
+  preview: {
+    host: "127.0.0.1",
+    allowedHosts: ["terminal.local"],
   },
   plugins: [react()],
 });

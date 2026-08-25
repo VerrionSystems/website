@@ -4,7 +4,8 @@ Public marketing site for Verrion Systems and the Pharma Compliance Suite launch
 
 ## Live Site Source
 
-The approved V3 website is built from `V3/` and promoted to the repository root:
+The approved V3 website is built from `V3/` into the clean, ignored
+`V3/root-dist/` deployment artifact. The artifact contains only:
 
 - `index.html`
 - `deviation-companion.html`
@@ -14,24 +15,35 @@ The approved V3 website is built from `V3/` and promoted to the repository root:
 - `terms.html`
 - `data-handling.html`
 - `assets/`
+- `favicon.png`
+- `CNAME`
+- `.nojekyll`
 - `.htaccess`
 - `robots.txt`
 - `sitemap.xml`
 
-The root files are the production launch surface. `V2/` is retained as prototype history, while `V3/` is the maintained source for the homepage.
+`V2/`, `app/`, `docs/`, package metadata, and repository instructions are never
+part of that artifact. The checked-in root pages remain a compatibility snapshot;
+they are not the GitHub Pages publishing source.
 
-To rebuild and promote the V3 homepage to the root:
+To build and validate the deployable artifact:
 
 ```bash
 cd V3
-npm install
-npm run promote:root
+npm ci
+npm run build:pages
 ```
+
+`npm run promote:root` additionally refreshes the checked-in root compatibility
+snapshot when that is required.
 
 ## Local Preview
 
 ```bash
-python3 -m http.server 4177
+cd V3
+npm ci
+npm run build:pages
+python3 -m http.server 4177 --bind 127.0.0.1 --directory root-dist
 ```
 
 Then open:
@@ -42,7 +54,10 @@ http://127.0.0.1:4177/
 
 ## Deployment
 
-GitHub Pages publishes the root static files to the public domain. Hostinger manages the domain and DNS. The root build keeps the existing legal and module pages available alongside the V3 homepage.
+GitHub Pages must use **GitHub Actions** as its publishing source. The
+`Deploy GitHub Pages` workflow uploads only `V3/root-dist/`; branch-root
+publication is unsupported because it exposes non-launch repository files.
+Hostinger manages the domain and DNS.
 
 The canonical public domain is:
 
@@ -56,9 +71,9 @@ Redirect posture:
 
 ## Launch Checklist
 
-1. Run `npm run promote:root` from `V3/`.
-2. Commit and push the promoted root files to `main`.
-3. Confirm GitHub Pages has completed its deployment.
+1. Run `npm run build:pages` from `V3/` and confirm its artifact check passes.
+2. Commit and push the reviewed source changes to `main`.
+3. Confirm the `Deploy GitHub Pages` workflow has completed successfully.
 4. Confirm these URLs return HTTP 200:
    - `https://www.verrionsystems.com/`
    - `https://www.verrionsystems.com/deviation-companion.html`
