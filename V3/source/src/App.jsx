@@ -31,7 +31,7 @@ const surfaceViews = {
     eyebrow: "Event frame",
     title: "Fill-weight alert limit breach during batch review.",
     copy: "Facts, containment, affected scope and initial impact questions remain separated from draft conclusions.",
-    challenge: "Is the proposed CAPA linked to the failure mode identified in the event frame?",
+    challenge: "Is the proposed root cause linked to the failure mode identified in the event frame?",
   },
   evidence: {
     eyebrow: "Evidence pack",
@@ -183,7 +183,7 @@ function Portfolio({ onOpenItem }) {
         <div className="portfolio-intro">
           <p className="section-label">Pharma Compliance Suite</p>
           <h2 id="portfolio-title">Modular software for regulated quality work.</h2>
-          <p>Three modules, one evidence foundation, introduced through a focused private pilot.</p>
+          <p>Four modules, one evidence foundation, introduced through a focused private pilot.</p>
         </div>
         <div className="portfolio-list">
           {productFamilies.map((family) => {
