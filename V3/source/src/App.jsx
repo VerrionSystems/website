@@ -5,25 +5,20 @@ import {
   BookOpen,
   ChartNoAxesColumn,
   Check,
-  ChevronDown,
   ChevronRight,
   CircleCheck,
   Clock3,
-  Database,
   FileText,
   Folder,
   History,
   Link2,
-  ListChecks,
   LockKeyhole,
   MessageSquareText,
-  Search,
   Shield,
-  Umbrella,
   UserRound,
   X,
 } from "lucide-react";
-import { findCatalogueItem, liveModules, productFamilies } from "./catalog";
+import { findCatalogueItem, productFamilies } from "./catalog";
 import { Brand, Footer, Header, iconMap, pilotMailto, StatusBadge } from "./SiteChrome";
 
 const surfaceViews = {
@@ -80,28 +75,27 @@ function ProductSurface() {
 
   return (
     <div className="product-surface" aria-label="Pharma Compliance Suite investigation record preview">
+      <span className="review-stamp">Under human review</span>
       <div className="surface-topbar">
         <Brand />
         <span className="record-code">DEV-0247</span>
-        <span className="review-state"><CircleCheck aria-hidden="true" /> Under human review</span>
         <strong>Investigation readiness record</strong>
-        <span className="qa-status">QA review <ChevronDown aria-hidden="true" /></span>
       </div>
+      <nav className="surface-navigation" aria-label="Record sections">
+        {surfaceNavigation.map(([id, label, Icon]) => (
+          <button
+            key={id}
+            type="button"
+            className={activeView === id ? "is-active" : ""}
+            aria-pressed={activeView === id}
+            onClick={() => setActiveView(id)}
+          >
+            <Icon aria-hidden="true" />
+            <span>{label}</span>
+          </button>
+        ))}
+      </nav>
       <div className="surface-body">
-        <nav className="surface-navigation" aria-label="Record sections">
-          {surfaceNavigation.map(([id, label, Icon]) => (
-            <button
-              key={id}
-              type="button"
-              className={activeView === id ? "is-active" : ""}
-              aria-pressed={activeView === id}
-              onClick={() => setActiveView(id)}
-            >
-              <Icon aria-hidden="true" />
-              <span>{label}</span>
-            </button>
-          ))}
-        </nav>
         <div className="surface-content" aria-live="polite">
           <section className="record-main">
             <div className="record-panel event-panel">
@@ -148,134 +142,58 @@ function ProductSurface() {
 
 function Hero() {
   return (
-    <section className="hero site-shell" aria-labelledby="hero-title">
-      <div className="hero-copy">
-        <h1 id="hero-title">
-          <span>Evidence-led software</span>
-          <span>for regulated decisions.</span>
-        </h1>
-        <p>Verrion Systems builds controlled tools for pharmaceutical quality, validation and accountable AI use.</p>
-        <div className="button-row">
-          <a className="button button-primary" href="#pilot">Book a private walkthrough</a>
-          <a className="button button-secondary" href="#portfolio">View the product portfolio</a>
-        </div>
-      </div>
-      <ProductSurface />
-    </section>
-  );
-}
-
-function FamilyIcon({ icon, tone }) {
-  const Icon = iconMap[icon] || Shield;
-  return (
-    <span className={`family-icon family-icon-${tone}`} aria-hidden="true">
-      <Icon />
-    </span>
-  );
-}
-
-function Portfolio({ onOpenItem }) {
-  const [openFamily, setOpenFamily] = useState("pharma-compliance-suite");
-
-  return (
-    <section id="portfolio" className="portfolio-section section-anchor" aria-labelledby="portfolio-title">
-      <div className="site-shell portfolio-layout">
-        <div className="portfolio-intro">
+    <section className="hero-field" aria-labelledby="hero-title">
+      <div className="site-shell hero">
+        <div className="hero-copy">
           <p className="section-label">Pharma Compliance Suite</p>
-          <h2 id="portfolio-title">Modular software for regulated quality work.</h2>
-          <p>Three modules, one evidence foundation, introduced through a focused private pilot.</p>
+          <h1 id="hero-title">A record that can survive inspection.</h1>
+          <p>Pharma Compliance Suite keeps facts, evidence, SOP context and human disposition together. AI supports. It does not dispose.</p>
+          <div className="button-row">
+            <a className="button button-primary" href="#pilot">Book a private walkthrough</a>
+            <a className="button button-ghost" href="#suite">Read the suite</a>
+          </div>
         </div>
-        <div className="portfolio-list">
-          {productFamilies.map((family) => {
-            const expanded = openFamily === family.id;
-            return (
-              <section className="family-group" key={family.id}>
-                <button
-                  className="family-summary"
-                  type="button"
-                  aria-expanded={expanded}
-                  aria-controls={`${family.id}-content`}
-                  onClick={() => setOpenFamily(expanded ? "" : family.id)}
-                >
-                  <ChevronRight className={expanded ? "is-expanded" : ""} aria-hidden="true" />
-                  <FamilyIcon icon={family.icon} tone={family.statusTone} />
-                  <span className="family-name-block">
-                    <span className="family-heading-row">
-                      <strong>{family.name}</strong>
-                      <StatusBadge tone={family.statusTone}>{family.status}</StatusBadge>
-                    </span>
-                    <span>{family.summary}</span>
-                  </span>
-                </button>
-                <div id={`${family.id}-content`} className="family-content" hidden={!expanded}>
-                  {family.modules.length > 0 ? (
-                    family.modules.map((module) => {
-                      const ModuleIcon = iconMap[module.icon] || FileText;
-                      return (
-                        <button className="module-row" type="button" key={module.id} onClick={() => onOpenItem(module.id)}>
-                          <span className="module-icon" aria-hidden="true"><ModuleIcon /></span>
-                          <strong>{module.name}</strong>
-                          <span className="module-summary">{module.summary}</span>
-                          <StatusBadge>{module.status}</StatusBadge>
-                          <span className="module-outcome">{module.outcome}</span>
-                          <ChevronRight className="module-chevron" aria-hidden="true" />
-                        </button>
-                      );
-                    })
-                  ) : (
-                    <div className="planned-product">
-                      <p>{family.detail}</p>
-                      <button type="button" onClick={() => onOpenItem(family.id)}>
-                        View planned direction <ArrowRight aria-hidden="true" />
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </section>
-            );
-          })}
-        </div>
+        <ProductSurface />
       </div>
     </section>
   );
 }
 
-function ModuleJourney() {
-  const [activeModuleId, setActiveModuleId] = useState(liveModules[0].id);
-  const activeModule = liveModules.find((module) => module.id === activeModuleId) || liveModules[0];
-
+function Suite({ onOpenItem }) {
   return (
-    <section className="journey-section section-band" aria-labelledby="journey-title">
+    <section id="suite" className="suite-section section-anchor" aria-labelledby="suite-title">
       <div className="site-shell">
-        <div className="section-heading-row">
-          <div>
-            <p className="section-label">Built for quality teams</p>
-            <h2 id="journey-title">From intake to review, all in one controlled record.</h2>
-          </div>
-          <p>Verrion Systems keeps facts, reasoning and decisions together with a clear review trail.</p>
-        </div>
-        <div className="module-selector" role="group" aria-label="Choose a Pharma Compliance Suite module">
-          {liveModules.map((module) => (
-            <button
-              key={module.id}
-              type="button"
-              className={activeModule.id === module.id ? "is-active" : ""}
-              aria-pressed={activeModule.id === module.id}
-              onClick={() => setActiveModuleId(module.id)}
-            >
-              {module.name}
-            </button>
-          ))}
-        </div>
-        <div className="journey-flow" aria-live="polite">
-          {activeModule.journey.map(([title, copy], index) => (
-            <div className="journey-step" key={title}>
-              <span className="journey-number">0{index + 1}</span>
-              <div><h3>{title}</h3><p>{copy}</p></div>
-              {index < activeModule.journey.length - 1 && <ArrowRight className="journey-arrow" aria-hidden="true" />}
+        {productFamilies.map((family) => (
+          <div className="suite-family" key={family.id}>
+            <div className="suite-intro">
+              <p className="section-label">The suite</p>
+              <div className="suite-heading-row">
+                <h2 id="suite-title">{family.name}</h2>
+                <StatusBadge tone={family.statusTone}>{family.status}</StatusBadge>
+              </div>
+              <p>{family.detail}</p>
             </div>
-          ))}
-        </div>
+            <div className="dossier-card-grid">
+              {family.modules.map((module) => {
+                const ModuleIcon = iconMap[module.icon] || FileText;
+                return (
+                  <article className="dossier-card" key={module.id}>
+                    <button type="button" onClick={() => onOpenItem(module.id)}>
+                      <span className="dossier-card-meta">
+                        <span className="dossier-card-icon" aria-hidden="true"><ModuleIcon /></span>
+                        <StatusBadge>{module.status}</StatusBadge>
+                      </span>
+                      <h3>{module.name}</h3>
+                      <p>{module.summary}</p>
+                      <span className="dossier-card-outcome">{module.outcome}</span>
+                      <span className="text-link">Open the record <ArrowRight aria-hidden="true" /></span>
+                    </button>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
@@ -283,19 +201,14 @@ function ModuleJourney() {
 
 const controlItems = [
   {
-    icon: Umbrella,
-    title: "Regulatory context stays visible",
-    copy: "FDA, EU GMP and UK MHRA requirements, guidance and expectations can be reviewed alongside the work they inform.",
+    icon: Link2,
+    title: "Sources stay linked",
+    copy: "Reviewers can inspect the evidence, procedure context and run information behind any supported output.",
   },
   {
     icon: LockKeyhole,
-    title: "Data handling starts before AI support",
-    copy: "Pilot routes define what data is used, how identifiers are handled and which model boundary applies.",
-  },
-  {
-    icon: Link2,
-    title: "Sources remain connected to suggestions",
-    copy: "Reviewers can inspect the evidence, procedure context and run information behind AI-supported output.",
+    title: "Sanitisation before model use",
+    copy: "Pilot routes define what data is used, how identifiers are handled and which model boundary applies before AI support runs.",
   },
   {
     icon: MessageSquareText,
@@ -309,7 +222,7 @@ function Controls() {
     <section id="controls" className="controls-section section-anchor" aria-labelledby="controls-title">
       <div className="site-shell controls-layout">
         <div className="controls-heading">
-          <p className="section-label">Controls &amp; Data</p>
+          <p className="section-label">Inspectability</p>
           <h2 id="controls-title">Make the evidence for AI use inspectable.</h2>
           <p>Quality teams should be able to see what informed a suggestion, what changed and who made the final decision.</p>
           <a className="text-link" href="./data-handling.html">Read the data handling approach <ArrowRight aria-hidden="true" /></a>
@@ -329,20 +242,10 @@ function Controls() {
 
 function WhyVerrionSystems() {
   return (
-    <section id="why" className="why-section section-band section-anchor" aria-labelledby="why-title">
+    <section id="why" className="why-section section-anchor" aria-labelledby="why-title">
       <div className="site-shell why-layout">
-        <div>
-          <p className="section-label">Why Verrion Systems</p>
-          <h2 id="why-title">Pharma quality experience, applied to modern AI.</h2>
-        </div>
-        <div className="why-copy">
-          <p className="lead-copy">Verrion Systems was founded by a Qualified Person with deep, hands-on experience of modern AI. That combination shapes every product decision.</p>
-          <div className="principle-list">
-            <div><span>01</span><p><strong>Start with the quality workflow.</strong> Technology follows the decision, evidence and review responsibilities.</p></div>
-            <div><span>02</span><p><strong>Keep AI inside explicit boundaries.</strong> Support is useful only when its context, limits and route are clear.</p></div>
-            <div><span>03</span><p><strong>Design for inspection.</strong> Sources, changes and human decisions should be easier to review, not hidden by automation.</p></div>
-          </div>
-        </div>
+        <p className="section-label">Why Verrion Systems</p>
+        <h2 id="why-title" className="why-statement">Built by a Qualified Person who also works with modern AI. The product follows the quality decision, not the other way around.</h2>
       </div>
     </section>
   );
@@ -354,8 +257,8 @@ function Pilot() {
       <div className="site-shell pilot-layout">
         <div>
           <p className="section-label">Private pilot</p>
-          <h2 id="pilot-title">Evaluate the workflow, controls and evidence record together.</h2>
-          <p>A focused pilot uses synthetic or customer-approved scenarios, agreed data boundaries and a small quality user group.</p>
+          <h2 id="pilot-title">Four weeks. One agreed scenario. Human review throughout.</h2>
+          <p>A private pilot uses synthetic or customer-approved material, agreed data boundaries and a small quality user group.</p>
         </div>
         <div className="pilot-scope">
           <h3>Typical four-week scope</h3>
@@ -365,7 +268,7 @@ function Pilot() {
             <li><Check aria-hidden="true" /> Hosted route with agreed data and governance boundaries</li>
             <li><Check aria-hidden="true" /> End-of-pilot workflow and control review</li>
           </ul>
-          <a className="button button-light" href={pilotMailto}>Book a private walkthrough <ArrowRight aria-hidden="true" /></a>
+          <a className="button button-primary" href={pilotMailto}>Book a private walkthrough <ArrowRight aria-hidden="true" /></a>
           <small>Please do not include regulated or confidential material in your first email.</small>
         </div>
       </div>
@@ -442,7 +345,7 @@ function ProductDetailDialog({ selection, onClose }) {
           ) : (
             <>
               <a className="button button-primary" href="#pilot" onClick={onClose}>Discuss the roadmap</a>
-              <button className="button button-secondary" type="button" onClick={onClose}>Back to portfolio</button>
+              <button className="button button-secondary" type="button" onClick={onClose}>Back to the suite</button>
             </>
           )}
         </div>
@@ -490,8 +393,7 @@ export function App() {
       <main id="main-content">
         <div id="top" />
         <Hero />
-        <Portfolio onOpenItem={openItem} />
-        <ModuleJourney />
+        <Suite onOpenItem={openItem} />
         <Controls />
         <WhyVerrionSystems />
         <Pilot />
