@@ -136,33 +136,7 @@ export const productFamilies = [
         ],
       },
     ],
-  },
-  {
-    id: "verrion-systems-validate",
-    name: "Verrion Systems Validate",
-    shortName: "Validate",
-    status: "In development",
-    statusTone: "development",
-    icon: "badgeCheck",
-    summary: "Validation portfolio and evidence workflows.",
-    detail:
-      "A planned product family for organising validation scope, evidence and review across a controlled portfolio. Product boundaries and availability will be published as development progresses.",
-    available: false,
-    modules: [],
-  },
-  {
-    id: "verrion-systems-ai-control-room",
-    name: "Verrion Systems AI Control Room",
-    shortName: "AI Control Room",
-    status: "In development",
-    statusTone: "development",
-    icon: "scanSearch",
-    summary: "Evidence layer for controlled AI use.",
-    detail:
-      "A planned product family for making AI use, context, controls and human decisions easier to inspect across regulated work. Product boundaries and availability will be published as development progresses.",
-    available: false,
-    modules: [],
-  },
+  }
 ];
 
 export const liveModules = productFamilies[0].modules;

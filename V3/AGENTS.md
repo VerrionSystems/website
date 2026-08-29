@@ -12,5 +12,5 @@ When implementing from a selected generated mock, treat that image as the source
 - Always use `Verrion Systems`; do not shorten the company name to `Verrion`.
 - Pharma Compliance Suite currently contains Deviation Companion, Deviation Investigator, and SOP Intelligence.
 - Deviation Companion is guided intake and evidence preparation before the formal Deviation Investigator workflow.
-- Verrion Systems Validate and Verrion Systems AI Control Room are separate product families in development.
-- Product families and modules must remain catalogue-driven so future additions do not require a layout redesign.
+- Do not name, describe, or hint at unpublished product families on the public site. The public catalogue is Pharma Compliance Suite only.
+- Product modules must remain catalogue-driven so future additions do not require a layout redesign.

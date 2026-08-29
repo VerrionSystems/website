@@ -22,7 +22,7 @@ export const legalPages = {
         title: "Who we are",
         content: (
           <>
-            <p>Verrion Systems Ltd develops software for pharmaceutical quality, validation and accountable AI use. Our portfolio includes Pharma Compliance Suite, with Verrion Systems Validate and Verrion Systems AI Control Room in development.</p>
+            <p>Verrion Systems Ltd develops software for pharmaceutical quality, validation and accountable AI use. The public product is Pharma Compliance Suite.</p>
             <p>Questions about this notice can be sent to {contactLink("Privacy question")}.</p>
           </>
         ),
@@ -119,7 +119,7 @@ export const legalPages = {
         id: "website-information",
         title: "Website information",
         content: (
-          <p>The website describes Verrion Systems products, planned product families and intended pilot posture at a high level. It is provided for general business information only. Features, controls, hosting arrangements, scope, pricing and availability may change as products develop and customer requirements are assessed.</p>
+          <p>The website describes Pharma Compliance Suite and the intended pilot posture at a high level. It is provided for general business information only. Features, controls, hosting arrangements, scope, pricing and availability may change as products develop and customer requirements are assessed.</p>
         ),
       },
       {
