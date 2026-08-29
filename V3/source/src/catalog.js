@@ -7,7 +7,7 @@ export const productFamilies = [
     statusTone: "pilot",
     icon: "shieldCheck",
     summary:
-      "Investigation, SOP and AI decision-support tools built on controlled evidence and human approval.",
+      "Investigation, CAPA, SOP and AI decision-support tools built on controlled evidence and human approval.",
     detail:
       "Pharma Compliance Suite brings quality context, AI-supported analysis and human review into one inspectable record. Each module has a clear role and can be introduced in a focused private pilot.",
     available: true,
@@ -31,7 +31,7 @@ export const productFamilies = [
           "Optional draft-only narrative for investigator handoff",
         ],
         boundary:
-          "Deviation Companion prepares a draft package for Deviation Investigator. Formal RCA/CAPA, QA submission, qualified review, final approval and report generation remain in Deviation Investigator.",
+          "Deviation Companion prepares a draft package for Deviation Investigator. Formal RCA, QA submission, qualified review, final approval and report remain in Deviation Investigator. Corrective and preventive action lifecycle belongs in CAPA.",
         pageValue:
           "Give Investigators a cleaner starting point without turning early intake into an unreviewed conclusion.",
         record: {
@@ -60,11 +60,11 @@ export const productFamilies = [
         icon: "fileSearch",
         audience: "For QA Leaders, QPs and Deviation Investigators",
         headline: "Deviation investigations that can withstand review.",
-        summary: "Controlled analysis, RCA/CAPA review and approval.",
+        summary: "Controlled analysis, RCA and human approval.",
         outcome: "Higher quality decisions",
         status: "Private pilots",
         detail:
-          "A structured investigation workspace that keeps event facts, evidence, SOP expectations, impact, RCA/CAPA reasoning and reviewer decisions together.",
+          "A structured investigation workspace that keeps event facts, evidence, SOP expectations, impact, RCA reasoning and reviewer decisions together.",
         supports: [
           "Evidence-led investigation framing",
           "SOP and regulatory context alongside the event",
@@ -80,7 +80,7 @@ export const productFamilies = [
           label: "Investigation readiness record",
           title: "Fill-weight alert limit breach",
           state: "Under human review",
-          prompt: "Is the proposed CAPA linked to the failure mode supported by the evidence?",
+          prompt: "Is the proposed root cause supported by the evidence?",
           checks: [
             "Event facts separated from conclusions",
             "SOP context linked to the record",
@@ -90,8 +90,49 @@ export const productFamilies = [
         },
         journey: [
           ["Frame", "Separate facts, evidence and draft conclusions."],
-          ["Challenge", "Surface gaps in impact and RCA/CAPA reasoning."],
+          ["Challenge", "Surface gaps in impact and RCA reasoning."],
           ["Review", "Correct, approve and retain the decision record."],
+        ],
+      },
+      {
+        id: "capa",
+        name: "CAPA",
+        pagePath: "./capa.html",
+        icon: "listChecks",
+        audience: "For QA Leaders, QPs, CAPA owners and action owners",
+        headline: "Corrective and preventive actions that can be closed.",
+        summary: "Source-linked CA/PA lifecycle, not a second investigation.",
+        outcome: "Actions that finish",
+        status: "Private pilots",
+        detail:
+          "A controlled register for corrective and preventive actions. Each case starts from a traceable source, holds separately classified CA/PA statements, and follows assignment, implementation evidence, effectiveness review and closure.",
+        supports: [
+          "Standalone intake or a signed handoff from Deviation Investigator",
+          "Source-linked corrective and preventive actions with owners and due dates",
+          "Implementation evidence, effectiveness checks and independent approval",
+          "Optional wording support that remains advisory",
+        ],
+        boundary:
+          "CAPA manages the action lifecycle. Investigation, RCA and event disposition remain in Deviation Investigator or the customer's authorised process. AI wording support does not create, approve or close a CAPA.",
+        pageValue:
+          "Keep the source, the actions and the evidence of effectiveness in one inspectable case.",
+        record: {
+          code: "CAPA-2026-0142",
+          label: "Action lifecycle record",
+          title: "Fill-weight control CAPA",
+          state: "Effectiveness review",
+          prompt: "Is the implementation evidence sufficient to close the preventive action?",
+          checks: [
+            "Source linked to the investigation record",
+            "Corrective action verified",
+            "Preventive action owner assigned",
+            "Effectiveness check still open",
+          ],
+        },
+        journey: [
+          ["Source", "Bind the case to a traceable origin."],
+          ["Act", "Assign CA/PA, collect implementation evidence."],
+          ["Close", "Review effectiveness and retain the decision."],
         ],
       },
       {
