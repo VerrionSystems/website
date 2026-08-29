@@ -90,7 +90,11 @@ export function Footer({ currentPage }) {
           <a href="./data-handling.html" aria-current={currentPage === "data-handling" ? "page" : undefined}>Data handling</a>
           <a href={pilotMailto}>Contact</a>
         </nav>
-        <small>&copy; {new Date().getFullYear()} Verrion Systems Ltd.</small>
+        <small>
+          &copy; {new Date().getFullYear()} Verrion Systems Ltd.
+          Registered in England and Wales. Company number 17265988.
+          Registered office: 1 Woodburn Drive, Bury St. Edmunds, England, IP32 6FY.
+        </small>
       </div>
     </footer>
   );

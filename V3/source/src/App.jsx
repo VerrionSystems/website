@@ -181,9 +181,9 @@ function Portfolio({ onOpenItem }) {
     <section id="portfolio" className="portfolio-section section-anchor" aria-labelledby="portfolio-title">
       <div className="site-shell portfolio-layout">
         <div className="portfolio-intro">
-          <p className="section-label">Our product portfolio</p>
+          <p className="section-label">Pharma Compliance Suite</p>
           <h2 id="portfolio-title">Modular software for regulated quality work.</h2>
-          <p>Each product family is purpose-built, shares a common evidence foundation and grows with your needs.</p>
+          <p>Three modules, one evidence foundation, introduced through a focused private pilot.</p>
         </div>
         <div className="portfolio-list">
           {productFamilies.map((family) => {
