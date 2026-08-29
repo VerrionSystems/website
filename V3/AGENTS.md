@@ -10,7 +10,8 @@ When implementing from a selected generated mock, treat that image as the source
 
 - The approved direction is the portfolio-index concept at `/Users/dawid/.codex/generated_images/019ebc87-c697-75f2-8354-0bb083260f7e/exec-708db864-6a42-4a7a-9790-b9b6492bf16e.png`.
 - Always use `Verrion Systems`; do not shorten the company name to `Verrion`.
-- Pharma Compliance Suite currently contains Deviation Companion, Deviation Investigator, and SOP Intelligence.
+- Pharma Compliance Suite currently contains Deviation Companion, Deviation Investigator, CAPA, and SOP Intelligence.
+- CAPA is an action repository and lifecycle manager. Investigation and RCA remain in Deviation Investigator.
 - Deviation Companion is guided intake and evidence preparation before the formal Deviation Investigator workflow.
 - Do not name, describe, or hint at unpublished product families on the public site. The public catalogue is Pharma Compliance Suite only.
 - Product modules must remain catalogue-driven so future additions do not require a layout redesign.

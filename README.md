@@ -10,6 +10,7 @@ The approved V3 website is built from `V3/` into the clean, ignored
 - `index.html`
 - `deviation-companion.html`
 - `deviation.html`
+- `capa.html`
 - `sop-intelligence.html`
 - `privacy.html`
 - `terms.html`
@@ -78,6 +79,7 @@ Redirect posture:
    - `https://www.verrionsystems.com/`
    - `https://www.verrionsystems.com/deviation-companion.html`
    - `https://www.verrionsystems.com/deviation.html`
+   - `https://www.verrionsystems.com/capa.html`
    - `https://www.verrionsystems.com/sop-intelligence.html`
    - `https://www.verrionsystems.com/privacy.html`
    - `https://www.verrionsystems.com/terms.html`

@@ -4,6 +4,7 @@ import {
   BookOpenCheck,
   ClipboardPenLine,
   FileSearch,
+  ListChecks,
   Menu,
   ScanSearch,
   ShieldCheck,
@@ -16,6 +17,7 @@ export const iconMap = {
   bookOpenCheck: BookOpenCheck,
   clipboardPen: ClipboardPenLine,
   fileSearch: FileSearch,
+  listChecks: ListChecks,
   scanSearch: ScanSearch,
   shieldCheck: ShieldCheck,
 };
