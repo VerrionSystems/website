@@ -6,7 +6,7 @@ import { ModulePage } from "./ModulePage";
 import "./styles.css";
 
 const pageId = document.body.dataset.page || "home";
-const modulePages = new Set(["deviation-companion", "deviation-investigator", "sop-intelligence"]);
+const modulePages = new Set(["deviation-companion", "deviation-investigator", "capa", "sop-intelligence"]);
 const legalPages = new Set(["privacy", "terms", "data-handling"]);
 
 let page = <App />;

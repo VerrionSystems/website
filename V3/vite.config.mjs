@@ -11,6 +11,7 @@ const pageNames = [
   "index",
   "deviation-companion",
   "deviation",
+  "capa",
   "sop-intelligence",
   "privacy",
   "terms",

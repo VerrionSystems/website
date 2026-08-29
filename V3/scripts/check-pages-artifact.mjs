@@ -6,6 +6,7 @@ import path from "node:path";
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const artifactRoot = path.join(projectRoot, "root-dist");
 const pageFiles = [
+  "capa.html",
   "data-handling.html",
   "deviation-companion.html",
   "deviation.html",

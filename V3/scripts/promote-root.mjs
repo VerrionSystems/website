@@ -11,6 +11,7 @@ const pageFiles = [
   "index.html",
   "deviation-companion.html",
   "deviation.html",
+  "capa.html",
   "sop-intelligence.html",
   "privacy.html",
   "terms.html",
