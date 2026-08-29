@@ -80,7 +80,7 @@ export function ModulePage({ moduleId }) {
               <p className="module-page-lede">{module.detail}</p>
               <div className="button-row">
                 <a className="button button-primary" href={pilotMailto}>Discuss this module <ArrowRight aria-hidden="true" /></a>
-                <a className="button button-secondary" href="./index.html#portfolio">Back to product portfolio</a>
+                <a className="button button-secondary" href="./index.html#suite">Back to the suite</a>
               </div>
             </div>
             <ModuleRecordPreview module={module} />
