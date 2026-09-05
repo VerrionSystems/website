@@ -35,9 +35,9 @@ export function Walkthrough({ dialogRef, interest, onInterestChange, onRestoreFo
         <X size={25} aria-hidden="true" />
       </button>
 
-      <p className="hp-eyebrow">Let’s look at your work</p>
-      <h2 id="hp-walkthrough-title">A conversation about your quality workflow.</h2>
-      <p id="hp-walkthrough-intro">Choose the workflow you would like to explore. We’ll talk through the work, responsibilities and records with you.</p>
+      <p className="hp-eyebrow">Arrange a walkthrough</p>
+      <h2 id="hp-walkthrough-title">Explore PCS with your team’s workflow in mind.</h2>
+      <p id="hp-walkthrough-intro">Choose the workflow you would like to explore. We’ll walk through its modules, review responsibilities and supporting records with you.</p>
 
       <div className="hp-field">
         <label htmlFor="hp-walkthrough-interest">I’m interested in</label>

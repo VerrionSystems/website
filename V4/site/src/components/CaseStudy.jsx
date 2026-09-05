@@ -32,8 +32,8 @@ export function CaseStudy() {
     <section id="case-study" className="hp-case shell" aria-labelledby="hp-case-title">
       <div className="hp-case-intro">
         <p className="hp-eyebrow">An illustrative example</p>
-        <h2 id="hp-case-title">Follow the work. Keep the judgement.</h2>
-        <p>A fill-weight variation is found during routine review. Explore the records people use to investigate it and decide what happens next.</p>
+        <h2 id="hp-case-title">A fill-weight variation under review.</h2>
+        <p>Explore the records used to establish the facts, investigate the cause and decide what happens next.</p>
       </div>
 
       <div className="hp-case-tabs" role="tablist" aria-label="Explore the illustrative records" aria-orientation="horizontal">

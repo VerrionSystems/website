@@ -22,7 +22,7 @@ function DeviationWorkflow({onContact,moduleRequest}) {
     <div className="hp-workflow-intro">
       <p className="hp-eyebrow">Deviation/CAPA workflow</p>
       <h2 id="hp-workflow-title">For the work <br/>that follows <br/>a deviation.</h2>
-      <p>From the first facts to the decisions and actions that follow. Each workspace has a clear role, with the evidence and responsible people in view.</p>
+      <p>Capture facts with Deviation Companion, investigate causes with Deviation Investigator, manage affected items with Impact & Disposition, and review corrective or preventive actions with CAPA.</p>
       <a className="hp-link hp-link-light" href="#case-study">Follow an illustrative case <Arrow/></a>
     </div>
     <div className="hp-modules">{workflowModules.map(module=><article id={`hp-stage-${module.id}`} className={`hp-module ${open===module.id?'is-open':''}`} key={module.id}>
@@ -36,14 +36,14 @@ function DeviationWorkflow({onContact,moduleRequest}) {
         <ModuleFacts module={module}/>
         <p className="hp-module-boundary">{module.boundary}</p>
       </div>
-    </article>)}<div className="hp-workflow-footer"><p>Scope and availability are agreed for each pilot.</p><button className="hp-link hp-link-light" onClick={event=>onContact(event,walkthroughInterests[0])}>Discuss this workflow <Arrow/></button></div></div>
+    </article>)}<div className="hp-workflow-footer"><button className="hp-link hp-link-light" onClick={event=>onContact(event,walkthroughInterests[0])}>Discuss this workflow <Arrow/></button></div></div>
   </div></section>;
 }
 
 function SopWorkflow({onContact}) {
   const [open,setOpen]=useState(false);
   return <section className="hp-sop" id="sop-workflow" aria-labelledby="hp-sop-title"><div className="shell hp-sop-layout">
-    <div className="hp-sop-intro"><p className="hp-eyebrow">SOP workflow</p><h2 id="hp-sop-title">A closer look<br/>at the procedure.</h2><p>Its own work. <br/>Its own workspace.</p></div>
+    <div className="hp-sop-intro"><p className="hp-eyebrow">SOP workflow</p><h2 id="hp-sop-title">A closer look<br/>at the procedure.</h2><p>Procedure review is independent of the deviation workflow.</p></div>
     <div className="hp-sop-content"><p className="hp-product-name">SOP Intelligence</p><h3>{procedureModule.title}</h3><p>{procedureModule.description}</p>
       <button className="hp-sop-trigger" aria-expanded={open} aria-controls="hp-sop-detail" onClick={()=>setOpen(!open)}>Explore the SOP workflow {open?<Minus size={22} aria-hidden="true"/>:<Plus size={22} aria-hidden="true"/>}</button>
       <div id="hp-sop-detail" className="hp-sop-detail" hidden={!open}><ModuleFacts module={procedureModule}/><p className="hp-note">{procedureModule.boundary}</p></div>
@@ -116,22 +116,22 @@ export function App() {
         <figure className="hp-hero-figure"><img src={heroPhoto.src} alt={heroPhoto.alt} style={heroPhoto.position?{objectPosition:heroPhoto.position,'--hp-photo-narrow-aspect':heroPhoto.narrowAspect}:undefined} width="2172" height="724" fetchPriority="high"/></figure>
       </section>
       <section className="hp-introduction shell" id="workflows" aria-labelledby="hp-intro-title">
-        <div className="hp-intro-row"><p className="hp-eyebrow">Pharma Compliance Suite</p><h2 id="hp-intro-title">From the first deviation report to the actions that follow. PCS helps your team keep the work, evidence and decisions connected.</h2><button className="hp-button" onClick={openContact}>Arrange a walkthrough <Arrow/></button></div>
+        <div className="hp-intro-row"><p className="hp-eyebrow">Pharma Compliance Suite</p><h2 id="hp-intro-title">From the first deviation report to the actions that follow. PCS helps your team link investigation records, disposition decisions and corrective or preventive actions.</h2><button className="hp-button" onClick={openContact}>Arrange a walkthrough <Arrow/></button></div>
         <div className="hp-workflow-choices">
           <a href="#deviation-workflow"><span><strong>Deviation/CAPA workflow</strong><small>Facts, investigation, disposition and actions</small></span><Arrow/></a>
           <a href="#sop-workflow"><span><strong>SOP workflow</strong><small>Independent procedure review with SOP Intelligence</small></span><Arrow/></a>
         </div>
-        <div className="hp-intro-notes"><p>Scope agreed for each pilot.</p><p>AI assists the review. Your team owns the decision.</p></div>
+
       </section>
       <section className="hp-approach shell" id="approach" aria-labelledby="hp-approach-title">
-        <div className="hp-approach-heading"><p className="hp-eyebrow">Our approach</p><h2 id="hp-approach-title">The context matters.<br/>So does the person<br/>making the decision.</h2></div>
-        <div className="hp-approach-copy"><p>Quality work asks people to make careful judgements. They need to understand what happened, inspect the evidence and explain the next step.</p><p>PCS brings that work into dedicated, connected workspaces. AI can assist selected analysis and drafting; authorised people review the output and retain responsibility for the outcome.</p><div className="hp-principles"><div><h3>Evidence within reach.</h3><p>Keep the source close to the finding it informs.</p></div><div><h3>Responsibility in view.</h3><p>Make ownership, review and the next decision clear.</p></div></div></div>
+        <div className="hp-approach-heading"><p className="hp-eyebrow">Our approach</p><h2 id="hp-approach-title">Review the evidence<br/>behind the conclusion.</h2></div>
+        <div className="hp-approach-copy"><p>Investigators need event facts, supporting records and relevant procedure requirements to assess a proposed cause. PCS brings those materials into the investigation workspace.</p><p>AI can assist with selected analysis and drafting tasks. Authorised people review the output and retain responsibility for the outcome.</p><div className="hp-principles"><div><h3>Source-linked findings</h3><p>Review findings against their supporting sources.</p></div><div><h3>Record ownership</h3><p>Investigators, Site QA and Quality reviewers have distinct responsibilities for investigation conclusions, disposition and CAPA approval.</p></div></div></div>
       </section>
       <DeviationWorkflow onContact={openContact} moduleRequest={moduleRequest}/>
       <CaseStudy/>
       <SopWorkflow onContact={openContact}/>
-      <section className="hp-questions shell" aria-labelledby="hp-questions-title"><div><p className="hp-eyebrow">Before we talk</p><h2 id="hp-questions-title">A few practical<br/>questions.</h2><p>A walkthrough starts with your work and the records your team needs to keep.</p></div><div className="hp-faq-list">{questions.map(([question,answer])=><details key={question}><summary>{question}<Plus size={21} aria-hidden="true"/></summary><p>{answer}</p></details>)}</div></section>
-      <section className="hp-contact" id="contact" aria-labelledby="hp-contact-title"><div className="shell hp-contact-layout"><div><p className="hp-eyebrow">Start with your workflow</p><h2 id="hp-contact-title">Let’s look at<br/>the work together.</h2></div><div className="hp-contact-options"><p>A focused conversation about your team, your responsibilities and where PCS could fit.</p>{walkthroughInterests.map(workflow=><button key={workflow} onClick={event=>openContact(event,workflow)}>{workflow}<Arrow/></button>)}<p className="hp-note">Please leave regulated and confidential material out of your first message.</p></div></div></section>
+      <section className="hp-questions shell" aria-labelledby="hp-questions-title"><div><p className="hp-eyebrow">Before we talk</p><h2 id="hp-questions-title">A few practical<br/>questions.</h2></div><div className="hp-faq-list">{questions.map(([question,answer])=><details key={question}><summary>{question}<Plus size={21} aria-hidden="true"/></summary><p>{answer}</p></details>)}</div></section>
+      <section className="hp-contact" id="contact" aria-labelledby="hp-contact-title"><div className="shell hp-contact-layout"><div><p className="hp-eyebrow">Start with your workflow</p><h2 id="hp-contact-title">Let’s look at<br/>the work together.</h2></div><div className="hp-contact-options"><p>Walk through the PCS modules relevant to your team’s deviation investigations or procedure reviews.</p>{walkthroughInterests.map(workflow=><button key={workflow} onClick={event=>openContact(event,workflow)}>{workflow}<Arrow/></button>)}<p className="hp-note">Please leave regulated and confidential material out of your first message.</p></div></div></section>
     </main>
     <footer className="hp-footer shell"><a className="hp-footer-name" href="#top">Verrion Systems</a><nav aria-label="Legal and contact"><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/data-handling.html">Data handling</a><button onClick={openContact}>Contact</button></nav><a className="hp-back-top" href="#top" aria-label="Back to top"><ArrowUp size={23} aria-hidden="true"/></a><p>© 2026 Verrion Systems Ltd. Registered in England and Wales. Company number 17265988. Registered office: 1 Woodburn Drive, Bury St. Edmunds, England, IP32 6FY.</p></footer>
     <Walkthrough dialogRef={dialogRef} interest={interest} onInterestChange={setInterest} onRestoreFocus={restoreFocus}/>

@@ -119,7 +119,7 @@ export const legalPages = {
         id: "website-information",
         title: "Website information",
         content: (
-          <p>The website describes Pharma Compliance Suite and the intended pilot posture at a high level. It is provided for general business information only. Features, controls, hosting arrangements, scope, pricing and availability may change as products develop and customer requirements are assessed.</p>
+          <p>The website describes Pharma Compliance Suite and the intended pilot arrangements at a high level. It is provided for general business information only. Features, controls, hosting arrangements, scope, pricing and availability may change as products develop and customer requirements are assessed.</p>
         ),
       },
       {
@@ -133,7 +133,7 @@ export const legalPages = {
         id: "no-automatic-compliance",
         title: "No automatic compliance claim",
         content: (
-          <p>References to audit trails, e-signature posture, sanitisation-first workflows, review controls, validation readiness or data integrity expectations describe product design intent and pilot discussion areas. They are not a claim that a customer's use is validated, Part 11 compliant, Annex 11 compliant, inspection approved or suitable for production GxP use by default.</p>
+          <p>References to audit trails, e-signature design, sanitisation-first workflows, review controls, validation readiness or data integrity expectations describe product design intent and pilot discussion areas. They are not a claim that a customer's use is validated, Part 11 compliant, Annex 11 compliant, inspection approved or suitable for production GxP use by default.</p>
         ),
       },
       {
@@ -181,13 +181,13 @@ export const legalPages = {
     title: "Data Handling Summary",
     updated: "12 July 2026",
     intro:
-      "A plain-English summary of the intended data handling posture for Verrion Systems walkthroughs and controlled pilot discussions.",
+      "A plain-English summary of the intended arrangements for handling data during Verrion Systems walkthroughs and controlled pilot discussions.",
     sections: [
       {
         id: "purpose",
         title: "Purpose of this summary",
         content: (
-          <p>This summary describes the intended data handling posture for Verrion Systems Ltd walkthroughs and early hosted pilots. It is not a substitute for a customer-specific data processing agreement, security review, supplier qualification or validation assessment.</p>
+          <p>This summary describes the intended arrangements for handling data during Verrion Systems Ltd walkthroughs and early hosted pilots. It is not a substitute for a customer-specific data processing agreement, security review, supplier qualification or validation assessment.</p>
         ),
       },
       {
@@ -203,7 +203,7 @@ export const legalPages = {
       },
       {
         id: "hosted-pilot-posture",
-        title: "Hosted pilot posture",
+        title: "Hosted pilot arrangements",
         content: (
           <p>Hosted pilots are intended to be fixed-scope, controlled evaluations with limited users, defined scenarios, guided onboarding, agreed review responsibilities and an explicit export, deletion or retention path at pilot end.</p>
         ),
@@ -234,7 +234,7 @@ export const legalPages = {
           <ul>
             <li>Access should be limited to agreed pilot users.</li>
             <li>Outputs should remain reviewable, editable and rejectable by authorised customer users.</li>
-            <li>Audit trail and e-signature posture support review and validation assessment but do not replace customer validation responsibilities.</li>
+            <li>Audit trail and e-signature design support review and validation assessment but do not replace customer validation responsibilities.</li>
           </ul>
         ),
       },
