@@ -61,7 +61,6 @@ p { line-height:1.55 }
 .hp-hero-shortcut { display:none }
 .hp-hero-figure { position:relative }
 .hp-hero-figure>img { width:100%; aspect-ratio:2.86; object-fit:cover; object-position:center; animation:hp-image-in 800ms var(--ease-out) both }
-.hp-hero-figure figcaption { position:absolute; right:var(--page-gutter); bottom:12px; padding:4px 8px; font-size:11px; background:var(--color-paper); color:var(--color-muted) }
 .hp-introduction { padding-block:38px 32px }
 .hp-intro-row { display:grid; grid-template-columns:.9fr 1.85fr auto; gap:48px; align-items:start }
 .hp-intro-row>.hp-eyebrow { padding-top:7px }
@@ -286,7 +285,6 @@ p { line-height:1.55 }
   .hp-hero h1 { font-size:clamp(37px,7.5vw,55px); line-height:1.13; letter-spacing:-.04em }
   .hp-hero-shortcut { display:inline-flex; margin-top:24px; font-size:16px }
   .hp-hero-figure>img { aspect-ratio:1.7; object-position:54% center }
-  .hp-hero-figure figcaption { bottom:10px; font-size:10px }
   .hp-introduction { padding-block:30px }
   .hp-intro-row { grid-template-columns:1fr; gap:20px }
   .hp-intro-row>.hp-eyebrow { max-width:none; padding:0 }

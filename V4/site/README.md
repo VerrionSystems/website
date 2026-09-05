@@ -10,7 +10,7 @@ Human Practice with **photo 02 — Investigate it together** is explicitly appro
 - SOP Intelligence is an independent SOP workflow, not a fifth deviation step or a related deviation record.
 - Walkthrough interests are exactly **Deviation/CAPA workflow** and **SOP workflow**. The dialog opens an email draft; it does not send messages.
 - A plain fresh homepage expands **Capture the facts / Companion** and selects **Initial facts**. Explicit module links open their intended detail.
-- The selected hero is `src/assets/hero-qa-operator.png`, sourced from photo 02 and cropped at `43% center`. Keep the **Illustrative scene** caption. It depicts generated people and a generated setting, not verified staff, customers or a real facility. The case example is also clearly labelled synthetic.
+- The selected hero is `src/assets/hero-qa-operator.png`, sourced from photo 02 and cropped at `43% center`. The visible caption was removed at the user's request after deployment. The image depicts generated people and a generated setting, not verified staff, customers or a real facility. The case example remains clearly labelled synthetic.
 
 ## Static build
 

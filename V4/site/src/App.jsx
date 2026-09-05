@@ -113,7 +113,7 @@ export function App() {
     <main id="main">
       <section className="hp-hero" id="top" aria-labelledby="hp-hero-title">
         <div className="shell hp-hero-heading"><h1 id="hp-hero-title"><span>Built around the people</span><span>responsible for quality.</span></h1><a className="hp-link hp-hero-shortcut" href="#workflows">Explore the workflows <ArrowRight size={20} aria-hidden="true"/></a></div>
-        <figure className="hp-hero-figure"><img src={heroPhoto.src} alt={heroPhoto.alt} style={heroPhoto.position?{objectPosition:heroPhoto.position,'--hp-photo-narrow-aspect':heroPhoto.narrowAspect}:undefined} width="2172" height="724" fetchPriority="high"/><figcaption>Illustrative scene</figcaption></figure>
+        <figure className="hp-hero-figure"><img src={heroPhoto.src} alt={heroPhoto.alt} style={heroPhoto.position?{objectPosition:heroPhoto.position,'--hp-photo-narrow-aspect':heroPhoto.narrowAspect}:undefined} width="2172" height="724" fetchPriority="high"/></figure>
       </section>
       <section className="hp-introduction shell" id="workflows" aria-labelledby="hp-intro-title">
         <div className="hp-intro-row"><p className="hp-eyebrow">Pharma Compliance Suite</p><h2 id="hp-intro-title">From the first deviation report to the actions that follow. PCS helps your team keep the work, evidence and decisions connected.</h2><button className="hp-button" onClick={openContact}>Arrange a walkthrough <Arrow/></button></div>

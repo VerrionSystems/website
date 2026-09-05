@@ -12,7 +12,7 @@ Human Practice with selected **photo 02 — Investigate it together** is explici
 - Separate SOP workflow, without fifth-step numbering or direct links to deviation-case records.
 - Exactly two walkthrough interests: **Deviation/CAPA workflow** and **SOP workflow**. Email actions prepare a draft without sending it.
 - Plain fresh loads expand Companion / Capture the facts and select Initial facts. Explicit legacy module links must reach the requested module.
-- Selected hero asset `src/assets/hero-qa-operator.png` uses `43% center`; retain its visible **Illustrative scene** label. Do not imply actual staff, customers, endorsement or facility evidence. Keep the case explanation labelled synthetic.
+- Selected hero asset `src/assets/hero-qa-operator.png` uses `43% center`. The user explicitly removed the visible **Illustrative scene** caption after deployment; do not restore that overlay. Keep image provenance in the internal documentation without implying actual staff, customers, endorsement or facility evidence. Keep the case explanation labelled synthetic.
 - Preserve existing public HTML routes, supported legacy module query parameters and homepage anchors. Retain legal-page text, dates, section IDs and contact routes unless a separate request authorizes a change.
 
 ## Publication boundary
