@@ -61,7 +61,8 @@ p { line-height:1.55 }
 .hp-hero-shortcut { display:none }
 .hp-hero-figure { position:relative }
 .hp-hero-figure>img { width:100%; aspect-ratio:2.86; object-fit:cover; object-position:center; animation:hp-image-in 800ms var(--ease-out) both }
-.hp-introduction { padding-block:38px 32px }
+/* This anchor meets the header so the preceding hero is completely out of view. */
+.hp-introduction { scroll-margin-top:-24px; padding-block:38px 32px }
 .hp-intro-row { display:grid; grid-template-columns:.9fr 1.85fr auto; gap:48px; align-items:start }
 .hp-intro-row>.hp-eyebrow { padding-top:7px }
 .hp-intro-row h2 { font-size:clamp(23px,2.1vw,31px); line-height:1.36; letter-spacing:-.035em }

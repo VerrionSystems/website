@@ -8,6 +8,7 @@ Human Practice with selected **photo 02 — Investigate it together** is explici
 
 - Full **Verrion Systems** company name and official identity; catalogue-driven PCS-only public content. Do not surface unpublished product families.
 - Persistent navigation and mild interactions that respect reduced-motion preferences.
+- The Pharma Compliance Suite shortcut must align the start of `#workflows` with the sticky header, leaving no strip of the preceding hero photograph visible.
 - Deviation Companion → Deviation Investigator → Impact & Disposition → CAPA display order, without implying a compulsory workflow. I&D depends directly on linked DI, while Site QA retains disposition ownership and approvals. No standalone I&D pilot or development label.
 - Separate SOP workflow, without fifth-step numbering or direct links to deviation-case records.
 - Exactly two walkthrough interests: **Deviation/CAPA workflow** and **SOP workflow**. Email actions prepare a draft without sending it.
