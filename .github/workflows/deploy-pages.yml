@@ -26,15 +26,19 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: V3/package-lock.json
+          cache-dependency-path: V4/site/package-lock.json
 
       - name: Install dependencies
         run: npm ci
-        working-directory: V3
+        working-directory: V4/site
 
       - name: Build the clean Pages artifact
         run: npm run build:pages
-        working-directory: V3
+        working-directory: V4/site
+
+      - name: Check publication boundaries and legacy links
+        run: npm test
+        working-directory: V4/site
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
@@ -43,7 +47,7 @@ jobs:
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           include-hidden-files: true
-          path: V3/root-dist
+          path: V4/site/root-dist
 
   deploy:
     environment:

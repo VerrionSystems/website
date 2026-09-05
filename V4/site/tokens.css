@@ -1,0 +1,41 @@
+/* Human Practice · warm paper / roman serif / forest green */
+:root {
+  --color-paper: oklch(95.2% .015 87);
+  --color-paper-deep: oklch(91.9% .023 84);
+  --color-paper-light: oklch(97.7% .009 87);
+  --color-ink: oklch(27.5% .040 164);
+  --color-forest: oklch(31.5% .048 164);
+  --color-forest-deep: oklch(25.5% .039 164);
+  --color-moss: oklch(45% .052 160);
+  --color-muted: oklch(44% .024 158);
+  --color-line: oklch(77.5% .022 145);
+  --color-line-dark: oklch(51% .037 158);
+  --color-light-muted: oklch(80% .025 127);
+  --color-focus: oklch(51% .128 51);
+  --color-focus-light: oklch(84% .097 90);
+  --color-backdrop: oklch(19% .030 158 / .7);
+  --font-display: 'Libre Caslon Text', Georgia, serif;
+  --font-body: 'Source Sans 3', Arial, sans-serif;
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+  --space-4xl: 120px;
+  --text-caption: 13px;
+  --text-small: 15px;
+  --text-body: 18px;
+  --text-lead: 22px;
+  --ease-out: cubic-bezier(.22,1,.36,1);
+  --ease-in: cubic-bezier(.55,0,1,.45);
+  --ease-in-out: cubic-bezier(.65,0,.35,1);
+  --dur-fast: 180ms;
+  --dur-state: 240ms;
+  --dur-entry: 700ms;
+  --rule-thin: 1px;
+  --radius-button: 2px;
+  --page-gutter: clamp(24px,3.65vw,64px);
+  --header-height: 108px;
+}

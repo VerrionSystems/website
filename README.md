@@ -1,93 +1,49 @@
 # Verrion Systems Website
 
-Public marketing site for Verrion Systems and the Pharma Compliance Suite launch motion.
+Public website for Verrion Systems and Pharma Compliance Suite. **Human Practice**, with selected photo 02, is the approved V4 replacement for V3. Approval is recorded; deployment completion must be established separately from the workflow and public-site checks.
 
-## Live Site Source
+## Production source and artifact
 
-The approved V3 website is built from `V3/` into the clean, ignored
-`V3/root-dist/` deployment artifact. The artifact contains only:
+The production source is [`V4/site/`](V4/site/). It builds a clean, ignored static artifact at `V4/site/root-dist/`. The existing [Deploy GitHub Pages workflow](.github/workflows/deploy-pages.yml) installs, builds and tests that source, then uploads **only this artifact**. GitHub Pages must use GitHub Actions as its publishing source.
 
-- `index.html`
-- `deviation-companion.html`
-- `deviation.html`
-- `capa.html`
-- `sop-intelligence.html`
-- `privacy.html`
-- `terms.html`
-- `data-handling.html`
-- `assets/`
-- `favicon.png`
-- `CNAME`
-- `.nojekyll`
-- `.htaccess`
-- `robots.txt`
-- `sitemap.xml`
+The artifact contains eight HTML files, runtime assets and the approved hosting files (`CNAME`, `.nojekyll`, `.htaccess`, favicon, robots and sitemap). It is a static Pages site: no Sites worker or server runtime is required. Repository-root publication is unsupported. Historical V2/V3 builds, the Next prototype, design studies, QA records, package metadata and repository instructions must never be included in the Pages artifact. Checked-in root pages are historical compatibility snapshots, not the publishing source.
 
-`V2/`, `app/`, `docs/`, package metadata, and repository instructions are never
-part of that artifact. The checked-in root pages remain a compatibility snapshot;
-they are not the GitHub Pages publishing source.
+## Build and check
 
-To build and validate the deployable artifact:
+From the repository root, using Node.js 22:
 
 ```bash
-cd V3
+cd V4/site
 npm ci
 npm run build:pages
+npm test
 ```
 
-`npm run promote:root` additionally refreshes the checked-in root compatibility
-snapshot when that is required.
+`build:pages` builds the pages, prepares legacy entry points and hosting files, then checks the artifact allowlist and asset references. The tests cover legacy links and rejection of unexpected publication files, source maps, missing assets and symlinks. Run the build before the tests because the publication checks inspect its output.
 
-## Local Preview
+For a local preview of the actual artifact:
 
 ```bash
-cd V3
-npm ci
-npm run build:pages
 python3 -m http.server 4177 --bind 127.0.0.1 --directory root-dist
 ```
 
-Then open:
+Open [the local preview](http://127.0.0.1:4177/). See [`V4/site/README.md`](V4/site/README.md) for maintenance context.
 
-```text
-http://127.0.0.1:4177/
-```
+## Public routes
 
-## Deployment
+| Route | Behaviour |
+|---|---|
+| `/` and `/index.html` | Human Practice homepage |
+| `/deviation-companion.html` | Compatibility entry to Companion in the deviation workflow |
+| `/deviation.html` | Compatibility entry to Deviation Investigator |
+| `/capa.html` | Compatibility entry to CAPA |
+| `/sop-intelligence.html` | Compatibility entry to the independent SOP workflow |
+| `/privacy.html` | Retained Privacy Notice |
+| `/terms.html` | Retained Terms of Use |
+| `/data-handling.html` | Retained Data Handling Summary |
 
-GitHub Pages must use **GitHub Actions** as its publishing source. The
-`Deploy GitHub Pages` workflow uploads only `V3/root-dist/`; branch-root
-publication is unsupported because it exposes non-launch repository files.
-Hostinger manages the domain and DNS.
+The four module HTML files forward visitors into the corresponding homepage content. Recognized legacy `?item=` values and `#portfolio`, `#controls`, `#why` and `#pilot` anchors remain supported. Legal text, dates and section anchors are retained from the latest V3 source, using Human Practice presentation.
 
-The canonical public domain is:
+## Release verification
 
-```text
-https://www.verrionsystems.com/
-```
-
-Redirect posture:
-
-- `verrionsystems.com` -> `https://www.verrionsystems.com/`
-
-## Launch Checklist
-
-1. Run `npm run build:pages` from `V3/` and confirm its artifact check passes.
-2. Commit and push the reviewed source changes to `main`.
-3. Confirm the `Deploy GitHub Pages` workflow has completed successfully.
-4. Confirm these URLs return HTTP 200:
-   - `https://www.verrionsystems.com/`
-   - `https://www.verrionsystems.com/deviation-companion.html`
-   - `https://www.verrionsystems.com/deviation.html`
-   - `https://www.verrionsystems.com/capa.html`
-   - `https://www.verrionsystems.com/sop-intelligence.html`
-   - `https://www.verrionsystems.com/privacy.html`
-   - `https://www.verrionsystems.com/terms.html`
-   - `https://www.verrionsystems.com/data-handling.html`
-5. Confirm these URLs redirect to the canonical `www` site:
-   - `http://verrionsystems.com/`
-   - `https://verrionsystems.com/`
-
-## Legacy Next Prototype
-
-The `app/` Next.js prototype remains in the repository for now, but it is not the approved launch surface. Do not deploy `out/` unless the approved static root site has first been translated into the Next app.
+The canonical domain remains [www.verrionsystems.com](https://www.verrionsystems.com/). After an authorized release, confirm that the Pages workflow succeeded for the intended commit and inspect the public homepage, all eight HTML entry points, legal pages and legacy links. Verify the selected photograph, responsive navigation and walkthrough behaviour on the deployed site. Build success alone does not establish deployment or public-site behaviour.

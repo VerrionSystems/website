@@ -1,0 +1,4 @@
+node_modules/
+root-dist/
+dist/
+.DS_Store
