@@ -1,4 +1,6 @@
-# Human Practice production site
+# Human Practice production site (superseded)
+
+> On 16 October 2026 V6 (`V6/site/`) was approved to replace Human Practice on the live site, and the Pages workflow now builds V6. This directory is retained unchanged as the previous production source.
 
 Human Practice with **photo 02 — Investigate it together** is explicitly approved to replace V3. This directory is the selected production source; deployment completion is recorded separately after workflow and public-site verification. The original Quality Index and Human Practice comparison prototypes remain in the user's working workspace and are not published by this build.
 
