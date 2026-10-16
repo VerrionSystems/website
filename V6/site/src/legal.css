@@ -1,0 +1,145 @@
+/* Verrion Systems V6 · legal pages. Same tokens, top bar and footer as the
+   homepage, set on the controlled-document paper ground. Text and section IDs
+   come unchanged from legalContent.jsx. */
+:root {
+  --floor: #0d1719;
+  --floor-2: #142226;
+  --floor-ink: #e9efeb;
+  --floor-soft: #a6b8b2;
+  --floor-line: rgba(233, 239, 235, 0.14);
+
+  --paper: #e6eae5;
+  --sheet: #f8faf6;
+  --sheet-2: #eef2ec;
+  --rec-ink: #10303a;
+  --rec-soft: #4a5e63;
+  --rec-line: rgba(16, 48, 58, 0.16);
+
+  --mint: #8ad8b2;        /* accent on the floor */
+  --green: #1b6f4d;       /* the same hue on paper */
+  --thread: #2e9a6e;      /* crosses both grounds; 5:1 on floor, 3.3:1 on paper */
+
+  /* Self-hosted (no third-party font requests from the live site). */
+  --display: "Archivo Variable", "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --text: "Instrument Sans Variable", "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+
+  --bar: calc(64px + env(safe-area-inset-top, 0px));
+  --pad-out: clamp(20px, 3.9vw, 64px);
+  --pad-in: clamp(48px, 6.2vw, 104px);
+  --top: clamp(118px, 15svh, 150px);
+  --h1: clamp(2.5rem, 1.25rem + 3.3vw, 4.5rem);
+  --sec-pad: clamp(64px, 7vw, 112px);
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* engine tokens */
+  --sc-canvas: var(--floor);
+  --sc-surface: var(--floor-2);
+  --sc-ink: var(--floor-ink);
+  --sc-ink-soft: var(--floor-soft);
+  --sc-accent: var(--mint);
+  --sc-accent-ink: var(--floor);
+  --sc-font-display: var(--display);
+  --sc-font-text: var(--text);
+  --sc-font-mono: var(--display);
+  --sc-shadow-color: 190 40% 8%;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-padding-top: calc(var(--bar) + 16px); -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--rec-ink); font-family: var(--text); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+p, h1, h2, ul { margin: 0; }
+img { display: block; max-width: none; }
+button { cursor: pointer; font: inherit; }
+:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 2px; }
+::selection { background: var(--mint); color: var(--floor); }
+.skip { position: fixed; left: 12px; top: -60px; z-index: 100; background: var(--rec-ink); color: var(--sheet); padding: 10px 14px; font-weight: 600; text-decoration: none; }
+.skip:focus { top: 12px; }
+.label { font-family: var(--display); font-stretch: 118%; font-weight: 650; font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); }
+
+/* -------------------------------------------------------------- top bar --
+   The unmodified wordmark on a solid light ground, direct links for people
+   who skim, and the one action. */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 70; height: var(--bar);
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: env(safe-area-inset-top, 0px) var(--pad-out) 0;
+  background: var(--sheet); color: var(--rec-ink);
+  border-bottom: 1px solid var(--rec-line);
+  box-shadow: 0 10px 26px -18px rgba(5, 14, 16, 0.55);
+}
+.topbar__brand { display: block; flex: none; }
+.topbar__brand img { display: block; height: 32px; width: auto; }
+.topbar__nav { display: flex; align-items: center; gap: clamp(14px, 2vw, 28px); }
+.topbar__nav a {
+  color: var(--rec-ink); text-decoration: none; white-space: nowrap;
+  font-family: var(--display); font-stretch: 104%; font-weight: 600; font-size: 14.5px;
+  padding: 8px 0; border-bottom: 1.5px solid transparent;
+  transition: border-color 160ms var(--ease);
+}
+.topbar__nav a:hover, .topbar__nav a[aria-current] { border-bottom-color: var(--green); }
+.topbar__cta, .topbar__menu {
+  height: 40px; padding: 0 16px; border-radius: 2px; white-space: nowrap;
+  font-family: var(--display); font-stretch: 106%; font-weight: 650; font-size: 14px; letter-spacing: 0.01em;
+  transition: background 160ms var(--ease), border-color 160ms var(--ease), transform 120ms var(--ease);
+}
+.topbar__cta { margin-left: 4px; background: var(--rec-ink); color: var(--sheet); border: 1px solid var(--rec-ink); }
+.topbar__cta:hover { background: #1c4652; }
+.topbar__menu { display: none; background: transparent; color: var(--rec-ink); border: 1px solid rgba(16, 48, 58, 0.32); }
+.topbar__menu[aria-expanded="true"] { border-color: var(--rec-ink); background: var(--sheet-2); }
+.topbar__cta:active, .topbar__menu:active { transform: translateY(1px); }
+
+
+/* ----------------------------------------------------------------- legal -- */
+.legal { padding-top: var(--bar); }
+.legal-hero { padding: clamp(48px, 7vw, 88px) var(--pad-out) clamp(36px, 5vw, 56px); border-bottom: 1px solid var(--rec-line); background: var(--sheet); }
+.legal-hero h1 { margin: 18px 0 20px; font-family: var(--display); font-weight: 640; font-stretch: 106%; font-size: clamp(2.4rem, 1.4rem + 3vw, 4.2rem); line-height: 1.04; letter-spacing: -0.026em; text-wrap: balance; max-width: 16em; }
+.legal-intro { max-width: 46rem; font-size: clamp(18px, 1rem + 0.4vw, 21px); line-height: 1.5; color: var(--rec-soft); text-wrap: pretty; }
+.legal-updated { margin-top: 18px; font-size: 14px; color: var(--rec-soft); }
+.legal-layout { display: grid; grid-template-columns: minmax(200px, 0.75fr) minmax(0, 2fr); gap: clamp(40px, 6vw, 96px); align-items: start; padding: clamp(40px, 5vw, 64px) var(--pad-out) clamp(64px, 8vw, 104px); }
+.legal-index { position: sticky; top: calc(var(--bar) + 28px); max-height: calc(100vh - var(--bar) - 56px); overflow: auto; }
+.legal-index nav { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; padding-top: 12px; border-top: 1.5px solid var(--rec-ink); }
+.legal-index nav a { padding: 4px 0; color: var(--rec-soft); text-decoration: none; font-size: 15.5px; line-height: 1.4; overflow-wrap: anywhere; }
+.legal-index nav a:hover { color: var(--rec-ink); text-decoration: underline; text-underline-offset: 4px; }
+.legal-home { display: inline-block; margin-top: 22px; color: var(--rec-ink); font-family: var(--display); font-stretch: 106%; font-weight: 650; font-size: 15px; text-decoration: none; border-bottom: 1.5px solid currentColor; padding-bottom: 3px; }
+.legal-article { max-width: 54rem; min-width: 0; }
+.legal-section { padding: 0 0 30px; margin-bottom: 30px; border-bottom: 1px dashed var(--rec-line); }
+.legal-section:last-child { margin-bottom: 0; border-bottom: 0; padding-bottom: 0; }
+.legal-section h2 { margin-bottom: 16px; font-family: var(--display); font-weight: 640; font-stretch: 104%; font-size: clamp(1.5rem, 1.1rem + 0.9vw, 2rem); line-height: 1.2; letter-spacing: -0.015em; }
+.legal-section p, .legal-section li { font-size: 17.5px; line-height: 1.65; color: var(--rec-soft); overflow-wrap: anywhere; }
+.legal-section p + p, .legal-section p + ul { margin-top: 16px; }
+.legal-section ul { padding-left: 22px; }
+.legal-section li + li { margin-top: 10px; }
+.legal-section a { color: var(--rec-ink); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.legal-section a:hover { color: var(--green); }
+.legal-section code { font-size: 0.9em; background: var(--sheet-2); padding: 2px 5px; }
+
+.site-foot { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 28px; padding: 18px var(--pad-out) calc(22px + env(safe-area-inset-bottom, 0px)); background: var(--floor); color: var(--floor-soft); border-top: 1px solid var(--floor-line); font-size: 12.5px; }
+.site-foot nav { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.site-foot a { color: var(--floor-ink); text-decoration: none; }
+.site-foot a:hover { text-decoration: underline; }
+.site-foot p { flex: 1 1 26rem; }
+
+.site-foot nav a[aria-current] { text-decoration: underline; text-underline-offset: 4px; }
+
+@media (hover: none) { .topbar__cta:hover { background: var(--rec-ink); } }
+
+@media (max-width: 860px) {
+  :root { --pad-out: 18px; --bar: calc(56px + env(safe-area-inset-top, 0px)); }
+  .topbar { padding-left: 14px; padding-right: 14px; }
+  .topbar__brand img { height: 26px; }
+  .topbar__menu { display: block; height: 38px; padding: 0 14px; }
+  .topbar__nav { display: none; }
+  .topbar__nav.is-open { display: flex; flex-direction: column; align-items: stretch; gap: 0; position: fixed; top: var(--bar); left: 0; right: 0; bottom: 0; overflow: auto; padding: 12px 18px 28px; background: var(--sheet); border-top: 1px solid var(--rec-line); }
+  .topbar__nav.is-open a { padding: 16px 0; font-size: 18px; border-bottom: 1px solid var(--rec-line); }
+  .topbar__nav.is-open .topbar__cta { margin: 22px 0 0; height: auto; padding: 14px 16px; text-align: center; border-bottom: 0; }
+  .legal-layout { grid-template-columns: 1fr; gap: 32px; }
+  .legal-index { position: static; max-height: none; overflow: visible; padding-bottom: 28px; border-bottom: 1px solid var(--rec-line); }
+  .legal-index nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 20px; }
+  .legal-section p, .legal-section li { font-size: 16.5px; }
+  .site-foot { font-size: 11.5px; }
+}
+@media (max-width: 380px) { .legal-index nav { grid-template-columns: 1fr; } }
+
+/* On these pages the walkthrough button is a link back to the homepage. */
+.topbar__nav a.topbar__cta { display: inline-flex; align-items: center; padding: 0 16px; color: var(--sheet); text-decoration: none; border: 1px solid var(--rec-ink); }
+.topbar__nav a.topbar__cta:hover { border-color: #1c4652; }
