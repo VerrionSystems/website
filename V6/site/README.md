@@ -50,6 +50,7 @@ Never add the V5 exploration, `lab/` checks, `evidence/` captures, source images
 - `hero-fit.mjs`: the four notes and the record fit on the first screen, at 10 desktop sizes.
 - `hero-fit-phone.mjs`: the phone record.
 - `fit.mjs`: pinned sections fit, at 12 sizes.
+- `close-fit.mjs`: scrolled to the end, the close photo sits below the top bar with both heads in view (16 sizes).
 - `functional.mjs`: keyboard and phone menu.
 - `prod.mjs`: fonts, legacy links, legal pages and external requests.
 

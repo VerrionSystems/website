@@ -160,4 +160,26 @@ live domain. V4's legacy routes are not ported.
   - Harness passes at 1440 × 900, 1440 × 700, 1280 × 560, 390 × 844 and
     360 × 640 are clean, and the keyboard and menu checks pass.
 
+- **Version 8 (17 October 2026), from Dawid's comment on the live site that,
+  scrolled to the end, the close photo was cut off and the gap above the footer
+  was too large.** The last section was taller than most windows, so its photo
+  (and both heads) slid under the top bar.
+  - On desktop, the close and the footer now fill the window below the top bar.
+    The photo takes the height that the copy and footer leave (measured in
+    `v6.js`), up to its own proportions, and is anchored at the top, so a short
+    window trims the bottom of the photo and never the heads.
+  - The space between the copy and the footer is 33–52 px, down from 72–112 px.
+    Any height left over on a very tall window goes above the heading, into the
+    photo's fade.
+  - On windows 640 px tall or less, the closing heading and intro are slightly
+    smaller to leave room for the photo.
+  - Phone browsers are too short for the photo, copy and footer together, so on
+    phones the photo now sits below the walkthrough buttons and ends the page
+    whole, directly above the footer.
+  - A new check (`lab/checks/close-fit.mjs`, 16 sizes from 2560 × 1440 to
+    360 × 640) confirms that, scrolled to the end, the photo starts at the
+    top bar with both heads in view, and both people are within the frame.
+  - Tests, hero fit, pinned-section fit, keyboard and menu checks, and harness
+    passes at 1440 × 900, 1512 × 745, 390 × 844 and reduced motion are clean.
+
 Screenshots and contact sheets from the design checks are kept locally in `site/evidence/` (not committed).

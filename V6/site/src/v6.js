@@ -220,10 +220,21 @@
   function kick() { if (!queued) { queued = true; requestAnimationFrame(frame); } }
   addEventListener('scroll', kick, { passive: true });
 
+  // ------------------------------------------------------------------ close
+  // The close photo takes the height the copy and footer leave on the last
+  // screen (.close-photo in v6.css), so it needs their measured heights.
+  var closeAct = $('.act--close'), closeCopy = $('.close-copy'), foot = $('.site-foot');
+  function measureClose() {
+    closeAct.style.setProperty('--copy-h', closeCopy.getBoundingClientRect().height + 'px');
+    closeAct.style.setProperty('--foot-h', foot.getBoundingClientRect().height + 'px');
+  }
+  if (window.ResizeObserver) { var closeRO = new ResizeObserver(measureClose); closeRO.observe(closeCopy); closeRO.observe(foot); }
+
   function measure() {
     phone = phoneMQ.matches;
     measureCrossings();
     measureThreads();
+    measureClose();
     frame();
   }
   var rT;
