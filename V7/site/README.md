@@ -56,5 +56,6 @@ Never add the V5 exploration, `lab/` checks, `evidence/` captures, source images
 - `prod.mjs`: fonts, legacy links, legal pages and external requests.
 - `record-links.mjs`: each in-page record link lands under the top bar, and Back returns to it.
 - `detail.mjs`: close-ups of the new records, the dialog (opening, focus, Copy message), the phone menu (inert page) and a print PDF.
+- `record-test.mjs`: marking the investigation's missing record as provided, at the 12 pinned-fit sizes and three more phones. It checks that nothing in the record moves, that the wording changes and changes back, the keyboard path and name, the status message and reduced motion.
 
 The scroll-craft harness provides the dead-scroll and contrast checks.

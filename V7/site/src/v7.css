@@ -437,6 +437,59 @@ html:not(.sc-ready) .slip { display: none; }
 .disposition tfoot th, .disposition tfoot .num { font-weight: 600; }
 .disposition tfoot td:last-child { color: var(--rec-soft); font-size: var(--fs-small); }
 
+/* ---------------------------------------------------- a record to test --
+   The reader can mark the investigation's one missing record as provided.
+   PCS never counts a new record as support on its own: it changes the
+   evidence, so the proposed cause goes back for review and the conclusion
+   stays with the investigator. The row is a native checkbox whose label is
+   the whole row. The two wordings of the row's status, and of the tag, share
+   one grid cell (on narrow phones "Open to challenge" takes two lines), so
+   marking the record changes no width or height and the pinned sheet keeps
+   its fit. The pin label is placed absolutely, so it simply swaps. The state
+   shows as a filled box, a filled tag and a solid thread, not motion. */
+.ev--pick { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.ev .ev__box { appearance: none; margin: 0; width: 13px; height: 13px; border: 1.5px solid var(--rec-soft); border-radius: 2px; background: var(--sheet); cursor: pointer; }
+.ev .ev__box:checked {
+  border: 2px solid var(--rec-ink);
+  background: var(--rec-ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.6 5.3 4 7.6l4.4-5' fill='none' stroke='%23f8faf6' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 9px 9px no-repeat;
+}
+.swap { display: inline-grid; }
+.swap > * { grid-area: 1 / 1; }
+.ev__state.swap { justify-items: end; }
+.tag.swap > .when-provided { place-self: center; }
+.swap > .when-provided, .is-provided .swap > .when-missing { visibility: hidden; }
+.is-provided .swap > .when-provided { visibility: visible; }
+.flip .when-provided, .is-provided .flip .when-missing { display: none; }
+.is-provided .flip .when-provided { display: inline; }
+/* The dashed underline marks the gap, so it belongs to that wording only. */
+.ev--pick .ev__state { text-decoration: none; }
+.ev--pick .ev__state > .when-missing { text-decoration: underline dashed; text-underline-offset: 3px; }
+/* Provided, not yet assessed: ink, not the green of "Supports". */
+.is-provided .ev--pick .ev__state { color: var(--rec-ink); }
+.is-provided .tag { background: var(--rec-ink); border-color: var(--rec-ink); color: var(--sheet); }
+.is-provided .thread--gap { stroke-dasharray: none; }
+.is-provided .pin--gap, .is-provided .pin--gap .pin__lbl { border-style: solid; }
+.ev-hint { margin-top: 6px; font-size: var(--fs-caption); line-height: 1.35; color: var(--rec-soft); }
+@media screen and (max-width: 860px) {
+  .ev-hint { margin-top: 4px; font-size: 0.7188rem; }
+}
+/* Phones under 841 px tall have no room left under the record: the box is
+   still there, and the hint stays its accessible description. */
+@media screen and (max-width: 860px) and (max-height: 840px) {
+  .ev-hint { display: none; }
+}
+/* High-contrast mode drops the ink fill, which would leave the light tick on
+   a light ground: fill the box with the system highlight colour instead. */
+@media (forced-colors: active) {
+  .ev .ev__box:checked { forced-color-adjust: none; background-color: Highlight; border-color: Highlight; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ev .ev__box, .tag, .ev--pick .ev__state {
+    transition-property: background-color, border-color, color;
+    transition-duration: 150ms; transition-timing-function: var(--ease);
+  }
+}
+
 
 /* ----------------------------------------------------------- disclosures --
    Modules and questions open with a short height and opacity change, so the
@@ -475,6 +528,8 @@ html:not(.sc-ready) .slip { display: none; }
   .module summary:hover .module__name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
   .link-btn:hover::after { translate: 3px 0; }
   .finding:hover .finding__txt { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+  .ev--pick:hover .ev__txt { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+  .ev--pick:hover .ev__box:not(:checked) { border-color: var(--rec-ink); }
   .btn:hover { background: #a2e3c3; }
   .btn--ghost:hover { background: rgba(233, 239, 235, 0.08); }
   .btn--paper:hover { background: #1c4652; }
@@ -766,7 +821,7 @@ html:not(.sc-ready) .slip { display: none; }
 
   .skip, .topbar, .slip, .threads, .seam, .seam-line, .side-labels, .hero-glow, .hero-window, .hero-subject,
   .evidence-photo, .band, .close-photo, .walk, .link-btn, .close-buttons, .close-actions > .label,
-  .findings__hint, .field__empty, .record-link, .module summary::after, .faq summary::after { display: none !important; }
+  .findings__hint, .ev-hint, .field__empty, .record-link, .module summary::after, .faq summary::after { display: none !important; }
 
   /* Unpin: the engine sizes pinned acts inline, so these need !important. */
   .act { height: auto !important; min-height: 0 !important; margin: 0 0 9mm; background: none !important; color: var(--rec-ink); }
@@ -781,6 +836,10 @@ html:not(.sc-ready) .slip { display: none; }
   .sheet--hero .fields { display: block; }
   .peak-copy { position: static; max-width: none; margin-bottom: 4mm; }
   .sheet--peak { position: static; max-width: none; }
+  /* A record the reader marked as provided prints as it looks: browsers skip
+     background fills by default, which would leave an empty box and a blank
+     tag. */
+  .ev .ev__box:checked, .is-provided .tag { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
   /* Every value shown, every reveal settled. */
   .field { --v: 1 !important; }

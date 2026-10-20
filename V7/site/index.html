@@ -147,7 +147,7 @@
           <span class="pin pin--below" id="pin-a" aria-hidden="true" style="left:14%;top:60%"><span class="pin__lbl">Electronic batch record</span></span>
           <span class="pin" id="pin-b" aria-hidden="true" style="left:33%;top:39%"><span class="pin__lbl">In-process check results</span></span>
           <span class="pin" id="pin-c" aria-hidden="true" style="left:42%;top:87%"><span class="pin__lbl">Procedure requirement</span></span>
-          <span class="pin pin--gap" id="pin-d" aria-hidden="true" style="left:73%;top:71%"><span class="pin__lbl">Adjustment record · not yet provided</span></span>
+          <span class="pin pin--gap" id="pin-d" aria-hidden="true" style="left:73%;top:71%"><span class="pin__lbl flip">Adjustment record · <span class="when-missing">not yet provided</span><span class="when-provided">provided</span></span></span>
         </div>
       </div>
 
@@ -159,19 +159,21 @@
           </header>
           <p class="sheet__module">Deviation Investigator · Causal review</p>
           <div class="cause">
-            <p class="cause__label">Proposed cause <span class="tag">Open to challenge</span></p>
+            <p class="cause__label">Proposed cause <span class="tag swap"><span class="when-missing">Open to challenge</span><span class="when-provided">Review again</span></span></p>
             <p class="cause__text">Fill-weight drift after a changeover adjustment at 10:40.</p>
           </div>
           <ul class="evidence">
             <li class="ev" id="ev-a"><span class="ev__dot" aria-hidden="true"></span><span class="ev__txt">Batch record shows an adjustment at 10:40</span><span class="ev__state">Supports</span></li>
             <li class="ev" id="ev-b"><span class="ev__dot" aria-hidden="true"></span><span class="ev__txt">Three in-process checks below target after it</span><span class="ev__state">Supports</span></li>
             <li class="ev" id="ev-c"><span class="ev__dot" aria-hidden="true"></span><span class="ev__txt">Procedure requires a check after changeover</span><span class="ev__state">Requirement</span></li>
-            <li class="ev ev--gap" id="ev-d"><span class="ev__dot" aria-hidden="true"></span><span class="ev__txt">Equipment adjustment record</span><span class="ev__state">Not yet provided</span></li>
+            <li id="ev-d"><label class="ev ev--gap ev--pick"><input class="ev__dot ev__box" type="checkbox" id="ev-d-provided" autocomplete="off" aria-describedby="ev-hint"><span class="ev__txt">Equipment adjustment record<span class="sr-only"> provided</span></span><span class="ev__state swap" aria-hidden="true"><span class="when-missing">Not yet provided</span><span class="when-provided">Provided</span></span></label></li>
           </ul>
+          <p class="ev-hint" id="ev-hint">Select the missing record to mark it as provided.</p>
           <div class="decision" data-sc-cue="0.66 1 0.2 0">
             <p class="decision__who"><b>Human decision.</b> The investigator records the conclusion. Authorised reviewers complete the review and approval.</p>
             <p class="decision__ai">AI can assist with selected analysis and drafting after the applicable data review. People own the outcome.</p>
           </div>
+          <p class="sr-only" role="status" id="ev-status"></p>
         </article>
       </div>
 

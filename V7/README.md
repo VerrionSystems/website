@@ -28,6 +28,7 @@ Open <http://localhost:4530/>. The browser checks in `V7/site/lab/checks/` expec
 | Print layout | Printing gives a plain A4 document (six pages): the headings, every record filled, every module and answer opened, and the contact and legal lines with their URLs. It has no photographs, controls or moving parts. | Quality teams print pages and pass them round for comment. |
 | Link preview | A 1200 × 630 share card (`og:image`), Open Graph and Twitter metadata, and Organization structured data. | A link pasted into Teams, Outlook or LinkedIn shows the page, not a blank card. |
 | Sticky headings | Beside the catalogue and the questions, the heading stays in view while the reader works through the list (desktop, 700 px tall or more). | The reader keeps the context. Nothing moves except ordinary scrolling. |
+| A record to test (prototype) | In the investigation record, the reader can mark the missing "Equipment adjustment record" as provided. The row then reads "Provided", the proposed cause's tag reads "Review again", and the human decision is unchanged. See [A record to test](#a-record-to-test-prototype-20-october-2026). | It shows the page's main claim working: a new record sends the cause back to a person and concludes nothing. |
 | Loading | The hero cutout is preloaded with high priority, and the four lower photographs load lazily. | The first screen arrives sooner on slow corporate networks. |
 
 ### Polish from the skills
@@ -59,6 +60,49 @@ The first V7 build broke two kinds of legacy link:
 
 Both are fixed, and a unit test covers the second. The test fails on the broken code.
 
+### A record to test (prototype, 20 October 2026)
+
+This prototypes item 1 of [What could be improved next](#what-could-be-improved-next). It was built on the side branch `claude/laughing-dhawan-eb877d` from a copy of this folder. Its wording is unapproved (see the table below).
+
+**What the reader does.** In the investigation record (`DI-0417`), the "Equipment adjustment record" row is a checkbox. Selecting the row, or pressing Space on the box, marks the record as provided. Selecting it again marks it as missing.
+
+**What changes, and what doesn't:**
+
+| Part | Not yet provided (wording as approved) | Marked as provided |
+|---|---|---|
+| Evidence row | Empty box in place of the dot, "Not yet provided" with a dashed underline | Filled box with a tick, "Provided" in ink, not the green used for "Supports" |
+| Proposed cause tag | "Open to challenge", outlined | "Review again", filled |
+| Thread and floor pin | Dashed, "Adjustment record · not yet provided" | Solid grey (not the green of the supporting threads), "Adjustment record · provided" |
+| Proposed cause text, the other three rows, the human decision | Unchanged | Unchanged |
+
+**Why these states (PCS source, `deviation_investigator`).** PCS never counts a new record as support on its own:
+
+- In the causal cross-check, each link between evidence and a claim is `support`, `contradiction` or `gap`. A material gap blocks action drafting, and every claim needs a qualified person's disposition (`causal_contracts.py`).
+- When the source set changes, PCS freezes the earlier analysis: "Start a fresh sanitisation review; the frozen package remains evidence." (`causal_package.py`).
+- A decision made on the earlier evidence becomes stale, and PCS asks the reviewer to "Review this claim again" (`templates/deviation_investigator/includes/causal_claim_review.html`).
+- The reviewer's disposition is Accept, Modify or Reject. A material gap is recorded as "Material gap remains unresolved" or "Reviewed as non-material" (`DICausalClaimDecision` in `models.py`).
+
+So the prototype shows the record as provided but not assessed, and sends the cause back for review. It does not turn the row into "Supports", close the gap, rerun AI or record a conclusion.
+
+**Where it lives, and why.** The control sits in the pinned record itself, because that is where the reader sees the effect. The catalogue's Deviation Investigator module was considered, but there the change would happen out of sight, a screen away. The control adds nothing to the pinned sheet's height:
+
+- The box takes the place of the row's dot.
+- The whole row is the box's label, so the target is the full row.
+- Both wordings of the row's status and of the tag share one grid cell. On narrow phones "Open to challenge" takes two lines, so a plain swap would make the record jump by 16 px.
+- One line of hint, "Select the missing record to mark it as provided.", sits under the evidence on desktop and on phones at least 841 px tall. Shorter phones have no room for it, so there it is hidden on screen but still read as the box's description.
+
+**Accessibility and motion:**
+
+- It is a native checkbox, named "Equipment adjustment record provided" and described by the hint.
+- A polite status message tells screen-reader users what else changed: "Proposed cause: review again. The investigator records the conclusion." or "Proposed cause: open to challenge."
+- It has the site's 2 px green focus ring. Hover styles apply only to pointers that hover.
+- In Windows high-contrast mode the ticked box fills with the system highlight colour, because the ink fill is dropped there.
+- Box, tag and status change colour over 150 ms. Under reduced motion they change instantly. There is no new scroll motion.
+- Reloading the page starts again with the record missing.
+- It prints in whatever state the reader left it. The box and the tag print filled even with background graphics off (checked in a PDF). The hint does not print.
+
+**Files:** `site/index.html` (the row, tag, pin label, hint and status), `site/src/v7.css` ("a record to test"), `site/src/v7.js` (the state class and status message), `site/lab/checks/record-test.mjs` (new).
+
 ## Verification (final files, 20 October 2026)
 
 - `npm run build:pages` and `npm test`: clean artifact, 11 of 11 tests pass.
@@ -74,11 +118,36 @@ Both are fixed, and a unit test covers the second. The test fails on the broken 
 - **Scroll harness** at 1440 × 900, 390 × 844, 360 × 640 and reduced motion: no dead scroll, every cue clears 4.5:1, 0 failed requests.
 - **Reflow**: no horizontal scrolling at 320 × 568.
 
+**A record to test (prototype)**, on the branch's final files:
+
+- `npm run build:pages` and `npm test`: clean artifact, 11 of 11 tests pass.
+- `record-test.mjs`, at the 12 pinned-fit sizes plus 375 × 812, 360 × 800 and 412 × 915:
+  - marking the record (by clicking the row text) moves no box in the record;
+  - the decision, the gap row and the hint stay inside the stage;
+  - the wording changes, and changes back when unmarked;
+  - the proposed cause text and the human decision do not change;
+  - the status message is set each time.
+  - At 1440 × 900, Tab reaches the box with a visible focus ring, Space marks it, and it has its name and description. Box, tag and status change colour over 150 ms, with no transitions under reduced motion.
+- Chrome's accessibility tree gives the box its name and the hint as its description, both at 1440 × 900 and at 375 × 667, where the hint is hidden on screen.
+- In emulated forced colours (Windows high-contrast mode), the ticked box fills with the highlight colour and the tick stays visible.
+- A PDF printed with background graphics off shows the ticked box and the "Review again" tag filled, and no hint.
+- Every other check passes again on these files: `fit.mjs`, `hero-fit.mjs`, `hero-fit-phone.mjs`, `close-fit.mjs`, `functional.mjs`, `prod.mjs`, `prod-live.mjs`, `record-links.mjs`, `detail.mjs`, `moments.mjs` and `sheet-look.mjs`. `functional.mjs` now finds 27 tab stops, all visible when focused; the new one is the checkbox.
+- Screenshots: before, after and focus, at 1440 × 900, 390 × 844 and 360 × 640 (`site/lab/record-test/`, git-ignored).
+- The scroll-craft harness was not rerun for the prototype.
+
+**Found while building the prototype, already present before it, and not fixed:**
+
+- At 360 × 780, 360 × 800 and 375 × 812, the investigation's decision overruns the pinned stage by 71, 59 and 20 px. `fit.mjs` has no phone sizes between 667 and 844 px tall, so it doesn't catch this. The prototype's hint is hidden at these sizes, so it adds nothing to the overrun.
+- `lab/checks/short.mjs` waits for `.sheet--g2`, which exists in neither V6 nor V7, so it never finishes.
+- In `record-links.mjs`, Back returns to the link for most links. It doesn't for "Illustrative record ID-0417" at 1440 × 900, or for the DI-0417, ID-0417 and CAPA-0212 catalogue links at 390 × 844. For example, the DI-0417 link was 891 px down the screen before it was followed, and 435 px after Back. The untouched V7 build gives the same figures.
+- `prod.mjs` and `prod-live.mjs` sometimes read the SOP page 1 px below the top bar (65 px instead of 64). That happened in 2 of 6 runs on the untouched build and in 2 of 6 on the prototype. The checks measure after a fixed 900 ms wait.
+
 **Not verified:**
 
 - Safari or Firefox on desktop, and iOS Safari on a real iPhone.
 - A Windows or Citrix corporate machine.
-- A screen reader.
+- A screen reader, including how the prototype's checkbox and its status message are announced.
+- The prototype's checkbox in a real Windows high-contrast theme. Only Chrome's emulation was checked.
 - A real print dialog, including US Letter paper.
 - How the link preview renders in Teams, Outlook or LinkedIn. This needs the deployed URL, because `og:image` points at `www.verrionsystems.com`.
 
@@ -92,12 +161,17 @@ Both are fixed, and a unit test covers the second. The test fails on the broken 
 | Walkthrough dialog | "Copy address" (was "Copy"), "Copy message", and the status "Message copied. Paste it into a new email." |
 | Print only | "Verrion Systems · Pharma Compliance Suite · www.verrionsystems.com · Every record shown is illustrative and uses a synthetic scenario." and "hello@verrionsystems.com · www.verrionsystems.com" |
 | Share card and its alt text | Reuses the approved headline, record fields and "Pharma Compliance Suite" |
+| Investigation record, evidence row (prototype) | "Provided", shown once the reader marks the record |
+| Investigation record, proposed cause tag (prototype) | "Review again", shown once the reader marks the record. It echoes PCS's own "Review this claim again". Alternatives if "again" reads as though the cause had already been reviewed: "Awaiting review" or "Evidence changed". |
+| Investigation record, under the evidence (prototype) | "Select the missing record to mark it as provided." |
+| Investigation photograph, pin label (prototype) | "Adjustment record · provided" |
+| Screen readers only (prototype) | The checkbox name "Equipment adjustment record provided", and the status messages "Proposed cause: review again. The investigator records the conclusion." and "Proposed cause: open to challenge." |
 
 ## What could be improved next
 
-Ordered by value to a quality professional. Each item needs a decision or input from Dawid, so none is built.
+Ordered by value to a quality professional. Each item needs a decision or input from Dawid. Item 1 is prototyped; the others are not built.
 
-1. **A record the reader can test.** In the investigation record, let the reader mark the missing "Equipment adjustment record" as provided, and watch the proposed cause's status change, while the conclusion stays a human decision. It would be a keyboard-accessible control rather than motion, demonstrating the page's main claim. It needs PCS's actual DI evidence states, so it doesn't over-claim.
+1. **A record the reader can test.** *Prototyped on 20 October 2026; see [A record to test](#a-record-to-test-prototype-20-october-2026). It needs Dawid's approval of its wording before it can go further.* In the investigation record, let the reader mark the missing "Equipment adjustment record" as provided, and watch the proposed cause's status change, while the conclusion stays a human decision. It would be a keyboard-accessible control rather than motion, demonstrating the page's main claim. It needs PCS's actual DI evidence states, so it doesn't over-claim.
 2. **Supplier-assessment answers.** QA and IT will ask about hosting and data location, access control, audit trail, e-signatures, validation support (CSV/CSA) and security before they ask for a demo. A short, factual section linking Data handling and Privacy, plus "questionnaire answers on request", would meet that early. It needs facts from Dawid; nothing should be claimed without evidence.
 3. **An approved one-page overview (PDF)** to download and circulate internally. The print layout is the stopgap. `docs/private-pilot-one-pager.md` is a starting point.
 4. **What happens after you write.** Three steps (reply, walkthrough, pilot scope) in the empty column beside "Before we talk". It needs agreed timings.

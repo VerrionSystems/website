@@ -13,8 +13,9 @@
 
    V7 adds: the reduced-motion preference is followed live, the phone menu
    holds focus and scroll while open, the walkthrough dialog can copy the
-   whole message (for webmail and locked-down machines), and printing opens
-   every module and answer first. */
+   whole message (for webmail and locked-down machines), printing opens
+   every module and answer first, and the investigation's missing record can
+   be marked as provided. */
 (function () {
   'use strict';
 
@@ -297,6 +298,24 @@
       light(on);
     });
   });
+
+  // ------------------------------------------------------ a record to test
+  // The reader can mark the missing adjustment record as provided. In PCS a
+  // new record changes the evidence, so the proposed cause goes back for
+  // review; nothing here concludes anything. Both wordings are in the markup;
+  // this sets the state and tells screen readers what else changed.
+  var provided = $('#ev-d-provided'), evStatus = $('#ev-status'), peakSection = $('#investigation');
+  function setProvided(announce) {
+    var on = provided.checked;
+    peakSection.classList.toggle('is-provided', on);
+    if (announce) evStatus.textContent = on
+      ? 'Proposed cause: review again. The investigator records the conclusion.'
+      : 'Proposed cause: open to challenge.';
+  }
+  provided.addEventListener('change', function () { setProvided(true); });
+  // A page restored from the back-forward cache keeps the box as it was.
+  addEventListener('pageshow', function () { setProvided(false); });
+  setProvided(false);
 
   // ------------------------------------------------------------ walkthrough
   // Opens an email draft. Nothing is sent from this website.
