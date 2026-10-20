@@ -103,6 +103,26 @@ So the prototype shows the record as provided but not assessed, and sends the ca
 
 **Files:** `site/index.html` (the row, tag, pin label, hint and status), `site/src/v7.css` ("a record to test"), `site/src/v7.js` (the state class and status message), `site/lab/checks/record-test.mjs` (new).
 
+### Mid-height phones (fix, 20 October 2026)
+
+**The problem.** On phones between the compact sizes and 390 × 844, the two pinned records ran past the bottom of the screen. V7 already did this before the prototype. `fit.mjs` missed it, because it had no phone heights between 667 and 844 px.
+
+- **Investigation.** The human decision ended 71, 59 and 20 px below the screen at 360 × 780, 360 × 800 and 375 × 812. A sweep from 344 to 430 px wide and 640 to 960 px tall found more of the same:
+  - at 360 px wide, at every height from 761 to 915 px, and at 375 px wide from 761 to 860 px;
+  - at 390 px wide, at 761 and 780 px tall.
+- **Hero record.** At the same three sizes, the status line ("Reviewed draft ready for the investigator") ran out of the record, by 19, 8 and 1 px. At 412–430 px wide it ran out by up to 50 px, between 761 and 851 px tall. Above 400 px wide the cards show their source tags, and each tag takes a line.
+
+**The fix** is in the phone section of `site/src/v7.css`. Each change reuses a layout the page already has. No wording, motion or photograph changed.
+
+- **Investigation.** These phones now use the layout that phones up to 760 px tall already had:
+  - phones up to 380 px wide, at any height;
+  - phones up to 400 px wide and 840 px tall.
+
+  The heading sits on the photograph. The photograph is larger as a result (232 px tall at 360 × 800, up from 188), so the pins and their labels have more room. The subline and the module line are not shown. The record's text is set slightly smaller: 13.5 px for the cause, 12.5 px for the evidence and the decision (was 15 and 13). Unlike on phones up to 760 px tall, the AI note stays. Wider phones keep the full layout, including the subline and the module line.
+- **Hero.** On phones up to 860 px tall, the record's cards drop their source tags. They already did this on narrow phones and on phones up to 760 px tall, because the notes carry the tags as they cross. The floor's height is now `min(46svh, 100svh - 450px)`, so the record always keeps at least 450 px. From 834 px tall the floor is unchanged. At 360 × 800 it is 350 px, 18 px less than before. The notes keep their size and their places relative to the floor.
+
+**For Dawid to decide.** Phones up to 760 px tall already hid the investigation's subline ("Where evidence is missing, the gap stays visible.") and module line ("Deviation Investigator · Causal review"). They are now hidden on narrow phones up to 840 px tall too, such as 360 × 800 and 375 × 812, and at any height up to 380 px wide. Showing them there would mean a smaller photograph or a record that runs off the screen. The words themselves are unchanged and still read on wider phones and on desktop.
+
 ## Verification (final files, 20 October 2026)
 
 - `npm run build:pages` and `npm test`: clean artifact, 11 of 11 tests pass.
@@ -135,9 +155,26 @@ So the prototype shows the record as provided but not assessed, and sends the ca
 - Screenshots: before, after and focus, at 1440 × 900, 390 × 844 and 360 × 640 (`site/lab/record-test/`, git-ignored).
 - The scroll-craft harness was not rerun for the prototype.
 
+**Mid-height phone fix**, on the branch's final files (20 October 2026). Each check ran against the untouched prototype build first, then against the fix, and the outputs were compared line by line.
+
+- `npm run build:pages` and `npm test`: clean artifact, 11 of 11 tests pass.
+- `fit.mjs` now has 16 sizes. The new ones are 360 × 780, 360 × 800, 375 × 812 and 393 × 852. On the untouched build it failed at the first three, with 7 failures: the decision outside the stage at each, and the hero status line out of its record at each, as listed above. With the fix, all 16 sizes pass. The decision now ends 52, 65 and 89 px inside the screen at 360 × 780, 360 × 800 and 375 × 812. The hero status line ends 10 px inside its record, as on the compact phones.
+- `record-test.mjs` now runs at the same 16 sizes plus 412 × 915. It no longer excuses an overrun at 375 × 812 and 360 × 800. On the untouched build it failed at 360 × 780, 360 × 800 and 375 × 812, because the decision was outside the stage. With the fix, every check passes. The hint is shown at 390 × 844, 393 × 852, 412 × 915 and on desktop, and hidden on shorter phones, as before.
+- A sweep across 344–430 px wide and 640–960 px tall (a scratch script, not kept). With the fix, every size from 360 to 430 px wide fits except the first gap below. The decision ends at least 3 px inside the screen; the closest is 360 × 640, the same as before. The hero status line ends at least 7 px inside its record. Two gaps remain:
+  - At 381–383 px wide and 841–847 px tall, the decision ends 1–3 px below the screen. No phone has that viewport; 384 × 854 has 20 px to spare.
+  - At 344 px wide (Galaxy Z Fold, folded), the hero status line runs up to 10 px out of its record between 761 and 851 px tall. The investigation fits there at every height. At 640 px tall it runs 17 px out, as it did before the fix. This is narrower than any size the page was designed for.
+- Every other check gives the same result as on the untouched build: `hero-fit.mjs`, `hero-fit-phone.mjs` (same figures), `close-fit.mjs`, `functional.mjs` (27 tab stops), `record-links.mjs` (same figures, including the Back issue below), `moments.mjs`, `sheet-look.mjs`, `prod.mjs`, `prod-live.mjs` and `detail.mjs`.
+  - `prod.mjs` and `prod-live.mjs` differed only by the known 64/65 px flake (below), once in each direction.
+  - `detail.mjs` differed only in its animation-frame samples. Rerun, it matched the untouched build exactly.
+- Screenshots of the investigation and the hero at 360 × 800, 375 × 812 and 390 × 844, before and after, are in `site/lab/phone-fit/` (git-ignored). They include two before-and-after strips.
+  - At 360 × 800 and 375 × 812, the decision and the AI note are on screen, and the photograph's pins and labels are clear of each other.
+  - At 390 × 844 nothing changed. There, "Procedure requirement" still touches "On the floor", as it did before.
+- `short.mjs` was not run (stale, below). The scroll-craft harness was not rerun.
+- The checks ran against the build served on port 4531, using copies of the checks pointed there. Port 4530 was held by another worktree's server for the identical untouched build, which served as the "before".
+
 **Found while building the prototype, already present before it, and not fixed:**
 
-- At 360 × 780, 360 × 800 and 375 × 812, the investigation's decision overruns the pinned stage by 71, 59 and 20 px. `fit.mjs` has no phone sizes between 667 and 844 px tall, so it doesn't catch this. The prototype's hint is hidden at these sizes, so it adds nothing to the overrun.
+- *Fixed on 20 October 2026; see [Mid-height phones](#mid-height-phones-fix-20-october-2026).* At 360 × 780, 360 × 800 and 375 × 812, the investigation's decision overran the pinned stage by 71, 59 and 20 px. `fit.mjs` had no phone sizes between 667 and 844 px tall, so it didn't catch this. The prototype's hint is hidden at these sizes, so it added nothing to the overrun.
 - `lab/checks/short.mjs` waits for `.sheet--g2`, which exists in neither V6 nor V7, so it never finishes.
 - In `record-links.mjs`, Back returns to the link for most links. It doesn't for "Illustrative record ID-0417" at 1440 × 900, or for the DI-0417, ID-0417 and CAPA-0212 catalogue links at 390 × 844. For example, the DI-0417 link was 891 px down the screen before it was followed, and 435 px after Back. The untouched V7 build gives the same figures.
 - `prod.mjs` and `prod-live.mjs` sometimes read the SOP page 1 px below the top bar (65 px instead of 64). That happened in 2 of 6 runs on the untouched build and in 2 of 6 on the prototype. The checks measure after a fixed 900 ms wait.

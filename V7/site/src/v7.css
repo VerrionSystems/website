@@ -755,6 +755,13 @@ html:not(.sc-ready) .slip { display: none; }
 @media screen and (max-width: 400px) {
   .sheet--hero .field__val small { display: none; }
 }
+/* Phones under 861 px tall, at any width (360 × 800, 375 × 812, 412 × 800):
+   the cards drop the source tags too, and the floor gives up height so the
+   record keeps at least 450 px. From 834 px tall the floor is unchanged. */
+@media screen and (max-width: 860px) and (max-height: 860px) {
+  .act--hero { --mf: min(46svh, 100svh - 450px); }
+  .sheet--hero .field__val small { display: none; }
+}
 
 /* Compact phones (375 × 667, 360 × 640): recomposed rather than squeezed. */
 @media screen and (max-width: 860px) and (max-height: 760px) {
@@ -772,7 +779,6 @@ html:not(.sc-ready) .slip { display: none; }
   .sheet--hero .field, .sheet--hero .field:first-child { padding: 2px 8px; }
   .sheet--hero .fields { gap: 3px; margin-top: 3px; }
   .sheet--hero .field__val { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.7812rem; }
-  .sheet--hero .field__val small { display: none; }
   .sheet--hero .sheet__status { font-size: 0.5938rem; letter-spacing: 0.05em; }
   .act--hero .seam span:first-child { display: none; }
   /* Four corners, leaving a lane through the middle for her face. */
@@ -783,7 +789,16 @@ html:not(.sc-ready) .slip { display: none; }
   .slip--b { left: 2%; top: calc(var(--bar) + var(--h1) + 28px); }
   .slip--c { left: 2%; top: calc(var(--mf) - 64px); }
   .slip--d { left: 61%; top: calc(var(--mf) - 64px); }
+  /* The AI note is also answered in the questions below. */
+  .decision__ai { display: none; }
+}
 
+/* The investigation on compact phones, on phones up to 400 px wide and
+   840 px tall (360 × 800, 375 × 812), and on any phone up to 380 px wide: at
+   full size the human decision would end below the screen. The copy rides
+   on a larger photograph, the subline and the module line go, and the
+   record is set tighter. From 761 px tall the AI note stays. */
+@media screen and (max-width: 860px) and (max-height: 760px), screen and (max-width: 400px) and (max-height: 840px), screen and (max-width: 380px) {
   .act--peak { --mf: 36svh; }
   .peak-copy { z-index: 4; top: calc(var(--bar) + 10px); }
   .display--floor { font-size: 1.08rem; text-shadow: 0 1px 12px rgba(13, 23, 25, 0.9); }
@@ -797,7 +812,6 @@ html:not(.sc-ready) .slip { display: none; }
   .cause { padding: 6px 8px; }
   .cause__text { font-size: 0.8438rem; }
   .ev { padding: 4px 0; font-size: 0.7812rem; }
-  .decision__ai { display: none; }
   .decision__who { font-size: 0.7812rem; }
 }
 

@@ -50,12 +50,12 @@ Never add the V5 exploration, `lab/` checks, `evidence/` captures, source images
 
 - `hero-fit.mjs`: the four notes and the record fit on the first screen, at 10 desktop sizes.
 - `hero-fit-phone.mjs`: the phone record.
-- `fit.mjs`: pinned sections fit, at 12 sizes.
+- `fit.mjs`: pinned sections fit, at 16 sizes. Seven are phones: 360 × 640, 375 × 667, 360 × 780, 360 × 800, 375 × 812, 390 × 844 and 393 × 852.
 - `close-fit.mjs`: scrolled to the end, the close photo sits below the top bar with both heads in view (16 sizes).
 - `functional.mjs`: keyboard and phone menu.
 - `prod.mjs`: fonts, legacy links, legal pages and external requests.
 - `record-links.mjs`: each in-page record link lands under the top bar, and Back returns to it.
 - `detail.mjs`: close-ups of the new records, the dialog (opening, focus, Copy message), the phone menu (inert page) and a print PDF.
-- `record-test.mjs`: marking the investigation's missing record as provided, at the 12 pinned-fit sizes and three more phones. It checks that nothing in the record moves, that the wording changes and changes back, the keyboard path and name, the status message and reduced motion.
+- `record-test.mjs`: marking the investigation's missing record as provided, at the 16 pinned-fit sizes and 412 × 915. It checks that nothing in the record moves, that the wording changes and changes back, the keyboard path and name, the status message and reduced motion.
 
 The scroll-craft harness provides the dead-scroll and contrast checks.

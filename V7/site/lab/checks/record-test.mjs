@@ -1,6 +1,6 @@
 // "A record to test": the reader can mark the investigation's missing
-// adjustment record as provided. Checks, at every pinned-fit size plus three
-// common phones:
+// adjustment record as provided. Checks, at every pinned-fit size plus one
+// more phone:
 //   - marking the record moves nothing in the pinned sheet (no width or height
 //     change), and the decision, gap row and hint stay inside the stage;
 //   - the evidence row, proposed cause, floor pin and thread change state, and
@@ -14,11 +14,7 @@ import path from 'node:path';
 const { chromium } = createRequire(path.join(process.cwd(), 'package.json'))('playwright-core');
 const URL = process.argv[2] || 'http://localhost:4530';
 const browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true });
-const sizes = [[1024, 768], [1280, 720], [1440, 900], [1536, 760], [1440, 700], [1366, 650], [1280, 620], [1280, 560], [1024, 600], [390, 844], [375, 667], [360, 640], [375, 812], [360, 800], [412, 915]];
-// Not in fit.mjs. At 375 x 812 and 360 x 800 the decision already overruns the
-// stage in V7 as it stood before this control (20 and 59 px), so there an
-// overrun is reported, not failed, and the hint must be hidden.
-const extra = new Set(['375x812', '360x800', '412x915']);
+const sizes = [[1024, 768], [1280, 720], [1440, 900], [1536, 760], [1440, 700], [1366, 650], [1280, 620], [1280, 560], [1024, 600], [390, 844], [375, 667], [360, 640], [360, 780], [360, 800], [375, 812], [393, 852], [412, 915]];
 let fails = 0;
 const fail = (where, msg) => { fails++; console.log(`  FAIL ${where}: ${msg}`); };
 
@@ -73,10 +69,7 @@ for (const [w, h] of sizes) {
   const before = await snap(page);
   if (before.checked) fail(where, 'starts checked');
   if (before.tag !== 'Open to challenge' || before.state !== 'Not yet provided' || before.pin !== 'not yet provided') fail(where, `wrong start wording: ${before.tag} / ${before.state} / ${before.pin}`);
-  const known = extra.has(where) ? before.outside.filter(s => s === '.decision') : [];
-  if (known.length) console.log(`  note ${where}: .decision overruns the stage, as in V7 before this control`);
-  if (extra.has(where) && h <= 840 && before.hint) fail(where, 'hint shown on a phone with no room for it');
-  before.outside = before.outside.filter(s => !known.includes(s));
+  if (w <= 860 && h <= 840 && before.hint) fail(where, 'hint shown on a phone with no room for it');
   // A tap on the row text, not the box: the whole row is the label.
   await page.click('.ev--pick .ev__txt');
   await page.waitForTimeout(250);
@@ -86,7 +79,6 @@ for (const [w, h] of sizes) {
   if (after.threadDash !== 'none') fail(where, `gap thread still dashed (${after.threadDash})`);
   if (after.decision !== before.decision || after.cause !== before.cause) fail(where, 'decision or cause text changed');
   if (!after.status.startsWith('Proposed cause: review again.')) fail(where, `status: "${after.status}"`);
-  after.outside = after.outside.filter(s => !known.includes(s));
   if (before.outside.length) fail(where, `outside stage before: ${before.outside}`);
   if (after.outside.length) fail(where, `outside stage after: ${after.outside}`);
   const moved = before.rects.filter((r, i) => r !== after.rects[i]).length;
