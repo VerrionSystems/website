@@ -1,6 +1,6 @@
 # Verrion Systems Website
 
-Public website for Verrion Systems and Pharma Compliance Suite. **V8** (V7, the polished "floor and record" layout, with its phone layouts fixed) replaces V7 on the live domain when Dawid merges its release pull request; that merge is the approval. Deployment completion must be established separately from the workflow and public-site checks.
+Public website for Verrion Systems and Pharma Compliance Suite. **V8** (V7, the polished "floor and record" layout, with its phone layouts fixed) replaces V7 on the live domain. Dawid's merge of its release pull request is the approval. Deployment completion must be established separately from the workflow and public-site checks.
 
 ## Production source and artifact
 

@@ -8,7 +8,7 @@ import { checkArtifact } from '../scripts/artifact-policy.mjs';
 import { resolveLegacyLocation, canonicalLegacyUrl, moduleAtLocation, followLegacyLinks } from '../src/legacyLinks.js';
 const artifact=fileURLToPath(new URL('../root-dist',import.meta.url));
 
-test('legacy entry points reach the right part of V7',()=>{
+test('legacy entry points reach the right part of V8',()=>{
   assert.equal(resolveLegacyLocation({search:'?item=deviation-companion'}).module,'companion');
   assert.equal(resolveLegacyLocation({search:'?item=deviation-investigator'}).module,'investigation');
   assert.equal(resolveLegacyLocation({search:'?item=capa'}).module,'actions');
@@ -49,7 +49,7 @@ test('a legacy hash still scrolls when popstate and hashchange both fire',()=>{
   assert.deepEqual(scrolled,['contact']);
 });
 
-test('every V7 anchor a legacy link can resolve to exists on the page',async()=>{
+test('every V8 anchor a legacy link can resolve to exists on the page',async()=>{
   const html=await readFile(fileURLToPath(new URL('../index.html',import.meta.url)),'utf8');
   for(const id of ['facts','investigation','workflows','procedure','questions','contact','module-companion','module-investigation','module-disposition','module-actions'])
     assert(html.includes(`id="${id}"`),`missing #${id}`);

@@ -22,9 +22,6 @@
   var reduceMQ = matchMedia('(prefers-reduced-motion: reduce)');
   var reduce = reduceMQ.matches;
   var phoneMQ = matchMedia('(max-width: 860px)');
-  // Too short or too narrow to pin (v8.css): both moments are shown resolved,
-  // side by side from 600 px wide.
-  var flatMQ = matchMedia('(max-height: 500px), (max-width: 860px) and (max-height: 620px), (max-width: 340px)');
   var sc = ScrollCraft.mount(document.body);
 
   var clamp = function (x, a, b) { return x < a ? a : x > b ? b : x; };
@@ -164,6 +161,10 @@
     var s = peakStage.getBoundingClientRect();
     svg.setAttribute('viewBox', '0 0 ' + s.width.toFixed(0) + ' ' + s.height.toFixed(0));
     var maxR = photoBox.getBoundingClientRect().width * 0.17;
+    // Where v8.css lays the resolved investigation out in two columns (a
+    // sideways phone), the photograph sits beside the record, as on desktop.
+    // Read from the layout itself, so the breakpoint lives only in the CSS.
+    var beside = getComputedStyle(peakStage).gridTemplateColumns.split(' ').length > 1;
     threads.forEach(function (T) {
       var d = T.row.querySelector('.ev__dot').getBoundingClientRect();
       var p = T.pin.getBoundingClientRect();
@@ -172,7 +173,7 @@
       var dd;
       // Threads climb to a photograph above the record (phones), or run
       // sideways to one beside it (desktop, and a sideways phone).
-      if (phone && !(flatMQ.matches && innerWidth >= 600)) {
+      if (phone && !beside) {
         var dy = Math.abs(y1 - y2);
         dd = 'M' + x1 + ' ' + y1 + ' C' + (x1 - 4) + ' ' + (y1 - dy * 0.62) + ' ' + x2 + ' ' + (y2 + dy * 0.3) + ' ' + x2 + ' ' + y2;
       } else {
