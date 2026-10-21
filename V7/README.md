@@ -2,7 +2,7 @@
 
 Built on 19–20 October 2026 at Dawid's request to "work on V7 improvements using the new website design skills" and to say what could be improved further "without throwing professionals away". The skills used were `better-ui`, `better-typography`, `better-accessibility`, `animate` and `impeccable`, with the `scroll-craft` harness for verification.
 
-**Status: local preview only.** V6 (`V6/site/`) remains the production source, and the Pages workflow still builds V6. V7 has not been approved, committed or deployed. The new wording listed below needs Dawid's approval before any release.
+**Status: approved, not yet released.** Dawid approved V7 on 21 October 2026, after reviewing the final build. That build includes the "a record to test" prototype, the mid-height phone fix, and the new wording listed below. V6 (`V6/site/`) remains the production source, and the Pages workflow still builds V6, until a release pull request that points it at `V7/site` is merged.
 
 V7 keeps V6's composition, photographs, two scroll moments and approved copy. It changes how the page is finished, and adds a few functions a quality professional would use. It adds no new scroll choreography.
 
@@ -62,7 +62,7 @@ Both are fixed, and a unit test covers the second. The test fails on the broken 
 
 ### A record to test (prototype, 20 October 2026)
 
-This prototypes item 1 of [What could be improved next](#what-could-be-improved-next). It was built on the side branch `claude/laughing-dhawan-eb877d` from a copy of this folder. Its wording is unapproved (see the table below).
+This prototypes item 1 of [What could be improved next](#what-could-be-improved-next). It was built on the side branch `claude/laughing-dhawan-eb877d` from a copy of this folder. Its wording was approved with V7 on 21 October 2026 (see the table below).
 
 **What the reader does.** In the investigation record (`DI-0417`), the "Equipment adjustment record" row is a checkbox. Selecting the row, or pressing Space on the box, marks the record as provided. Selecting it again marks it as missing.
 
@@ -121,7 +121,7 @@ So the prototype shows the record as provided but not assessed, and sends the ca
   The heading sits on the photograph. The photograph is larger as a result (232 px tall at 360 × 800, up from 188), so the pins and their labels have more room. The subline and the module line are not shown. The record's text is set slightly smaller: 13.5 px for the cause, 12.5 px for the evidence and the decision (was 15 and 13). Unlike on phones up to 760 px tall, the AI note stays. Wider phones keep the full layout, including the subline and the module line.
 - **Hero.** On phones up to 860 px tall, the record's cards drop their source tags. They already did this on narrow phones and on phones up to 760 px tall, because the notes carry the tags as they cross. The floor's height is now `min(46svh, 100svh - 450px)`, so the record always keeps at least 450 px. From 834 px tall the floor is unchanged. At 360 × 800 it is 350 px, 18 px less than before. The notes keep their size and their places relative to the floor.
 
-**For Dawid to decide.** Phones up to 760 px tall already hid the investigation's subline ("Where evidence is missing, the gap stays visible.") and module line ("Deviation Investigator · Causal review"). They are now hidden on narrow phones up to 840 px tall too, such as 360 × 800 and 375 × 812, and at any height up to 380 px wide. Showing them there would mean a smaller photograph or a record that runs off the screen. The words themselves are unchanged and still read on wider phones and on desktop.
+**Decided with V7's approval (21 October 2026).** Phones up to 760 px tall already hid the investigation's subline ("Where evidence is missing, the gap stays visible.") and module line ("Deviation Investigator · Causal review"). They are now hidden on narrow phones up to 840 px tall too, such as 360 × 800 and 375 × 812, and at any height up to 380 px wide. Showing them there would mean a smaller photograph or a record that runs off the screen. The words themselves are unchanged and still read on wider phones and on desktop.
 
 ## Verification (final files, 20 October 2026)
 
@@ -188,7 +188,7 @@ So the prototype shows the record as provided but not assessed, and sends the ca
 - A real print dialog, including US Letter paper.
 - How the link preview renders in Teams, Outlook or LinkedIn. This needs the deployed URL, because `og:image` points at `www.verrionsystems.com`.
 
-## New wording for Dawid to approve
+## New wording, approved with V7 (21 October 2026)
 
 | Where | Text |
 |---|---|
@@ -208,7 +208,7 @@ So the prototype shows the record as provided but not assessed, and sends the ca
 
 Ordered by value to a quality professional. Each item needs a decision or input from Dawid. Item 1 is prototyped; the others are not built.
 
-1. **A record the reader can test.** *Prototyped on 20 October 2026; see [A record to test](#a-record-to-test-prototype-20-october-2026). It needs Dawid's approval of its wording before it can go further.* In the investigation record, let the reader mark the missing "Equipment adjustment record" as provided, and watch the proposed cause's status change, while the conclusion stays a human decision. It would be a keyboard-accessible control rather than motion, demonstrating the page's main claim. It needs PCS's actual DI evidence states, so it doesn't over-claim.
+1. **A record the reader can test.** *Prototyped on 20 October 2026 and approved with V7 on 21 October 2026; see [A record to test](#a-record-to-test-prototype-20-october-2026).* In the investigation record, let the reader mark the missing "Equipment adjustment record" as provided, and watch the proposed cause's status change, while the conclusion stays a human decision. It would be a keyboard-accessible control rather than motion, demonstrating the page's main claim. It needs PCS's actual DI evidence states, so it doesn't over-claim.
 2. **Supplier-assessment answers.** QA and IT will ask about hosting and data location, access control, audit trail, e-signatures, validation support (CSV/CSA) and security before they ask for a demo. A short, factual section linking Data handling and Privacy, plus "questionnaire answers on request", would meet that early. It needs facts from Dawid; nothing should be claimed without evidence.
 3. **An approved one-page overview (PDF)** to download and circulate internally. The print layout is the stopgap. `docs/private-pilot-one-pager.md` is a starting point.
 4. **What happens after you write.** Three steps (reply, walkthrough, pilot scope) in the empty column beside "Before we talk". It needs agreed timings.

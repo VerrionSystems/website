@@ -1,6 +1,6 @@
 # V7 preview site
 
-V7 is a polish of V6, the calm cut of the V5 "Floor and Record" exploration. It is a **local preview**: V6 (`V6/site/`) remains the production source and the Pages workflow still builds V6. What changed, how it was verified and the new wording awaiting approval are in [`../README.md`](../README.md).
+V7 is a polish of V6, the calm cut of the V5 "Floor and Record" exploration. Dawid approved it on 21 October 2026. It is **not yet released**: V6 (`V6/site/`) remains the production source, and the Pages workflow still builds V6, until a release pull request points it at `V7/site`. What changed, how it was verified and the approved new wording are in [`../README.md`](../README.md).
 
 ## What it is
 
