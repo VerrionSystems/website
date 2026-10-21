@@ -1,4 +1,6 @@
-# V7 production site
+# V7 production site (superseded)
+
+> V8 (`V8/site/`), V7 with its phone layouts fixed, replaces V7 on the live site when its release pull request is merged, and the Pages workflow then builds V8. This directory is retained unchanged as the previous production source.
 
 V7 is a polish of V6, the calm cut of the V5 "Floor and Record" exploration. Dawid approved it on 21 October 2026 to replace V6 on www.verrionsystems.com, including its new wording. This directory is the production source; V6 (`V6/site/`) is retained unchanged as the previous one. Deployment completion is recorded separately, after the Pages workflow and public-site checks. What changed, how it was verified and the approved new wording are in [`../README.md`](../README.md).
 
