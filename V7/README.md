@@ -2,7 +2,7 @@
 
 Built on 19–20 October 2026 at Dawid's request to "work on V7 improvements using the new website design skills" and to say what could be improved further "without throwing professionals away". The skills used were `better-ui`, `better-typography`, `better-accessibility`, `animate` and `impeccable`, with the `scroll-craft` harness for verification.
 
-**Status: approved, not yet released.** Dawid approved V7 on 21 October 2026, after reviewing the final build. That build includes the "a record to test" prototype, the mid-height phone fix, and the new wording listed below. V6 (`V6/site/`) remains the production source, and the Pages workflow still builds V6, until a release pull request that points it at `V7/site` is merged.
+**Status: approved to replace V6 on the live site.** Dawid approved V7 on 21 October 2026, after reviewing the final build. That build includes the "a record to test" prototype, the mid-height phone fix, and the new wording listed below. The production source is [`site/`](site/); the release pull request points the Pages workflow at it. V6 (`V6/site/`) is retained unchanged as the previous production source. Deployment completion is recorded separately, after the Pages workflow and public-site checks.
 
 V7 keeps V6's composition, photographs, two scroll moments and approved copy. It changes how the page is finished, and adds a few functions a quality professional would use. It adds no new scroll choreography.
 

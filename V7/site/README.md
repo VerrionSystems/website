@@ -1,6 +1,6 @@
-# V7 preview site
+# V7 production site
 
-V7 is a polish of V6, the calm cut of the V5 "Floor and Record" exploration. Dawid approved it on 21 October 2026. It is **not yet released**: V6 (`V6/site/`) remains the production source, and the Pages workflow still builds V6, until a release pull request points it at `V7/site`. What changed, how it was verified and the approved new wording are in [`../README.md`](../README.md).
+V7 is a polish of V6, the calm cut of the V5 "Floor and Record" exploration. Dawid approved it on 21 October 2026 to replace V6 on www.verrionsystems.com, including its new wording. This directory is the production source; V6 (`V6/site/`) is retained unchanged as the previous one. Deployment completion is recorded separately, after the Pages workflow and public-site checks. What changed, how it was verified and the approved new wording are in [`../README.md`](../README.md).
 
 ## What it is
 
@@ -40,7 +40,7 @@ npm test
   - the repository's hosting files;
   - the four legacy module-entry pages.
 - `scripts/artifact-policy.mjs` validates the exact root-file list, the permitted assets and every referenced file. It rejects third-party font requests and non-release content.
-- The Pages workflow uploads only `V6/site/root-dist/`. Pointing it at V7 is a release decision, not part of this preview.
+- The Pages workflow uploads only `V7/site/root-dist/`.
 
 Never add the V5 exploration, `lab/` checks, `evidence/` captures, source images or design notes to the artifact.
 

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Production source for www.verrionsystems.com (V7 preview). Builds a static GitHub Pages artifact in root-dist/.",
+  "description": "Production source for www.verrionsystems.com (V7). Builds a static GitHub Pages artifact in root-dist/.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

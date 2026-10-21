@@ -1,4 +1,6 @@
-# V6 production site
+# V6 production site (superseded)
+
+> On 21 October 2026 V7 (`V7/site/`), a polish of V6, was approved to replace V6 on the live site, and the Pages workflow now builds V7. This directory is retained unchanged as the previous production source.
 
 V6 is the calm cut of the V5 "Floor and Record" exploration. Dawid approved it on 16 October 2026 to replace V4 Human Practice on www.verrionsystems.com, including its current wording. This directory is the production source. Deployment completion is recorded separately, after the Pages workflow and public-site checks.
 
