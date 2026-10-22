@@ -1,0 +1,1012 @@
+/* Verrion Systems V7 · polish of V6, the calm cut of V5 "Floor and Record".
+   Same two grounds (dark floor, controlled-document paper) and the same one
+   accent hue in two lightnesses. Two pinned moments only; everything else is
+   ordinary scrolling.
+
+   V7 keeps V6's composition and copy, and adds: one type scale in rem, hover
+   styles only for pointers that hover, pressed controls that scale, a gentle
+   open for the dialog and the disclosures, links between the illustrative
+   records, and a print layout that reads as a document. */
+
+:root {
+  --floor: #0d1719;
+  --floor-2: #142226;
+  --floor-ink: #e9efeb;
+  --floor-soft: #a6b8b2;
+  --floor-line: rgba(233, 239, 235, 0.14);
+
+  --paper: #e6eae5;
+  --sheet: #f8faf6;
+  --sheet-2: #eef2ec;
+  --rec-ink: #10303a;
+  --rec-soft: #4a5e63;
+  --rec-line: rgba(16, 48, 58, 0.16);
+
+  --mint: #8ad8b2;        /* accent on the floor */
+  --green: #1b6f4d;       /* the same hue on paper */
+  --thread: #2e9a6e;      /* crosses both grounds; 5:1 on floor, 3.3:1 on paper */
+
+  /* Self-hosted (no third-party font requests from the live site). */
+  --display: "Archivo Variable", "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --text: "Instrument Sans Variable", "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+
+  --bar: calc(64px + env(safe-area-inset-top, 0px));
+  --pad-out: clamp(20px, 3.9vw, 64px);
+  --pad-in: clamp(48px, 6.2vw, 104px);
+  --top: clamp(118px, 15svh, 150px);
+  --h1: clamp(2.5rem, 1.25rem + 3.3vw, 4.5rem);
+  --sec-pad: clamp(64px, 7vw, 112px);
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
+
+  /* Type scale. In rem, so a reader's own browser text size still applies.
+     Record pages use the small steps; the floor uses body and lead. */
+  --fs-micro: 0.6875rem;   /* 11px · uppercase labels, states and sources */
+  --fs-caption: 0.8125rem; /* 13px · notes under a record, dialog details */
+  --fs-small: 0.875rem;    /* 14px · navigation, compact record text */
+  --fs-record: 0.9375rem;  /* 15px · text on a record */
+  --fs-body: 1.0625rem;    /* 17px · running text */
+  --fs-lead: 1.125rem;     /* 18px · the note beside a heading */
+  --track-over: 0.1em;     /* overlines: section and module labels */
+  --track-field: 0.08em;   /* field labels, states and sources on a record */
+
+  /* Photographs on the dark floor get a hairline edge in pure white. */
+  --img-outline: oklch(1 0 0 / 0.1);
+
+  /* engine tokens */
+  --sc-canvas: var(--floor);
+  --sc-surface: var(--floor-2);
+  --sc-ink: var(--floor-ink);
+  --sc-ink-soft: var(--floor-soft);
+  --sc-accent: var(--mint);
+  --sc-accent-ink: var(--floor);
+  --sc-font-display: var(--display);
+  --sc-font-text: var(--text);
+  --sc-font-mono: var(--display);
+  --sc-shadow-color: 190 40% 8%;
+}
+
+html { scroll-padding-top: var(--bar); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { background: var(--floor); color: var(--floor-ink); font-family: var(--text); font-size: var(--fs-body); line-height: 1.58; }
+p, h1, h2, h3, ol, ul, dl, dd, figure { margin: 0; padding: 0; }
+p { text-wrap: pretty; }
+ol, ul { list-style: none; }
+img { max-width: none; }
+button { cursor: pointer; }
+/* The engine rounds every focus ring to 6px; this site's corners are 2-3px. */
+:focus-visible { border-radius: 2px; }
+.print-only { display: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.skip { position: fixed; left: 12px; top: -60px; z-index: 100; background: var(--mint); color: var(--floor); padding: 10px 14px; font-weight: 600; text-decoration: none; }
+.skip:focus { top: 12px; }
+
+/* Paper grounds take the dark accent for focus: mint on paper is 1.6:1. */
+.half--record :focus-visible, .col--record :focus-visible, .walk :focus-visible, .topbar :focus-visible { outline-color: var(--green); }
+
+/* ---------------------------------------------------------------- type -- */
+.display { font-family: var(--display); font-weight: 620; font-stretch: 106%; letter-spacing: -0.026em; line-height: 1.04; text-wrap: balance; }
+.display--md { font-size: clamp(1.9rem, 1.2rem + 2vw, 3.1rem); }
+.display--lg { font-size: clamp(2.2rem, 1.2rem + 2.8vw, 3.8rem); }
+.display--floor { font-size: clamp(1.6rem, 0.95rem + 1.85vw, 2.75rem); color: var(--floor-ink); }
+.label { font-family: var(--display); font-stretch: 118%; font-weight: 650; font-size: var(--fs-micro); letter-spacing: var(--track-over); text-transform: uppercase; color: var(--green); }
+.label--floor { color: var(--mint); }
+.floor-note { color: var(--floor-soft); font-size: var(--fs-lead); max-width: 36ch; margin-top: 16px; text-wrap: pretty; }
+.ref { white-space: nowrap; font-family: var(--display); font-stretch: 100%; font-weight: 500; font-variant-numeric: tabular-nums; letter-spacing: 0.02em; color: var(--rec-soft); font-size: 0.82em; margin-left: 0.5em; }
+
+/* -------------------------------------------------------------- top bar --
+   The unmodified wordmark on a solid light ground, direct links for people
+   who skim, and the one action. */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 70; height: var(--bar);
+  display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  padding: env(safe-area-inset-top, 0px) var(--pad-out) 0;
+  background: var(--sheet); color: var(--rec-ink);
+  border-bottom: 1px solid var(--rec-line);
+  box-shadow: 0 10px 26px -18px rgba(5, 14, 16, 0.55);
+}
+.topbar__brand { display: block; flex: none; }
+.topbar__brand img { display: block; height: 32px; width: auto; }
+.topbar__nav { display: flex; align-items: center; gap: clamp(14px, 2vw, 28px); }
+.topbar__nav a {
+  color: var(--rec-ink); text-decoration: none; white-space: nowrap;
+  font-family: var(--display); font-stretch: 104%; font-weight: 600; font-size: var(--fs-small);
+  padding: 8px 0; border-bottom: 1.5px solid transparent;
+  transition: border-color 150ms ease;
+}
+.topbar__nav a[aria-current] { border-bottom-color: var(--green); }
+.topbar__cta, .topbar__menu {
+  height: 40px; padding: 0 16px; border-radius: 2px; white-space: nowrap;
+  font-family: var(--display); font-stretch: 106%; font-weight: 650; font-size: 0.875rem; letter-spacing: 0.01em;
+  transition-property: background-color, border-color, scale;
+  transition-duration: 150ms; transition-timing-function: var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.topbar__cta { margin-left: 4px; background: var(--rec-ink); color: var(--sheet); border: 1px solid var(--rec-ink); }
+.topbar__menu { display: none; background: transparent; color: var(--rec-ink); border: 1px solid rgba(16, 48, 58, 0.32); }
+.topbar__menu[aria-expanded="true"] { border-color: var(--rec-ink); background: var(--sheet-2); }
+.topbar__cta:active, .topbar__menu:active { scale: 0.96; }
+
+/* -------------------------------------------------------- pinned stage -- */
+.stage { background: var(--floor); }
+.half { position: absolute; top: 0; bottom: 0; width: 50%; }
+.half--floor { left: 0; background: var(--floor); color: var(--floor-ink); overflow: clip; }
+.half--record { left: 50%; background: var(--paper); color: var(--rec-ink); overflow: clip; }
+.seam { display: none; }
+.seam-line { position: absolute; top: var(--bar); bottom: 0; left: 50%; width: 1px; margin-left: -0.5px; z-index: 5; background: rgba(138, 216, 178, 0.35); pointer-events: none; }
+.seam-line__gate { position: absolute; left: -1.5px; top: 0; width: 4px; height: 160px; opacity: 0;
+  background: linear-gradient(to bottom, transparent, var(--mint) 40%, var(--mint) 60%, transparent); }
+.side-labels { position: absolute; top: calc(var(--bar) + 16px); left: 50%; width: 0; z-index: 6; pointer-events: none; }
+.side-labels span { position: absolute; top: 0; white-space: nowrap; font-family: var(--display); font-stretch: 118%; font-weight: 650; font-size: 0.6875rem; letter-spacing: 0.12em; text-transform: uppercase; }
+.side-labels span:first-child { right: 16px; color: var(--floor-soft); }
+.side-labels span:last-child { left: 16px; color: var(--rec-soft); }
+
+/* ---------------------------------------------------------------- sheet -- */
+.sheet {
+  background: var(--sheet); color: var(--rec-ink);
+  border: 1px solid var(--rec-line); border-radius: 3px;
+  padding: clamp(16px, 1.6vw, 24px) clamp(18px, 1.9vw, 28px);
+  box-shadow: 0 1px 0 #fff inset, 0 2px 5px rgba(16, 48, 58, 0.06), 0 22px 44px -22px rgba(16, 48, 58, 0.32);
+}
+.sheet__head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-bottom: 10px; border-bottom: 1.5px solid var(--rec-ink); }
+.sheet__title { font-family: var(--display); font-stretch: 112%; font-weight: 680; font-size: 0.9375rem; letter-spacing: 0.02em; text-transform: uppercase; }
+.sheet__meta { font-size: var(--fs-micro); color: var(--rec-soft); white-space: nowrap; }
+.sheet__module { margin: 12px 0 4px; font-family: var(--display); font-stretch: 118%; font-weight: 650; font-size: var(--fs-micro); letter-spacing: var(--track-over); text-transform: uppercase; color: var(--green); }
+.sheet__foot { margin-top: 14px; font-size: var(--fs-caption); color: var(--rec-soft); text-wrap: pretty; }
+
+.fields { display: flex; flex-direction: column; }
+.field { padding: clamp(8px, 1.15svh, 13px) 0; border-top: 1px dashed var(--rec-line); }
+.field:first-child { border-top: 0; }
+.field dt { font-family: var(--display); font-stretch: 112%; font-weight: 650; font-size: var(--fs-micro); letter-spacing: var(--track-field); text-transform: uppercase; color: var(--rec-soft); }
+.field dd { position: relative; margin-top: 3px; min-height: 1.4em; min-width: 0; }
+.field__val { display: block; font-size: var(--fs-record); line-height: 1.38; font-weight: 520; opacity: var(--v, 1); }
+.field__val small { display: block; margin-top: 2px; font-size: var(--fs-micro); font-weight: 600; letter-spacing: var(--track-field); text-transform: uppercase; color: var(--green); }
+.field__empty {
+  position: absolute; left: 0; top: 0; right: 0;
+  font-size: var(--fs-small); color: var(--rec-soft); font-style: italic;
+  border-bottom: 1px dotted rgba(74, 94, 99, 0.45); padding-bottom: 2px;
+  opacity: calc(1 - var(--v, 1));
+}
+.sheet__status { margin-top: 10px; font-family: var(--display); font-stretch: 112%; font-weight: 650; font-size: var(--fs-micro); letter-spacing: var(--track-field); text-transform: uppercase; color: var(--green); }
+.sheet__status::before { content: ""; display: inline-block; width: 9px; height: 5px; margin: 0 8px 3px 0; border-left: 2px solid currentColor; border-bottom: 2px solid currentColor; rotate: -45deg; }
+
+/* ----------------------------------------------------------------- slip --
+   A noted fact. Calm: no tilt, no arc. Placed by script on a desktop, level
+   with the field it fills. Hidden until the engine is running, because
+   without script the record simply shows its filled values. */
+.slip {
+  position: absolute; left: 0; top: 0; z-index: 8; width: clamp(220px, 19vw, 290px);
+  padding: 8px 12px 9px; background: var(--sheet); color: var(--rec-ink);
+  border-radius: 2px; border: 1px solid var(--rec-line);
+  box-shadow: 0 2px 4px rgba(3, 10, 12, 0.18), 0 14px 28px -14px rgba(3, 10, 12, 0.55);
+  will-change: transform, opacity;
+}
+html:not(.sc-ready) .slip { display: none; }
+.slip__src { display: block; font-family: var(--display); font-stretch: 112%; font-weight: 650; font-size: var(--fs-micro); letter-spacing: var(--track-field); text-transform: uppercase; color: var(--green); }
+.slip__txt { display: block; margin-top: 2px; font-size: var(--fs-small); line-height: 1.3; font-weight: 540; }
+
+/* ---------------------------------------------------------------- hero -- */
+.hero-title { position: absolute; inset: 0; z-index: 3; pointer-events: none; margin: 0; font-size: var(--h1); }
+.hero-title > span { position: absolute; top: var(--top); display: block; font-family: var(--display); font-weight: 640; font-stretch: 106%; letter-spacing: -0.03em; line-height: 0.98; text-wrap: balance; }
+.hero-title__floor { left: var(--pad-out); width: calc(50% - var(--pad-out) - var(--pad-in)); color: var(--floor-ink); }
+.hero-title__record { left: calc(50% + var(--pad-in)); width: calc(50% - var(--pad-in) - var(--pad-out)); color: var(--rec-ink); }
+
+.hero-glow { position: absolute; inset: -10% -30% 0 -10%; pointer-events: none;
+  background: radial-gradient(42% 38% at 72% 30%, rgba(176, 214, 220, 0.14), transparent 70%); }
+.hero-window { position: absolute; left: 0; right: 0; top: 43svh; bottom: 0; overflow: clip; border-top: 1px solid var(--floor-line); }
+/* Plate and subject share one box and move together, so the subject always
+   sits exactly over herself in the photograph. The
+   subject image carries an extra strip above (90/1086 of the box) holding the
+   crown of her hairnet, which the generated photograph had cropped off. */
+.hero-plate, .hero-subject { position: absolute; display: block; --box-h: 66svh; left: calc(42% - 0.52 * var(--box-h) * 1950 / 1086); }
+.hero-plate { height: var(--box-h); aspect-ratio: 1950 / 1086; top: -5svh; z-index: 1; }
+.hero-subject { height: calc(var(--box-h) * 1176 / 1086); aspect-ratio: 1950 / 1176; top: calc(var(--sub-top, 38svh) - var(--box-h) * 90 / 1086); z-index: 4; transform-origin: 50% 100%; }
+.hero-plate img, .hero-subject img { width: 100%; height: 100%; display: block; }
+/* The plate is the original photograph, so inside the frame her soft edges sit
+   on the very pixels they came from. No filter, or the two layers would differ. */
+.hero-window::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(13, 23, 25, 0.35), transparent 30%, transparent 70%, rgba(13, 23, 25, 0.55)); }
+
+.act--hero .half--record { display: flex; flex-direction: column; padding: calc(var(--top) + var(--h1) * 2.06 + 22px) var(--pad-out) 24px var(--pad-in); }
+.half--record .hero-lede { max-width: 32rem; flex: none; font-size: clamp(1rem, 0.9rem + 0.25vw, 1.1562rem); line-height: 1.5; color: var(--rec-soft); text-wrap: pretty; }
+.sheet-stack { position: relative; flex: 1 1 auto; min-height: 0; margin-top: 28px; max-width: 40rem; }
+.sheet--hero { position: relative; height: 100%; display: flex; flex-direction: column; }
+.sheet--hero .fields { flex: 1 0 auto; display: grid; grid-template-rows: repeat(4, minmax(min-content, 1fr)); gap: 6px; margin-top: 6px; }
+/* Each field is a card that takes an equal share of the record's height, with
+   its content centred, so the four of them always fill the sheet. */
+.sheet--hero .field, .sheet--hero .field:first-child {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 10px 14px; background: var(--sheet-2);
+  border: 1px solid var(--rec-line); border-radius: 2px;
+}
+
+/* ------------------------------------------------------- investigation -- */
+.peak-copy { position: absolute; left: var(--pad-out); right: var(--pad-in); top: var(--top); max-width: 34rem; }
+.peak-sub { margin-top: 12px; color: var(--floor-soft); font-size: clamp(1rem, 0.9rem + 0.3vw, 1.1875rem); }
+.evidence-photo { position: absolute; top: 40svh; height: 57svh; aspect-ratio: 1758 / 1086; left: 0; }
+.evidence-photo img { width: 100%; height: 100%; display: block; }
+.evidence-photo__dark { filter: brightness(var(--fb, 0.24)) saturate(0.55) contrast(1.05); }
+.evidence-photo__lit { position: absolute; inset: 0;
+  -webkit-mask-image: radial-gradient(circle var(--ra, 0.1px) at 14% 60%, #000 45%, transparent 100%), radial-gradient(circle var(--rb, 0.1px) at 33% 39%, #000 45%, transparent 100%), radial-gradient(circle var(--rc, 0.1px) at 42% 87%, #000 45%, transparent 100%);
+          mask-image: radial-gradient(circle var(--ra, 0.1px) at 14% 60%, #000 45%, transparent 100%), radial-gradient(circle var(--rb, 0.1px) at 33% 39%, #000 45%, transparent 100%), radial-gradient(circle var(--rc, 0.1px) at 42% 87%, #000 45%, transparent 100%);
+}
+.evidence-photo__lit img { filter: saturate(0.92); }
+.pin { position: absolute; z-index: 3; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%;
+  border: 2px solid var(--mint); background: var(--floor); opacity: var(--po, 0); scale: var(--ps, 0.6); }
+/* Labels sit on the side the threads do not arrive from. */
+.pin__lbl { position: absolute; right: 18px; top: 50%; translate: 0 -50%; white-space: nowrap;
+  padding: 3px 8px; border-radius: 2px; background: rgba(13, 23, 25, 0.86); color: var(--floor-ink);
+  font-family: var(--display); font-stretch: 108%; font-weight: 600; font-size: 0.7188rem; letter-spacing: 0.02em; }
+.pin--below .pin__lbl { right: auto; left: -8px; top: 20px; translate: none; }
+.pin--gap { border-style: dashed; border-color: var(--floor-soft); background: transparent; }
+.pin--gap .pin__lbl { color: var(--floor-soft); border: 1px dashed rgba(166, 184, 178, 0.5); }
+
+.sheet--peak { position: absolute; left: var(--pad-in); right: var(--pad-out); top: var(--top); max-width: 40rem; }
+.cause { margin-top: 10px; padding: 12px 14px; background: var(--sheet-2); border: 1px solid var(--rec-line); border-radius: 2px; }
+.cause__label { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-stretch: 112%; font-weight: 650; font-size: var(--fs-micro); letter-spacing: var(--track-field); text-transform: uppercase; color: var(--rec-soft); }
+.tag { font-size: 0.625rem; padding: 2px 6px; border: 1px solid var(--rec-soft); border-radius: 2px; color: var(--rec-ink); }
+.cause__text { margin-top: 4px; font-family: var(--display); font-stretch: 104%; font-weight: 600; font-size: clamp(1.0625rem, 0.85rem + 0.55vw, 1.3125rem); line-height: 1.25; letter-spacing: -0.01em; }
+.evidence { margin-top: 10px; }
+.ev { display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: 10px; padding: clamp(8px, 1.2svh, 12px) 0; border-top: 1px dashed var(--rec-line); font-size: var(--fs-record); line-height: 1.32; }
+.ev__dot { width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--thread); background: var(--sheet); }
+.ev--gap .ev__dot { border-style: dashed; border-color: var(--rec-soft); }
+.ev__state { font-family: var(--display); font-stretch: 112%; font-weight: 650; font-size: var(--fs-micro); letter-spacing: var(--track-field); text-transform: uppercase; color: var(--green); white-space: nowrap; }
+.ev--gap .ev__state { color: var(--rec-soft); text-decoration: underline dashed; text-underline-offset: 3px; }
+.decision { margin-top: 18px; padding-top: 12px; border-top: 1.5px solid var(--rec-ink); }
+.decision__who { font-size: var(--fs-record); line-height: 1.42; }
+.decision__ai { margin-top: 6px; font-size: var(--fs-caption); color: var(--rec-soft); }
+
+.threads { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 7; overflow: visible; pointer-events: none; }
+.thread { fill: none; stroke: var(--thread); stroke-width: 1.7; stroke-linecap: round; }
+.thread--gap { stroke: #7f9a95; stroke-dasharray: 5 6; }
+.thread-mask { fill: none; stroke: #fff; stroke-width: 6; stroke-linecap: round; }
+
+/* ----------------------------------------------------------- flow acts -- */
+.split { display: grid; grid-template-columns: 1fr 1fr; position: relative; }
+.col { min-width: 0; }
+.col--floor { background: var(--floor); color: var(--floor-ink); padding: var(--sec-pad) var(--pad-in) var(--sec-pad) var(--pad-out); }
+.col--record { background: var(--paper); color: var(--rec-ink); padding: var(--sec-pad) var(--pad-out) var(--sec-pad) var(--pad-in); }
+.col--record > * { max-width: 40rem; }
+.act--held .col { padding-top: calc(var(--sec-pad) * 0.6); }
+
+.band { position: relative; overflow: clip; aspect-ratio: 16 / 9; margin-bottom: 32px; border-radius: 2px; max-width: 40rem; }
+.band img { width: 100%; height: 100%; object-fit: cover; display: block; outline: 1px solid var(--img-outline); outline-offset: -1px; }
+/* Held material looks held: cooler, lower, quieter than the live line. */
+.act--held .band img { object-position: 30% 50%; filter: saturate(0.35) brightness(0.62) contrast(1.08); }
+.band--capa img { object-position: 40% 40%; filter: saturate(0.85) brightness(0.92); }
+.band--sop img { object-position: 45% 40%; filter: saturate(0.85); }
+
+.sheet--flow, .sheet--sop { max-width: 40rem; }
+.table-wrap { overflow-x: auto; }
+.disposition { width: 100%; margin-top: 10px; border-collapse: collapse; font-size: var(--fs-record); }
+.disposition th, .disposition td { text-align: left; padding: 11px 10px 11px 0; border-bottom: 1px dashed var(--rec-line); vertical-align: top; }
+.disposition thead th { font-family: var(--display); font-stretch: 112%; font-weight: 650; font-size: var(--fs-micro); letter-spacing: var(--track-field); text-transform: uppercase; color: var(--rec-soft); border-bottom: 1.5px solid var(--rec-ink); }
+.disposition tbody th { font-weight: 560; }
+.disposition .num { font-variant-numeric: tabular-nums; text-align: right; padding-right: 22px; }
+.outcome { display: inline-block; font-weight: 600; color: var(--rec-ink); }
+.outcome small { display: block; font-family: var(--display); font-stretch: 112%; font-size: var(--fs-micro); font-weight: 650; letter-spacing: var(--track-field); text-transform: uppercase; color: var(--green); }
+
+.fields--capa { margin-top: 4px; }
+.fields--capa .field { padding: 10px 0; }
+
+.catalogue { border-top: 1.5px solid var(--rec-ink); }
+.module { border-bottom: 1px solid var(--rec-line); }
+.module summary { list-style: none; display: grid; grid-template-columns: 1fr 22px; align-items: center; gap: 2px 16px; padding: 18px 0; cursor: pointer; }
+.module summary::-webkit-details-marker { display: none; }
+.module__job { grid-column: 1; font-family: var(--display); font-stretch: 112%; font-weight: 650; font-size: var(--fs-micro); letter-spacing: var(--track-over); text-transform: uppercase; color: var(--green); }
+.module__name { grid-column: 1; font-family: var(--display); font-weight: 640; font-stretch: 106%; font-size: clamp(1.3rem, 1rem + 0.8vw, 1.75rem); letter-spacing: -0.015em; line-height: 1.1; }
+.module summary::after { content: ""; grid-column: 2; grid-row: 1 / span 2; width: 14px; height: 14px; justify-self: end;
+  background: linear-gradient(var(--rec-ink), var(--rec-ink)) center / 14px 2px no-repeat, linear-gradient(var(--rec-ink), var(--rec-ink)) center / 2px 14px no-repeat; transition: rotate 200ms var(--ease); }
+.module[open] summary::after { rotate: 45deg; }
+.module__body { padding: 0 0 20px; }
+.module__body > p:first-child { font-size: 1rem; max-width: 46ch; }
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px; padding: 12px 0; border-top: 1px dashed var(--rec-line); border-bottom: 1px dashed var(--rec-line); }
+.facts dt { font-family: var(--display); font-stretch: 112%; font-weight: 650; font-size: var(--fs-micro); letter-spacing: var(--track-field); text-transform: uppercase; color: var(--rec-soft); }
+.facts dd { margin-top: 4px; font-size: var(--fs-small); line-height: 1.4; }
+.module__boundary { margin-top: 12px; font-size: var(--fs-small); color: var(--rec-soft); }
+
+.link-btn {
+  display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; padding: 0 0 4px;
+  background: none; border: 0; border-bottom: 1.5px solid currentColor; color: var(--rec-ink);
+  font-family: var(--display); font-stretch: 106%; font-weight: 650; font-size: var(--fs-record);
+}
+.link-btn::after { content: ""; width: 7px; height: 7px; border-top: 2px solid currentColor; border-right: 2px solid currentColor; rotate: 45deg; transition: translate 150ms var(--ease); }
+.link-btn--floor { color: var(--mint); }
+
+.procedure { margin-top: 12px; font-size: var(--fs-record); line-height: 1.45; }
+.clause { display: grid; grid-template-columns: 2.6em 1fr; padding: 7px 8px 7px 6px; margin: 0 -8px 0 -6px; border-radius: 2px; transition: background 180ms var(--ease), box-shadow 180ms var(--ease); }
+.clause__no { font-family: var(--display); font-stretch: 100%; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--rec-soft); }
+.clause.is-lit { background: rgba(46, 154, 110, 0.16); box-shadow: inset 0 0 0 1px rgba(27, 111, 77, 0.45); }
+.findings { margin-top: 14px; border-top: 1.5px solid var(--rec-ink); }
+.finding { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; width: 100%; text-align: left; padding: 12px 0; background: none; border: 0; border-bottom: 1px dashed var(--rec-line); color: var(--rec-ink); }
+.finding__txt { font-size: var(--fs-record); font-weight: 560; line-height: 1.35; }
+.finding__src { font-family: var(--display); font-stretch: 112%; font-weight: 650; font-size: var(--fs-micro); letter-spacing: var(--track-field); text-transform: uppercase; color: var(--green); white-space: nowrap; align-self: center; }
+.finding[aria-pressed="true"] .finding__txt { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+.findings__hint { margin-top: 8px; font-size: var(--fs-caption); color: var(--rec-soft); }
+.facts--sop { margin-top: 18px; }
+
+.faq { border-top: 1.5px solid var(--rec-ink); }
+.faq details { border-bottom: 1px solid var(--rec-line); }
+.faq summary { list-style: none; cursor: pointer; padding: 18px 28px 18px 0; position: relative; font-family: var(--display); font-weight: 620; font-stretch: 104%; font-size: 1.1875rem; letter-spacing: -0.01em; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: ""; position: absolute; right: 2px; top: 50%; width: 12px; height: 12px; translate: 0 -50%;
+  background: linear-gradient(var(--rec-ink), var(--rec-ink)) center / 12px 2px no-repeat, linear-gradient(var(--rec-ink), var(--rec-ink)) center / 2px 12px no-repeat; transition: rotate 200ms var(--ease); }
+.faq details[open] summary::after { rotate: 45deg; }
+.faq details p { padding: 0 0 18px; max-width: 52ch; color: var(--rec-soft); }
+
+/* ---------------------------------------------------------------- close --
+   The split ends: the people take the full width, and the invitation.
+   Scrolled to the end, the close and the footer fill the window below the top
+   bar. The photo takes the height the copy and footer leave (v6.js measures
+   them), never more than its own proportions, and is anchored at the top so
+   the heads stay in view; on a short window it loses the bottom instead. Any
+   height left over on a very tall window goes above the copy, into the fade,
+   so the copy stays close to the footer. */
+.act--close { --close-min: 160px; container-type: inline-size; display: flex; flex-direction: column;
+  min-height: calc(100svh - var(--bar) - var(--foot-h, 0px)); background: var(--floor); color: var(--floor-ink); }
+.close-photo { position: relative; flex: none; width: 100%; overflow: clip;
+  height: clamp(var(--close-min), 100svh - var(--bar) - var(--foot-h, 64px) - var(--copy-h, 320px), 100cqw * 1012 / 3040); }
+.close-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 40% 0%; display: block; }
+.close-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 64%, var(--floor)); }
+.close-copy { display: grid; grid-template-columns: 1fr 1fr; gap: 32px calc(var(--pad-in) + var(--pad-out)); margin-top: auto; padding: clamp(20px, 2.4vw, 40px) var(--pad-out) clamp(32px, 3.2vw, 52px); }
+.close-copy h2 { max-width: 12em; }
+.close-lede { margin-top: 16px; max-width: 46ch; color: var(--floor-soft); font-size: var(--fs-lead); }
+.close-actions { padding-top: 8px; }
+.close-buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px; white-space: nowrap;
+  padding: 13px 18px; border-radius: 2px; border: 1px solid var(--mint);
+  background: var(--mint); color: var(--floor); text-decoration: none;
+  font-family: var(--display); font-stretch: 106%; font-weight: 650; font-size: var(--fs-record);
+  transition-property: background-color, scale;
+  transition-duration: 150ms; transition-timing-function: var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.btn::after { content: ""; width: 7px; height: 7px; border-top: 2px solid currentColor; border-right: 2px solid currentColor; rotate: 45deg; }
+.btn:active { scale: 0.96; }
+.btn--ghost { background: transparent; color: var(--floor-ink); border-color: rgba(233, 239, 235, 0.4); }
+.close-note { margin-top: 14px; font-size: var(--fs-caption); color: var(--floor-soft); max-width: 42ch; }
+
+.site-foot { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 28px; padding: 18px var(--pad-out) calc(22px + env(safe-area-inset-bottom, 0px)); background: var(--floor); color: var(--floor-soft); border-top: 1px solid var(--floor-line); font-size: var(--fs-caption); }
+.site-foot nav { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.site-foot a { color: var(--floor-ink); text-decoration: none; }
+.site-foot p { flex: 1 1 26rem; }
+
+/* --------------------------------------------------------------- dialog -- */
+.walk { width: min(32rem, calc(100vw - 32px)); padding: 28px 28px 24px; border: 1px solid var(--rec-line); border-radius: 3px; background: var(--sheet); color: var(--rec-ink); box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.7); }
+.walk::backdrop { background: rgba(8, 15, 17, 0.72); }
+.walk h2 { margin-top: 8px; font-family: var(--display); font-weight: 640; font-stretch: 106%; font-size: 1.65rem; line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance; }
+.walk p { margin-top: 10px; }
+#walk-intro { color: var(--rec-soft); }
+.walk__close { position: absolute; right: 14px; top: 12px; padding: 6px 10px; background: none; border: 1px solid var(--rec-line); border-radius: 2px; color: var(--rec-ink); font-size: var(--fs-caption); }
+.walk__close, .walk__copy { transition-property: background-color, scale; transition-duration: 150ms; transition-timing-function: var(--ease); -webkit-tap-highlight-color: transparent; }
+.walk__close:active, .walk__copy:active { scale: 0.96; }
+.walk__field { display: block; margin-top: 18px; font-family: var(--display); font-stretch: 112%; font-weight: 650; font-size: var(--fs-micro); letter-spacing: var(--track-field); text-transform: uppercase; color: var(--rec-soft); }
+/* 16px, so iOS Safari never zooms the page when the select is focused. */
+.walk select { width: 100%; margin-top: 6px; padding: 11px 12px; border: 1px solid var(--rec-soft); border-radius: 2px; background: #fff; color: var(--rec-ink); font: inherit; font-size: 1rem; }
+.btn--paper { margin-top: 16px; background: var(--rec-ink); border-color: var(--rec-ink); color: var(--sheet); }
+.walk__note { font-size: var(--fs-caption); color: var(--rec-soft); }
+.walk__email { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 12px; margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--rec-line); }
+.walk__copies { display: flex; gap: 8px; }
+.walk__email a { color: var(--rec-ink); }
+.walk__copy { padding: 6px 12px; background: none; border: 1px solid var(--rec-soft); border-radius: 2px; color: var(--rec-ink); font-size: var(--fs-caption); }
+.walk__status { min-height: 1.2em; font-size: var(--fs-caption); color: var(--green); }
+
+/* The dialog scrolls inside itself on a short phone, never the page behind. */
+.walk { max-height: calc(100dvh - 32px); overflow: auto; overscroll-behavior: contain; }
+/* The dialog opens with a short fade (and, with motion allowed, a slight
+   scale from 0.96). It closes faster than it opens. Opened about once a
+   visit, so it gets a standard modal duration. */
+.walk, .walk::backdrop {
+  opacity: 0;
+  transition-property: opacity, scale, display, overlay;
+  transition-duration: 150ms; transition-timing-function: var(--ease);
+  transition-behavior: allow-discrete;
+}
+.walk[open], .walk[open]::backdrop { opacity: 1; transition-duration: 220ms; }
+@starting-style { .walk[open], .walk[open]::backdrop { opacity: 0; } }
+@media (prefers-reduced-motion: no-preference) {
+  .walk { scale: 0.96; }
+  .walk[open] { scale: 1; }
+  @starting-style { .walk[open] { scale: 0.96; } }
+}
+
+/* -------------------------------------------------------- linked records --
+   A reference to another record is a link to it, so a reader can follow the
+   chain from CAPA or Impact & Disposition back to the investigation, and from
+   each module in the catalogue to its illustrative record. Hash links, so the
+   browser's Back returns the reader to where they were. */
+.ref-link {
+  color: inherit; font-variant-numeric: tabular-nums;
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.24em;
+  text-decoration-color: color-mix(in oklab, currentColor 45%, transparent);
+  transition: text-decoration-color 150ms ease;
+}
+.record-link {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 4px 0;
+  color: var(--rec-ink); font-family: var(--display); font-stretch: 106%; font-weight: 600; font-size: var(--fs-small);
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.24em;
+  text-decoration-color: var(--rec-line);
+  transition: text-decoration-color 150ms ease;
+}
+.record-link .ref { margin-left: 0; font-size: 1em; color: var(--green); }
+/* Points up: every illustrative record sits above the catalogue. */
+.record-link::after { content: ""; flex: none; width: 6px; height: 6px; margin-top: 3px; border-top: 2px solid currentColor; border-left: 2px solid currentColor; rotate: 45deg; }
+
+/* Reconciliation: the groups add up to the batch. */
+.disposition tfoot th, .disposition tfoot td { border-top: 1.5px solid var(--rec-ink); border-bottom: 0; }
+.disposition tfoot th, .disposition tfoot .num { font-weight: 600; }
+.disposition tfoot td:last-child { color: var(--rec-soft); font-size: var(--fs-small); }
+
+/* ---------------------------------------------------- a record to test --
+   The reader can mark the investigation's one missing record as provided.
+   PCS never counts a new record as support on its own: it changes the
+   evidence, so the proposed cause goes back for review and the conclusion
+   stays with the investigator. The row is a native checkbox whose label is
+   the whole row. The two wordings of the row's status, and of the tag, share
+   one grid cell (on narrow phones "Open to challenge" takes two lines), so
+   marking the record changes no width or height and the pinned sheet keeps
+   its fit. The pin label is placed absolutely, so it simply swaps. The state
+   shows as a filled box, a filled tag and a solid thread, not motion. */
+.ev--pick { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.ev .ev__box { appearance: none; margin: 0; width: 13px; height: 13px; border: 1.5px solid var(--rec-soft); border-radius: 2px; background: var(--sheet); cursor: pointer; }
+.ev .ev__box:checked {
+  border: 2px solid var(--rec-ink);
+  background: var(--rec-ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.6 5.3 4 7.6l4.4-5' fill='none' stroke='%23f8faf6' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 9px 9px no-repeat;
+}
+.swap { display: inline-grid; }
+.swap > * { grid-area: 1 / 1; }
+.ev__state.swap { justify-items: end; }
+.tag.swap > .when-provided { place-self: center; }
+.swap > .when-provided, .is-provided .swap > .when-missing { visibility: hidden; }
+.is-provided .swap > .when-provided { visibility: visible; }
+.flip .when-provided, .is-provided .flip .when-missing { display: none; }
+.is-provided .flip .when-provided { display: inline; }
+/* The dashed underline marks the gap, so it belongs to that wording only. */
+.ev--pick .ev__state { text-decoration: none; }
+.ev--pick .ev__state > .when-missing { text-decoration: underline dashed; text-underline-offset: 3px; }
+/* Provided, not yet assessed: ink, not the green of "Supports". */
+.is-provided .ev--pick .ev__state { color: var(--rec-ink); }
+.is-provided .tag { background: var(--rec-ink); border-color: var(--rec-ink); color: var(--sheet); }
+.is-provided .thread--gap { stroke-dasharray: none; }
+.is-provided .pin--gap, .is-provided .pin--gap .pin__lbl { border-style: solid; }
+.ev-hint { margin-top: 6px; font-size: var(--fs-caption); line-height: 1.35; color: var(--rec-soft); }
+@media screen and (max-width: 860px) {
+  .ev-hint { margin-top: 4px; font-size: 0.7188rem; }
+}
+/* Phones under 841 px tall have no room left under the record: the box is
+   still there, and the hint stays its accessible description. */
+@media screen and (max-width: 860px) and (max-height: 840px) {
+  .ev-hint { display: none; }
+}
+/* High-contrast mode drops the ink fill, which would leave the light tick on
+   a light ground: fill the box with the system highlight colour instead. */
+@media (forced-colors: active) {
+  .ev .ev__box:checked { forced-color-adjust: none; background-color: Highlight; border-color: Highlight; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ev .ev__box, .tag, .ev--pick .ev__state {
+    transition-property: background-color, border-color, color;
+    transition-duration: 150ms; transition-timing-function: var(--ease);
+  }
+}
+
+
+/* ----------------------------------------------------------- disclosures --
+   Modules and questions open with a short height and opacity change, so the
+   content below moves rather than jumps. Chromium only (interpolate-size);
+   other browsers open instantly, as before. Under reduced motion only the
+   fade remains. */
+@supports (interpolate-size: allow-keywords) {
+  .module, .faq details { interpolate-size: allow-keywords; }
+  .module::details-content, .faq details::details-content {
+    block-size: 0; overflow: clip; opacity: 0;
+    transition-property: block-size, opacity, content-visibility;
+    transition-duration: 200ms; transition-timing-function: var(--ease);
+    transition-behavior: allow-discrete;
+  }
+  .module[open]::details-content, .faq details[open]::details-content { block-size: auto; opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .module::details-content, .faq details::details-content { transition-property: opacity, content-visibility; }
+  }
+  /* Opened by script (a legacy link, printing): no animation. */
+  html[data-instant] .module::details-content, html[data-instant] .faq details::details-content { transition: none; }
+}
+
+/* -------------------------------------------------- sticky floor columns --
+   Where the floor column is a short heading beside a taller record (the
+   catalogue, the questions), the heading stays in view while the record is
+   read. Only on screens tall enough to hold it. */
+@media screen and (min-width: 861px) and (min-height: 700px) {
+  .col__hold { position: sticky; top: calc(var(--bar) + 40px); }
+}
+
+/* Hover styles only for pointers that hover: on touch a tapped :hover sticks
+   and reads as a selected state. */
+@media (hover: hover) {
+  .topbar__nav a:hover { border-bottom-color: var(--green); }
+  .topbar__cta:hover { background: #1c4652; }
+  .module summary:hover .module__name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+  .link-btn:hover::after { translate: 3px 0; }
+  .finding:hover .finding__txt { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+  .ev--pick:hover .ev__txt { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+  .ev--pick:hover .ev__box:not(:checked) { border-color: var(--rec-ink); }
+  .btn:hover { background: #a2e3c3; }
+  .btn--ghost:hover { background: rgba(233, 239, 235, 0.08); }
+  .btn--paper:hover { background: #1c4652; }
+  .site-foot a:hover { text-decoration: underline; }
+  .walk__copy:hover, .walk__close:hover { background: var(--sheet-2); }
+  .ref-link:hover, .record-link:hover { text-decoration-color: currentColor; }
+}
+
+/* Narrower screens: the record's header keeps to one line. The illustrative
+   label always stays; the reference number is the part that gives way. */
+@media screen and (max-width: 1199px) {
+  .sheet--hero .sheet__title .ref { display: none; }
+}
+
+/* Short desktop viewports: the hero record must still fit all four fields. */
+@media screen and (min-width: 861px) and (max-height: 860px) {
+  :root { --h1: min(clamp(2.5rem, 1.25rem + 3.3vw, 4.5rem), 6.4svh); }
+  .act--hero .half--record { padding-bottom: 16px; }
+  .sheet-stack { margin-top: 20px; }
+  .sheet--hero { padding: 14px 20px; }
+  .sheet--hero .sheet__module { margin: 8px 0 0; }
+  .sheet--hero .field, .sheet--hero .field:first-child { padding: 6px 12px; }
+  .sheet--hero .fields { gap: 6px; margin-top: 6px; }
+  .sheet--hero .field__val { font-size: 0.9062rem; line-height: 1.32; }
+  .sheet--hero .field__val small { display: inline-block; margin-left: 8px; white-space: nowrap; }
+  .sheet--hero .sheet__status { margin-top: 6px; font-size: 0.6562rem; letter-spacing: 0.06em; }
+  .half--record .hero-lede { font-size: 0.9688rem; }
+  /* Fields sit closer here, so the notes go wider and two lines tall. */
+  .slip { width: clamp(210px, 22vw, 290px); padding: 6px 10px 7px; }
+  .slip__txt { font-size: 0.8125rem; line-height: 1.26; margin-top: 2px; }
+  .slip__src { font-size: 0.625rem; }
+}
+
+/* Short screens (a laptop browser, or the page inside a viewer): everything in
+   the hero, including all four notes, must be readable on the first screen. */
+@media screen and (min-width: 861px) and (max-height: 720px) {
+  :root { --top: calc(var(--bar) + 44px); --h1: min(clamp(2.5rem, 1.25rem + 3.3vw, 4.5rem), 6svh); }
+  /* "What can be shown." fits on one line on a wide, short screen, so the
+     record reserves one headline line, not two, and the record itself keeps
+     its normal size: only the notes on the left needed to change. */
+  .hero-title > .hero-title__record { white-space: nowrap; }
+  .act--hero .half--record { padding-top: calc(var(--top) + var(--h1) * 1.04 + 16px); padding-bottom: 14px; }
+  .half--record .hero-lede { line-height: 1.45; max-width: 38rem; }
+  .sheet-stack { margin-top: 16px; }
+  .slip { width: clamp(220px, 22vw, 300px); padding: 5px 9px 6px; }
+  .slip__txt { font-size: 0.7812rem; line-height: 1.25; margin-top: 1px; }
+  .slip__src { font-size: 0.625rem; }
+  .display--floor { font-size: min(clamp(1.6rem, 0.95rem + 1.85vw, 2.75rem), 5svh); }
+  .peak-sub { margin-top: 6px; font-size: 0.9375rem; }
+  .sheet--peak { padding: 10px 16px 12px; }
+  .sheet--peak .sheet__head { padding-bottom: 6px; }
+  .sheet--peak .sheet__title { font-size: 0.8125rem; }
+  .sheet--peak .sheet__module { margin: 6px 0 2px; font-size: 0.625rem; }
+  .cause { margin-top: 6px; padding: 7px 10px; }
+  .cause__text { font-size: 0.9375rem; }
+  .evidence { margin-top: 4px; }
+  .ev { padding: 5px 0; font-size: 0.8438rem; }
+  .ev__state { font-size: 0.625rem; }
+  .decision { margin-top: 10px; padding-top: 8px; }
+  .decision__who { font-size: 0.8438rem; line-height: 1.38; }
+  .decision__ai { margin-top: 4px; font-size: 0.75rem; }
+  /* The photo is smaller here, so two labels sit above their pins. */
+  .pin--below .pin__lbl { top: auto; bottom: 16px; }
+  .pin--gap .pin__lbl { right: -6px; top: -26px; translate: none; }
+  #pin-b .pin__lbl { right: auto; left: -8px; top: auto; bottom: 16px; translate: none; }
+}
+/* Very short screens: the AI note is also answered in the questions below. */
+@media screen and (min-width: 861px) and (max-height: 640px) {
+  :root { --h1: min(clamp(2.5rem, 1.25rem + 3.3vw, 4.5rem), 5.3svh); }
+  .sheet--peak .sheet__module, .decision__ai { display: none; }
+  /* The notes carry these source tags as they cross, so the cards can drop them. */
+  .sheet--hero .field__val small { display: none; }
+  .cause__label { font-size: 0.625rem; }
+  /* The close keeps room for the photo. */
+  .close-copy h2 { font-size: min(clamp(2.2rem, 1.2rem + 2.8vw, 3.8rem), 8svh); }
+  .close-lede { margin-top: 10px; font-size: 1rem; }
+}
+
+/* Only very short screens (600 px tall or less) need a denser record: label
+   and value side by side, slightly smaller type. */
+@media screen and (min-width: 861px) and (max-height: 600px) {
+  .sheet--hero { padding: 10px 16px 12px; }
+  .sheet--hero .sheet__head { padding-bottom: 6px; }
+  .sheet--hero .sheet__module { margin: 6px 0 2px; }
+  .sheet--hero .field, .sheet--hero .field:first-child { display: grid; grid-template-columns: 9.5em 1fr; column-gap: 10px; align-items: baseline; align-content: center; padding: 3px 10px; }
+  .sheet--hero .fields { gap: 4px; margin-top: 4px; }
+  .sheet--hero .field dd { margin: 0; }
+  .sheet--hero .field__val { font-size: 0.8438rem; line-height: 1.3; }
+  .sheet--hero .sheet__status { margin-top: 4px; }
+}
+
+/* =============================================================== PHONE ==
+   Art-directed, not shrunk. Each pinned act splits top/bottom with its own
+   seam, and the facts fall straight down into the record. */
+@media screen and (max-width: 860px) {
+  :root { --pad-out: 18px; --pad-in: 18px; --top: 74px; --h1: clamp(2rem, 1.2rem + 3.6vw, 2.6rem); --bar: calc(56px + env(safe-area-inset-top, 0px)); --sec-pad: 56px; }
+  body { font-size: 1rem; }
+
+  .topbar { padding-left: 14px; padding-right: 14px; }
+  .topbar__brand img { height: 26px; }
+  .topbar__menu { display: block; height: 38px; padding: 0 14px; }
+  .topbar__nav { display: none; }
+  .topbar__nav.is-open {
+    display: flex; flex-direction: column; align-items: stretch; gap: 0;
+    position: fixed; top: var(--bar); left: 0; right: 0; bottom: 0; overflow: auto;
+    padding: 12px 18px 28px; background: var(--sheet); border-top: 1px solid var(--rec-line);
+    overscroll-behavior: contain;
+  }
+  html.is-menu-open { overflow: hidden; }
+  .topbar__nav.is-open a { padding: 16px 0; font-size: 1.125rem; border-bottom: 1px solid var(--rec-line); }
+  .topbar__nav.is-open a[aria-current] { border-bottom-color: var(--rec-line); color: var(--green); }
+  .topbar__nav.is-open .topbar__cta { margin: 22px 0 0; height: 48px; font-size: 1rem; }
+
+  .seam-line, .side-labels { display: none; }
+  .half { width: 100%; left: 0; }
+  .half--floor { top: 0; bottom: auto; height: var(--mf, 44svh); }
+  .half--record { top: var(--mf, 44svh); bottom: 0; }
+  .seam { display: flex; justify-content: space-between; position: absolute; left: 0; right: 0; top: var(--mf, 44svh); z-index: 9; height: 0; border-top: 1px solid rgba(138, 216, 178, 0.55); pointer-events: none; }
+  .seam span { position: absolute; right: 18px; font-family: var(--display); font-stretch: 118%; font-weight: 650; font-size: 0.625rem; letter-spacing: 0.12em; text-transform: uppercase; }
+  .seam span:first-child { bottom: 5px; color: var(--floor-soft); }
+  .seam span:last-child { top: 5px; color: var(--rec-soft); }
+
+  /* hero (the floor label would sit on the last note; the headline says it) */
+  .act--hero { --mf: 46svh; }
+  .act--hero .seam span:first-child { display: none; }
+  .hero-title { z-index: 5; }
+  .hero-title > span { width: auto; right: var(--pad-out); line-height: 1; white-space: nowrap; }
+  .hero-title > .hero-title__floor { top: calc(var(--bar) + 18px); left: var(--pad-out); }
+  .hero-title > .hero-title__record { top: calc(var(--mf) + 20px); left: var(--pad-out); }
+  .hero-window { top: calc(var(--bar) + 18px + var(--h1) + 40px); }
+  .hero-plate, .hero-subject { --box-h: 34svh; left: calc(58% - 0.5 * 34svh * 1950 / 1086); }
+  .hero-plate { top: -1.5svh; }
+  .hero-subject { --sub-top: calc(var(--bar) + 18px + var(--h1) + 40px - 1.5svh); }
+  .act--hero .half--record { padding: calc(var(--h1) * 1.02 + 36px) 12px 10px; }
+  .half--record .hero-lede { padding: 0 6px; font-size: 0.875rem; line-height: 1.42; }
+  .sheet-stack { margin-top: 16px; }
+  .sheet { padding: 10px 12px; }
+  .sheet--hero { padding-bottom: 14px; }
+  .sheet--hero .fields { gap: 4px; margin-top: 4px; }
+  .sheet--hero .field, .sheet--hero .field:first-child { display: grid; align-content: center; padding: 2px 8px; }
+  .sheet__head { padding-bottom: 6px; }
+  .sheet__title { font-size: 0.7812rem; }
+  .sheet__meta { font-size: 0.625rem; }
+  .sheet__module { margin: 6px 0 0; font-size: 0.625rem; }
+  .field { display: grid; grid-template-columns: 6.6em 1fr; gap: 8px; padding: 3px 0; align-items: baseline; }
+  .field dt { font-size: 0.625rem; line-height: 1.3; }
+  .field dd { margin: 0; }
+  .field__val { font-size: 0.8125rem; line-height: 1.28; }
+  .field__val small { font-size: 0.625rem; margin-top: 0; }
+  .field__empty { font-size: 0.75rem; }
+  .sheet__status { margin-top: 4px; font-size: 0.625rem; }
+  .slip { width: 42%; padding: 6px 8px 8px; }
+  .slip__src { font-size: 0.625rem; }
+  .slip__txt { font-size: 0.7188rem; margin-top: 1px; }
+  .slip--a { left: 56%; top: calc(var(--bar) + 18px + var(--h1) + 40px); }
+  .slip--b { left: 3%; top: calc(var(--bar) + 18px + var(--h1) + 40px); }
+  .slip--c { left: 3%; top: calc(var(--mf) - 84px); }
+  .slip--d { left: 56%; top: calc(var(--mf) - 84px); }
+
+  /* investigation */
+  .act--peak { --mf: 43svh; }
+  .peak-copy { top: calc(var(--bar) + 14px); left: var(--pad-out); right: var(--pad-out); }
+  .display--floor { font-size: clamp(1.2rem, 0.9rem + 1.5vw, 1.5rem); }
+  .peak-sub { margin-top: 6px; font-size: 0.8438rem; }
+  .evidence-photo { top: calc(var(--bar) + 14px + 4.2em * 1.4); height: calc(var(--mf) - var(--bar) - 14px - 4.2em * 1.4 + 8px); left: 0; }
+  .pin__lbl { font-size: 0.625rem; padding: 2px 5px; right: auto; left: 13px; }
+  .pin--gap .pin__lbl { left: auto; right: -6px; top: -14px; translate: none; }
+  .pin--below .pin__lbl { top: auto; bottom: 16px; }
+  .pin { width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; }
+  .sheet--peak { left: 10px; right: 10px; top: 12px; padding-left: 32px; z-index: 2; }
+  /* The evidence dots hang in the margin so the threads climb beside the
+     sheet's text, and run under the paper to emerge at its top edge. */
+  .threads { z-index: 1; }
+  .sheet--peak .ev { position: relative; grid-template-columns: 1fr auto; }
+  .sheet--peak .ev__dot { position: absolute; left: -22px; top: 50%; translate: 0 -50%; }
+  .cause { margin-top: 6px; padding: 8px 10px; }
+  .cause__text { font-size: 0.9375rem; }
+  .evidence { margin-top: 4px; }
+  .ev { grid-template-columns: 16px 1fr auto; gap: 8px; padding: 6px 0; font-size: 0.8125rem; }
+  .ev__dot { width: 10px; height: 10px; }
+  .ev__state { font-size: 0.625rem; }
+  .decision { margin-top: 10px; padding-top: 8px; }
+  .decision__who { font-size: 0.8125rem; line-height: 1.35; }
+  .decision__ai { font-size: 0.7188rem; margin-top: 4px; }
+
+  /* flow acts stack: floor above, record below, with a seam between */
+  .split { grid-template-columns: 1fr; }
+  .col--floor { padding: 40px var(--pad-out) 36px; }
+  .col--record { padding: 36px var(--pad-out) 48px; position: relative; }
+  .col--record::before { content: "In the record"; position: absolute; top: 0; left: 0; right: 0; padding: 6px 18px 0; text-align: right; border-top: 1px solid rgba(138, 216, 178, 0.55);
+    font-family: var(--display); font-stretch: 118%; font-weight: 650; font-size: 0.625rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rec-soft); }
+  .act--held .col { padding-top: 40px; }
+  .facts { grid-template-columns: 1fr; gap: 10px; }
+  .disposition { font-size: 0.8438rem; }
+  .disposition .num { padding-right: 12px; }
+  .band { margin-bottom: 24px; }
+  .floor-note { font-size: 1rem; }
+  .fields--capa .field { grid-template-columns: 7.4em 1fr; padding: 6px 0; }
+  /* Records outside the two pinned moments have no first-screen budget, so
+     on a phone they keep the desktop label size and a readable text size. */
+  :is(.sheet--flow, .sheet--sop) :is(.sheet__module, .field dt) { font-size: var(--fs-micro); }
+  :is(.sheet--flow, .sheet--sop) .field__val { font-size: var(--fs-small); line-height: 1.4; }
+
+  /* close: a phone browser is too short for the photo, the copy and the
+     footer together, so the photo moves below the invitation and ends the
+     page whole, directly above the footer. */
+  .act--close { min-height: 0; }
+  .close-photo { order: 1; height: auto; aspect-ratio: 4 / 3; }
+  .close-photo img { object-position: 30% 0%; }
+  .close-copy { grid-template-columns: 1fr; gap: 24px; margin-top: 0; padding: 48px var(--pad-out) 32px; }
+  .close-copy h2 { font-size: clamp(1.8rem, 1.2rem + 2.6vw, 2.3rem); }
+  .close-lede { font-size: 0.9375rem; margin-top: 10px; }
+  .close-buttons { flex-direction: column; align-items: stretch; }
+  .btn { justify-content: space-between; padding: 13px 16px; }
+  .site-foot { font-size: 0.7188rem; }
+  .site-foot nav { gap: 0 18px; }
+  .site-foot nav a { padding-block: 7px; }
+}
+
+@media screen and (max-width: 380px) {
+  :root { --h1: 1.85rem; }
+}
+/* Narrow phones: the notes carry the source tags as they cross, so the
+   record's cards drop them and keep four clear rows. */
+@media screen and (max-width: 400px) {
+  .sheet--hero .field__val small { display: none; }
+}
+/* Phones under 861 px tall, at any width (360 × 800, 375 × 812, 412 × 800):
+   the cards drop the source tags too, and the floor gives up height so the
+   record keeps at least 450 px. From 834 px tall the floor is unchanged. */
+@media screen and (max-width: 860px) and (max-height: 860px) {
+  .act--hero { --mf: min(46svh, 100svh - 450px); }
+  .sheet--hero .field__val small { display: none; }
+}
+
+/* Compact phones (375 × 667, 360 × 640): recomposed rather than squeezed. */
+@media screen and (max-width: 860px) and (max-height: 760px) {
+  .act--hero { --mf: 40svh; }
+  .hero-window { top: calc(var(--bar) + 12px + var(--h1) + 30px); }
+  .hero-subject { --sub-top: calc(var(--bar) + 12px + var(--h1) + 30px - 1.5svh); }
+  .hero-title > .hero-title__floor { top: calc(var(--bar) + 12px); }
+  .hero-title > .hero-title__record { top: calc(var(--mf) + 16px); }
+  .act--hero .half--record { padding-top: calc(var(--h1) * 1.02 + 28px); }
+  .half--record .hero-lede { font-size: 0.8125rem; line-height: 1.36; }
+  .sheet-stack { margin-top: 8px; }
+  .sheet--hero { padding-top: 7px; padding-bottom: 9px; }
+  .sheet--hero .sheet__head { padding-bottom: 4px; }
+  .sheet--hero .sheet__module { margin-top: 4px; }
+  .sheet--hero .field, .sheet--hero .field:first-child { padding: 2px 8px; }
+  .sheet--hero .fields { gap: 3px; margin-top: 3px; }
+  /* Values wrap rather than end in an ellipsis: cut-off facts can't be read anywhere else once the notes have crossed. */
+  .sheet--hero .field__val { font-size: 0.75rem; line-height: 1.25; }
+  .sheet--hero .sheet__status { font-size: 0.625rem; font-stretch: 104%; letter-spacing: 0.05em; }
+  .act--hero .seam span:first-child { display: none; }
+  /* Four corners, leaving a lane through the middle for her face. */
+  .slip { width: 37%; padding: 4px 6px 5px; }
+  .slip__txt { font-size: 0.625rem; line-height: 1.25; }
+  .slip__src { font-size: 0.625rem; }
+  .slip--a { left: 61%; top: calc(var(--bar) + var(--h1) + 28px); }
+  .slip--b { left: 2%; top: calc(var(--bar) + var(--h1) + 28px); }
+  .slip--c { left: 2%; top: calc(var(--mf) - 64px); }
+  .slip--d { left: 61%; top: calc(var(--mf) - 64px); }
+  /* The AI note is also answered in the questions below. */
+  .decision__ai { display: none; }
+}
+
+/* The investigation on compact phones, on phones up to 400 px wide and
+   840 px tall (360 × 800, 375 × 812), and on any phone up to 380 px wide: at
+   full size the human decision would end below the screen. The copy rides
+   on a larger photograph, the subline and the module line go, and the
+   record is set tighter. From 761 px tall the AI note stays. */
+@media screen and (max-width: 860px) and (max-height: 760px), screen and (max-width: 400px) and (max-height: 840px), screen and (max-width: 380px) {
+  .act--peak { --mf: 36svh; }
+  .peak-copy { z-index: 4; top: calc(var(--bar) + 10px); }
+  .display--floor { font-size: 1.08rem; text-shadow: 0 1px 12px rgba(13, 23, 25, 0.9); }
+  .peak-sub { display: none; }
+  .evidence-photo { top: var(--bar); height: calc(var(--mf) - var(--bar)); left: 50%; translate: -50% 0; }
+  .pin--below .pin__lbl { left: 0; }
+  /* The copy rides on the photograph here, so the photograph darkens where
+     the copy sits (above the lit circles, below the pins). */
+  .evidence-photo::after { content: ""; position: absolute; inset: 0 0 38% 0; z-index: 2; pointer-events: none;
+    background: linear-gradient(to bottom, rgba(13, 23, 25, 0.94), rgba(13, 23, 25, 0.72) 60%, transparent); }
+  .sheet--peak .sheet__module { display: none; }
+  .cause { padding: 6px 8px; }
+  .cause__text { font-size: 0.8438rem; }
+  .ev { padding: 4px 0; font-size: 0.7812rem; }
+  .decision__who { font-size: 0.7812rem; }
+}
+
+/* The disposition table on narrow phones: four columns in about 316 px broke
+   "Release after added checks" into one or two words a line. Each affected
+   group becomes a short block instead: its name, then Units, Interim control
+   and Outcome as label/value rows. The column headings stay in the table for
+   screen readers; the visible labels repeat them and are hidden from speech. */
+@media screen and (max-width: 520px) {
+  .disposition thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .disposition, .disposition tbody, .disposition tfoot { display: block; }
+  .disposition tr { display: grid; grid-template-columns: minmax(0, 1fr); padding: 10px 0; border-bottom: 1px dashed var(--rec-line); }
+  .disposition tfoot tr { border-top: 1.5px solid var(--rec-ink); border-bottom: 0; }
+  .disposition th, .disposition td, .disposition tfoot th, .disposition tfoot td { display: grid; grid-template-columns: 7rem minmax(0, 1fr); column-gap: 10px; padding: 2px 0; border: 0; text-align: left; }
+  .disposition tbody th, .disposition tfoot th { display: block; padding-bottom: 4px; }
+  .disposition td::before { content: attr(data-label); content: attr(data-label) / ""; align-self: baseline;
+    font-family: var(--display); font-stretch: 112%; font-weight: 650; font-size: var(--fs-micro); letter-spacing: var(--track-field); text-transform: uppercase; color: var(--rec-soft); }
+  .disposition td:not([data-label]) { display: block; padding-left: calc(7rem + 10px); }
+  .disposition td:not([data-label])::before { content: none; }
+  .disposition .num { padding-right: 0; text-align: left; }
+}
+
+/* ===================================================== TOO SHORT TO PIN ==
+   A phone held sideways (500 px tall or less), or a phone 620 px tall or
+   less (an iPhone SE once Safari's bars are showing), or any phone 340 px
+   wide or less (which is also a desktop zoomed to 400%), has no room for a
+   pinned scene: the notes would cover the headline and the records would run
+   off the screen. Here both moments are shown already resolved, as ordinary
+   sections: every field filled, every thread drawn, nothing pinned or moving.
+   One column on a narrow phone; floor and record side by side from 600 px
+   wide. The sides also clear a landscape iPhone's notch. */
+@media screen and (max-height: 500px), screen and (max-width: 860px) and (max-height: 620px), screen and (max-width: 340px) {
+  :root {
+    --bar: calc(52px + env(safe-area-inset-top, 0px));
+    --pad-out: max(18px, env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
+    --h1: clamp(1.85rem, 1.2rem + 2vw, 2.6rem);
+  }
+  .topbar { padding-left: var(--pad-out); padding-right: var(--pad-out); }
+
+  /* Unpinned: each act is as tall as its content, so its stage never sticks. */
+  .sc-act--pinned { height: auto !important; }
+  /* minmax(0, …): a column never grows to fit text that cannot wrap, or a
+     320 px phone would scroll sideways. */
+  .act .sc-stage { height: auto; overflow: visible; display: grid; grid-template-columns: minmax(0, 1fr); padding-top: var(--bar); background: var(--paper); }
+  .act .half { position: static; width: auto; height: auto; overflow: visible; }
+  .slip, .seam, .seam-line, .side-labels { display: none !important; }
+  .field { --v: 1 !important; }
+  .field__empty { display: none; }
+  [data-sc-cue] { opacity: 1 !important; transform: none !important; }
+  .thread, .thread-mask { stroke-dashoffset: 0 !important; }
+  .pin { --po: 1 !important; --ps: 1 !important; }
+
+  /* Hero: the headline, the photograph (her head still breaking out of its
+     frame), then the lede and the filled record. */
+  .hero-title { position: static; grid-row: 1; display: grid; font-size: var(--h1); padding: 22px var(--pad-out) 0; background: var(--floor); }
+  .hero-title > span, .hero-title > .hero-title__floor, .hero-title > .hero-title__record {
+    position: static; width: auto; white-space: normal; line-height: 1.02; color: var(--floor-ink); }
+  /* The photograph and her cutout share one cell, bottom to bottom, so her
+     head rises out of the frame; the cell sits at the top of the column. */
+  .act--hero .half--floor { grid-row: 2; display: grid; align-content: start; align-items: end; padding: 18px var(--pad-out) 28px; }
+  .hero-glow { display: none; }
+  .hero-window, .hero-subject { grid-area: 1 / 1; }
+  .hero-window { position: relative; inset: auto; top: auto; aspect-ratio: 1950 / 1086; border-top: 0; }
+  .hero-plate, .hero-subject { position: relative; left: auto; top: auto; width: 100%; height: auto; transform: none !important; }
+  .hero-subject { aspect-ratio: 1950 / 1176; }
+  .act--hero .half--record { grid-row: 3; display: block; padding: 22px var(--pad-out) 32px; }
+  .half--record .hero-lede { padding: 0; font-size: var(--fs-small); line-height: 1.45; }
+  .sheet-stack { margin-top: 16px; }
+  .sheet--hero { height: auto; padding: 12px 14px 14px; }
+  .sheet--hero .fields { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+  .sheet--hero .field, .sheet--hero .field:first-child { padding: 6px 10px; }
+  .sheet--hero .field__val { white-space: normal; overflow: visible; font-size: var(--fs-small); line-height: 1.35; }
+  .sheet--hero .field__val small { display: block; }
+  .sheet--hero .sheet__status { font-size: var(--fs-micro); letter-spacing: var(--track-field); }
+  .site-foot nav { gap: 0 18px; }
+  .site-foot nav a { padding-block: 7px; }
+
+  /* Investigation: the copy and the lit photograph, then the record, with
+     the threads climbing beside it to the evidence. */
+  .act--peak .half--floor { grid-row: 1; padding: 26px var(--pad-out) 24px; }
+  .act--peak .half--record { grid-row: 2; padding: 20px var(--pad-out) 32px; }
+  .peak-copy { position: static; max-width: none; }
+  .display--floor { font-size: clamp(1.35rem, 1rem + 1.4vw, 1.9rem); text-shadow: none; }
+  .peak-sub { display: block; margin-top: 8px; font-size: var(--fs-small); }
+  .evidence-photo { position: relative; top: auto; left: auto; translate: none; width: 100%; height: auto; margin-top: 18px; }
+  .evidence-photo::after { display: none; }
+  .evidence-photo__dark { --fb: 0.42 !important; }
+  .evidence-photo__lit { --ra: 13cqw !important; --rb: 13cqw !important; --rc: 13cqw !important; }
+  /* The threads run under the record and come out at its top edge. */
+  .sheet--peak { position: relative; left: auto; right: auto; top: auto; z-index: 2; max-width: 40rem; }
+  .sheet--peak .sheet__module { display: block; }
+  .decision__ai { display: block; }
+
+  /* From 600 px wide (a sideways phone), floor and record sit side by side. */
+  @media (min-width: 600px) {
+    :root { --pad-out: max(clamp(20px, 3.9vw, 64px), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px)); --pad-in: clamp(24px, 4vw, 56px); }
+    .act .sc-stage { grid-template-columns: repeat(2, minmax(0, 1fr)); background: linear-gradient(90deg, var(--floor) 50%, var(--paper) 50%); }
+    .hero-title { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 0; background: none; }
+    .hero-title > .hero-title__floor { padding: 24px var(--pad-in) 0 var(--pad-out); }
+    .hero-title > .hero-title__record { padding: 24px var(--pad-out) 0 var(--pad-in); color: var(--rec-ink); }
+    .act--hero .half--floor { grid-column: 1; grid-row: 2; padding: 24px var(--pad-in) 32px var(--pad-out); }
+    .act--hero .half--record { grid-column: 2; grid-row: 2; padding: 16px var(--pad-out) 32px var(--pad-in); }
+    .act--peak .half--floor { grid-column: 1; grid-row: 1; padding: 28px var(--pad-in) 32px var(--pad-out); }
+    .act--peak .half--record { grid-column: 2; grid-row: 1; padding: 28px var(--pad-out) 32px var(--pad-in); }
+    .threads { z-index: 7; }
+    .sheet--peak { padding: 12px 16px 14px; }
+    .sheet--peak .ev { grid-template-columns: 22px 1fr auto; }
+    .sheet--peak .ev__dot { position: static; translate: none; }
+    /* Flow sections keep the two columns a sideways phone has room for. */
+    .split { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .col--floor { padding: 32px var(--pad-in) 32px var(--pad-out); }
+    .col--record { padding: 32px var(--pad-out) 32px var(--pad-in); }
+    .col--record::before { content: none; }
+    .act--close .close-photo { aspect-ratio: 3040 / 1012; height: auto; }
+    .close-copy { grid-template-columns: 1fr 1fr; }
+  }
+}
+
+/* The photo's labels need room. On a photograph narrower than 330 px (most
+   phones under 841 px tall) four labels collide, so only the missing record
+   keeps its label; the threads already tie each row to its place. */
+.evidence-photo { container-type: inline-size; }
+@container (max-width: 330px) {
+  .pin:not(.pin--gap) .pin__lbl { display: none; }
+}
+
+/* ------------------------------------------------------- reduced motion -- */
+@media (prefers-reduced-motion: reduce) {
+  .slip { transition: none; }
+}
+
+/* ================================================================ PRINT ==
+   Quality teams print pages and pass them round for comment. On paper the
+   site becomes a plain document: the headings, every record (filled), every
+   module and answer (opened by v8.js before printing), and the contact and
+   legal lines. No photographs, notes in flight, threads or controls. */
+@media print {
+  @page { size: A4; margin: 16mm 16mm 18mm; }
+  :root { --bar: 0px; }
+  html, body { background: #fff !important; color: var(--rec-ink); }
+  body { font-size: 10pt; line-height: 1.45; }
+  .print-only { display: block; }
+  .print-mast { margin-bottom: 7mm; padding-bottom: 3mm; border-bottom: 1.5px solid var(--rec-ink); font-size: 8.5pt; color: var(--rec-soft); }
+
+  .skip, .topbar, .slip, .threads, .seam, .seam-line, .side-labels, .hero-glow, .hero-window, .hero-subject,
+  .evidence-photo, .band, .close-photo, .walk, .link-btn, .close-buttons, .close-actions > .label,
+  .findings__hint, .ev-hint, .field__empty, .record-link, .module summary::after, .faq summary::after { display: none !important; }
+
+  /* Unpin: the engine sizes pinned acts inline, so these need !important. */
+  .act { height: auto !important; min-height: 0 !important; margin: 0 0 9mm; background: none !important; color: var(--rec-ink); }
+  .stage, .sc-stage { position: static !important; height: auto !important; overflow: visible !important; background: none !important; }
+  .half { position: static !important; width: auto !important; height: auto !important; padding: 0 !important; background: none !important; color: var(--rec-ink); overflow: visible !important; }
+  .act--hero .stage { display: flex; flex-direction: column; }
+  .hero-title { order: -1; position: static; margin-bottom: 4mm; font-size: 24pt; }
+  .hero-title > span { position: static; display: block; width: auto; color: var(--rec-ink) !important; white-space: normal; line-height: 1.05; }
+  .act--hero .half--record { display: block; }
+  .sheet-stack { margin-top: 5mm; max-width: none; }
+  .sheet--hero { height: auto; }
+  .sheet--hero .fields { display: block; }
+  .peak-copy { position: static; max-width: none; margin-bottom: 4mm; }
+  .sheet--peak { position: static; max-width: none; }
+  /* A record the reader marked as provided prints as it looks: browsers skip
+     background fills by default, which would leave an empty box and a blank
+     tag. */
+  .ev .ev__box:checked, .is-provided .tag { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* Every value shown, every reveal settled. */
+  .field { --v: 1 !important; }
+  [data-sc-in], [data-sc-stagger] > *, [data-sc-cue] { opacity: 1 !important; transform: none !important; }
+
+  .split { display: block; }
+  .col, .col--floor, .col--record { padding: 0 !important; background: none !important; color: var(--rec-ink); }
+  .col--record::before { content: none !important; }
+  .col--record > *, .sheet--flow, .sheet--sop { max-width: none; }
+  .col__hold { position: static; }
+  .col--floor { margin-bottom: 4mm; }
+  .display, .display--floor { color: var(--rec-ink); font-size: 17pt; }
+  .display--lg { font-size: 20pt; }
+  .label--floor { color: var(--green); }
+  .floor-note, .peak-sub, .close-lede, .close-note, .hero-lede { color: var(--rec-soft); font-size: 10.5pt; max-width: none; }
+  h1, h2, .sheet__head, .module summary, .faq summary { break-after: avoid; }
+  .sheet, .module, .faq details, .disposition tr { break-inside: avoid; }
+  .sheet { box-shadow: none; border-color: #b9c4c1; padding: 4mm 5mm; }
+
+  .act--close { display: block; }
+  .close-copy { display: block; padding: 0; }
+  .close-actions { margin-top: 3mm; padding: 0; }
+  .close-contact { margin-top: 2mm; font-weight: 600; }
+  .site-foot { display: block; padding: 4mm 0 0; background: none; color: var(--rec-soft); border-top: 1px solid var(--rec-line); }
+  .site-foot nav { margin-bottom: 2mm; }
+  .site-foot a { color: var(--rec-ink); }
+  .site-foot a[href^="/"]::after { content: " (www.verrionsystems.com" attr(href) ")"; color: var(--rec-soft); }
+  details[open]::details-content { block-size: auto !important; opacity: 1 !important; transition: none !important; }
+}
