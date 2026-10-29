@@ -1,4 +1,6 @@
-# V8 production site
+# V8 production site (superseded)
+
+> V10 (`V10/site/`), V8 with a short, quiet clip over three of the floor photographs, replaces V8 on the live site when its release pull request is merged, and the Pages workflow then builds V10. This directory is retained unchanged as the previous production source.
 
 V8 is V7, as released on 21 October 2026, with its phone problems fixed. It replaces V7 on www.verrionsystems.com when Dawid merges its release pull request, and that merge is the approval. This directory is then the production source; V7 (`V7/site/`) is retained unchanged as the previous one. Deployment completion is recorded separately, after the Pages workflow and public-site checks. What changed and how it was verified are in [`../README.md`](../README.md).
 

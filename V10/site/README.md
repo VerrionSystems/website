@@ -1,6 +1,6 @@
-# V10 preview site
+# V10 production site
 
-V10 is V8, the live source since 22 October 2026, with a short, quiet clip over three of the floor photographs. It is a **preview**: it has not been released, and V8 stays the live source until a release pull request that Dawid merges. What changed and how it was verified are in [`../README.md`](../README.md).
+V10 is V8, as released on 22 October 2026, with a short, quiet clip over three of the floor photographs. It replaces V8 on www.verrionsystems.com when Dawid merges its release pull request, and that merge is the approval. This directory is then the production source; V8 (`V8/site/`) is retained unchanged as the previous one. Deployment completion is recorded separately, after the Pages workflow and public-site checks. What changed and how it was verified are in [`../README.md`](../README.md).
 
 ## What it is
 
@@ -42,7 +42,7 @@ npm test
   - the repository's hosting files;
   - the four legacy module-entry pages.
 - `scripts/artifact-policy.mjs` validates the exact root-file list, the permitted assets and every referenced file. It rejects third-party font requests and non-release content.
-- The Pages workflow uploads only the production source's `root-dist/` (`V8/site` since 22 October 2026). Pointing it at V10 is a release decision, not part of this preview.
+- The Pages workflow installs, builds, tests and uploads only this directory's `root-dist/`.
 
 Never add the V5 exploration, `lab/` checks, `evidence/` captures, source images or design notes to the artifact.
 

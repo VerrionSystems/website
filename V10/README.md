@@ -2,7 +2,7 @@
 
 Built on 29 October 2026 at Dawid's request to "bring some more life into the photos but keep it sufficiently toned down to preserve the professional feel". Codex is working on V9 separately. V10 does not build on V9 and does not touch it.
 
-**Status: preview, not released.** V10 starts from `V8/site`, the live production source since 22 October 2026. The live site and its Pages workflow still build from `V8/site`. Pointing them at V10 is a separate release decision.
+**Status: proposed for release.** The release pull request points the Pages workflow at `V10/site`. Dawid's merge of it is the approval, and V8 stays live until then. V10 starts from `V8/site` as released on 22 October 2026, and `V8/site` is retained unchanged as the previous source.
 
 V10 changes no wording, layout or records. The only addition is a short clip over three of the floor photographs.
 
@@ -82,3 +82,15 @@ The clips are generated, like the photographs they come from. As with the photog
 - After the ending was revised, the build, tests, photo motion, production package and keyboard checks were all rerun and pass. In the browser, each clip's first frame now matches its photograph's average tone within 1–3 levels (it was 4–6 levels darker). The phone sweep was not rerun because nothing in the layout changed.
 
 Not verified: Safari or iOS (autoplay of muted inline video is expected to work there, but was not tried), a real phone, or a screen reader.
+
+## Release
+
+The release pull request changes `.github/workflows/deploy-pages.yml` from `V8/site` to `V10/site`, updates the root `README.md` and marks `V8/site/README.md` superseded. The V10 site itself is unchanged from the preview merged in VerrionSystems/website#10.
+
+After the merge:
+
+1. Check that the Pages run succeeded for the merge commit.
+2. On the live site, check that each of the three column photographs plays its clip once and rests on its last frame. Check this on desktop and on a phone, in portrait and landscape.
+3. Check the legacy links and the link preview.
+
+A real iPhone in Safari and a real Android phone are the checks this build could not make.
