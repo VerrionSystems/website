@@ -112,7 +112,8 @@ test('published pages are real documents with one h1 and parseable JSON-LD', asy
   assert.match(home, />What was seen\.</);
   assert.match(home, />What can be shown\.</);
   assert.match(home, /property="og:title" content="Verrion Systems · Pharma Compliance Suite"/);
-  assert.match(home, /Verrion Pharma Compliance Suite \(PCS\) is GMP deviation, investigation, disposition and CAPA software for pharmaceutical quality teams, built by Verrion Systems Ltd\./);
+  assert.match(home, /Verrion Pharma Compliance Suite \(PCS\) is GMP deviation, investigation, disposition and CAPA software for UK pharmaceutical quality teams, built by Verrion Systems Ltd\./);
+  assert.doesNotMatch(home, /Annex 11|MHRA/);
   assert.match(home, /<title>Verrion Systems · Verrion Pharma Compliance Suite<\/title>/);
   const graph = jsonLdBlocks(home)[0]['@graph'];
   const org = graph.find((node) => node['@type'] === 'Organization');
@@ -131,13 +132,18 @@ test('published pages are real documents with one h1 and parseable JSON-LD', asy
   ]);
   assert.equal(app.publisher.name, 'Verrion Systems Ltd');
   const faq = graph.find((node) => node['@type'] === 'FAQPage').mainEntity;
-  const visible = [...home.matchAll(/<details><summary>([\s\S]*?)<\/summary><p>([\s\S]*?)<\/p><\/details>/g)];
+  const visible = [...home.matchAll(/<details><summary>([\s\S]*?)<\/summary>([\s\S]*?)<\/details>/g)].map((match) => ({
+    question: decodeEntities(match[1].trim()),
+    answer: decodeEntities(match[2].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim(),
+  }));
   assert.equal(faq.length, visible.length);
   assert.equal(visible.length, 3);
   for (let i = 0; i < faq.length; i += 1) {
-    assert.equal(faq[i].name, decodeEntities(visible[i][1]));
-    assert.equal(faq[i].acceptedAnswer.text, decodeEntities(visible[i][2]));
+    assert.equal(faq[i].name, visible[i].question);
+    assert.equal(faq[i].acceptedAnswer.text, visible[i].answer);
   }
+  assert.equal(faq[0].acceptedAnswer.text, 'Choose the Deviation/CAPA workflow or the SOP workflow. We agree the scope and availability for your chosen pilot. Pilots are scoped and priced per site. They run on synthetic or customer-approved data within agreed boundaries. Contact hello@verrionsystems.com to discuss.');
+  assert.match(home, /<a href="mailto:hello@verrionsystems\.com">hello@verrionsystems\.com<\/a> to discuss\./);
   const deviation = await readFile(path.join(artifact, 'deviation.html'), 'utf8');
   assert.match(deviation, /<h1 id="module-title">Deviation Investigator: AI-assisted deviation investigation for GMP manufacturing<\/h1>/);
   assert.match(deviation, /href="\/\?item=deviation-investigator"/);
@@ -148,6 +154,7 @@ test('published pages are real documents with one h1 and parseable JSON-LD', asy
   assert.match(data, /<h1 id="legal-page-title">Data Handling Summary<\/h1>/);
   assert.match(data, /This summary describes the intended arrangements for handling data during Verrion Systems Ltd walkthroughs and early hosted pilots\./);
   const llms = await readFile(path.join(artifact, 'llms.txt'), 'utf8');
+  assert.match(llms, /for UK pharmaceutical quality teams, built by Verrion Systems Ltd\./);
   assert.match(llms, /hello@verrionsystems\.com/);
   assert.match(llms, /https:\/\/www\.verrionsystems\.com\/\)/);
   assert.match(llms, /data-handling\.html/);

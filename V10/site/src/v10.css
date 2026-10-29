@@ -350,6 +350,7 @@ html:not(.sc-ready) .slip { display: none; }
   background: linear-gradient(var(--rec-ink), var(--rec-ink)) center / 12px 2px no-repeat, linear-gradient(var(--rec-ink), var(--rec-ink)) center / 2px 12px no-repeat; transition: rotate 200ms var(--ease); }
 .faq details[open] summary::after { rotate: 45deg; }
 .faq details p { padding: 0 0 18px; max-width: 52ch; color: var(--rec-soft); }
+.faq details a { color: var(--rec-ink); }
 
 /* ---------------------------------------------------------------- close --
    The split ends: the people take the full width, and the invitation.
