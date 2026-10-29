@@ -54,7 +54,7 @@ export function LegalPage({ pageId }) {
         <p className="label">{page.label}</p>
         <h1 id="legal-page-title">{page.title}</h1>
         <p className="legal-intro">{page.intro}</p>
-        <p className="legal-updated">Last updated: {page.updated}</p>
+        <p className="legal-updated">{`Last updated: ${page.updated}`}</p>
       </section>
       <div className="legal-layout">
         <aside className="legal-index">

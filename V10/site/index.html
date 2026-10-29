@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Verrion Systems · Pharma Compliance Suite</title>
+<title>Verrion Systems · Verrion Pharma Compliance Suite</title>
 <meta name="description" content="Pharma Compliance Suite helps pharmaceutical quality teams link deviation facts, investigation, disposition and CAPA. The people accountable keep every decision.">
 <meta name="theme-color" content="#f8faf6">
 <link rel="icon" type="image/png" href="/favicon.png">
@@ -22,7 +22,82 @@
 <!-- The hero cutout is the largest first-screen image. -->
 <link rel="preload" as="image" type="image/avif" href="/assets/hero-subject-v4.avif" fetchpriority="high">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Organization","name":"Verrion Systems Ltd","alternateName":"Verrion Systems","url":"https://www.verrionsystems.com/","logo":"https://www.verrionsystems.com/assets/verrion-systems-bar.png","email":"hello@verrionsystems.com","address":{"@type":"PostalAddress","streetAddress":"1 Woodburn Drive","addressLocality":"Bury St. Edmunds","postalCode":"IP32 6FY","addressCountry":"GB"}}
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.verrionsystems.com/#organization",
+      "name": "Verrion Systems Ltd",
+      "legalName": "Verrion Systems Ltd",
+      "alternateName": "Verrion Systems",
+      "identifier": "17265988",
+      "founder": {
+        "@type": "Person",
+        "name": "Dawid Pysznik"
+      },
+      "url": "https://www.verrionsystems.com/",
+      "logo": "https://www.verrionsystems.com/assets/verrion-systems-bar.png",
+      "email": "hello@verrionsystems.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1 Woodburn Drive",
+        "addressLocality": "Bury St. Edmunds",
+        "postalCode": "IP32 6FY",
+        "addressCountry": "GB"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://www.verrionsystems.com/#pcs",
+      "name": "Verrion Pharma Compliance Suite (PCS)",
+      "alternateName": "Verrion PCS",
+      "url": "https://www.verrionsystems.com/",
+      "featureList": [
+        "Deviation Companion",
+        "Deviation Investigator",
+        "Impact & Disposition (no AI)",
+        "CAPA",
+        "SOP Intelligence"
+      ],
+      "publisher": {
+        "@type": "Organization",
+        "name": "Verrion Systems Ltd",
+        "legalName": "Verrion Systems Ltd"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.verrionsystems.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What can we pilot?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Choose the Deviation/CAPA workflow or the SOP workflow. We agree the scope and availability for your chosen pilot."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where does AI fit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI can assist with selected analysis and drafting tasks after the applicable data review. Authorised people review the output and own the decisions. Impact & Disposition uses no AI."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What would a walkthrough cover?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We start with your quality workflow, then explore the relevant modules, who reviews the records and what evidence they need. A pilot can use synthetic or customer-approved scenarios within agreed data boundaries."
+          }
+        }
+      ]
+    }
+  ]
+}
 </script>
 <script type="module" src="/src/main.js"></script>
 </head>
@@ -45,6 +120,8 @@
 </header>
 
 <main id="main">
+
+  <p class="site-identity">Verrion Pharma Compliance Suite (PCS) is GMP deviation, investigation, disposition and CAPA software for pharmaceutical quality teams, built by Verrion Systems Ltd.</p>
 
   <p class="print-only print-mast">Verrion Systems · Pharma Compliance Suite · www.verrionsystems.com · Every record shown is illustrative and uses a synthetic scenario.</p>
 

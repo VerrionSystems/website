@@ -143,3 +143,15 @@ button { cursor: pointer; font: inherit; }
 /* On these pages the walkthrough button is a link back to the homepage. */
 .topbar__nav a.topbar__cta { display: inline-flex; align-items: center; padding: 0 16px; color: var(--sheet); text-decoration: none; border: 1px solid var(--rec-ink); }
 .topbar__nav a.topbar__cta:hover { border-color: #1c4652; }
+
+/* Module pages reuse this chrome. The record text is the homepage's. */
+.module-page .legal-hero h1 { max-width: 18em; }
+.module-facts { margin-top: 16px; }
+.module-facts div { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 8px 18px; padding: 10px 0; border-top: 1px solid var(--rec-line); }
+.module-facts dt { font-family: var(--display); font-stretch: 106%; font-weight: 650; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--green); }
+.module-facts dd { margin: 0; color: var(--rec-soft); }
+.module-page .legal-section ul { padding-left: 22px; }
+.module-page .legal-section li + li { margin-top: 8px; }
+@media (max-width: 860px) {
+  .module-facts div { grid-template-columns: 1fr; gap: 2px; }
+}

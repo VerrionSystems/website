@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { access, cp, mkdtemp, readFile, rm, symlink, writeFile, unlink } from 'node:fs/promises';
+import { access, cp, mkdtemp, readFile, readdir, rm, symlink, writeFile, unlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -77,4 +77,96 @@ for(const [name,mutate] of [
   const root=await mkdtemp(path.join(tmpdir(),'verrion-artifact-check-'));
   try{await cp(artifact,root,{recursive:true});await mutate(root);await assert.rejects(checkArtifact(root));}
   finally{await rm(root,{recursive:true,force:true});}
+});
+
+function decodeEntities(value) {
+  return value.replaceAll('&amp;', '&').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&quot;', '"');
+}
+
+function jsonLdBlocks(html) {
+  return [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
+}
+
+test('published pages are real documents with one h1 and parseable JSON-LD', async () => {
+  const forbidden = /Verrion Validate|Verrion AI Control Room|AI Control Room|Verrion Voice|Verrion Note|Verrion Inquiry/;
+  const expected = {
+    'index.html': 'https://www.verrionsystems.com/',
+    'deviation.html': 'https://www.verrionsystems.com/deviation.html',
+    'deviation-companion.html': 'https://www.verrionsystems.com/deviation-companion.html',
+    'capa.html': 'https://www.verrionsystems.com/capa.html',
+    'sop-intelligence.html': 'https://www.verrionsystems.com/sop-intelligence.html',
+    'privacy.html': 'https://www.verrionsystems.com/privacy.html',
+    'terms.html': 'https://www.verrionsystems.com/terms.html',
+    'data-handling.html': 'https://www.verrionsystems.com/data-handling.html',
+  };
+  for (const [file, canonical] of Object.entries(expected)) {
+    const html = await readFile(path.join(artifact, file), 'utf8');
+    assert.doesNotMatch(html, /http-equiv\s*=\s*["']refresh/i, `${file} meta refresh`);
+    assert.match(html, new RegExp(`<link rel="canonical" href="${canonical.replaceAll('/', '\\/')}"\\s*/?>`), `${file} canonical`);
+    assert.equal((html.match(/<h1\b/g) ?? []).length, 1, `${file} h1 count`);
+    for (const block of jsonLdBlocks(html)) JSON.parse(JSON.stringify(block));
+    assert.doesNotMatch(html, forbidden, file);
+  }
+  const home = await readFile(path.join(artifact, 'index.html'), 'utf8');
+  assert.match(home, /<h1 class="hero-title" id="hero-title">/);
+  assert.match(home, />What was seen\.</);
+  assert.match(home, />What can be shown\.</);
+  assert.match(home, /property="og:title" content="Verrion Systems · Pharma Compliance Suite"/);
+  assert.match(home, /Verrion Pharma Compliance Suite \(PCS\) is GMP deviation, investigation, disposition and CAPA software for pharmaceutical quality teams, built by Verrion Systems Ltd\./);
+  assert.match(home, /<title>Verrion Systems · Verrion Pharma Compliance Suite<\/title>/);
+  const graph = jsonLdBlocks(home)[0]['@graph'];
+  const org = graph.find((node) => node['@type'] === 'Organization');
+  assert.equal(org.legalName, 'Verrion Systems Ltd');
+  assert.equal(org.identifier, '17265988');
+  assert.equal(org.founder.name, 'Dawid Pysznik');
+  assert.equal(org.sameAs, undefined);
+  const app = graph.find((node) => node['@type'] === 'SoftwareApplication');
+  assert.equal(app.name, 'Verrion Pharma Compliance Suite (PCS)');
+  assert.deepEqual(app.featureList, [
+    'Deviation Companion',
+    'Deviation Investigator',
+    'Impact & Disposition (no AI)',
+    'CAPA',
+    'SOP Intelligence',
+  ]);
+  assert.equal(app.publisher.name, 'Verrion Systems Ltd');
+  const faq = graph.find((node) => node['@type'] === 'FAQPage').mainEntity;
+  const visible = [...home.matchAll(/<details><summary>([\s\S]*?)<\/summary><p>([\s\S]*?)<\/p><\/details>/g)];
+  assert.equal(faq.length, visible.length);
+  assert.equal(visible.length, 3);
+  for (let i = 0; i < faq.length; i += 1) {
+    assert.equal(faq[i].name, decodeEntities(visible[i][1]));
+    assert.equal(faq[i].acceptedAnswer.text, decodeEntities(visible[i][2]));
+  }
+  const deviation = await readFile(path.join(artifact, 'deviation.html'), 'utf8');
+  assert.match(deviation, /<h1 id="module-title">Deviation Investigator: AI-assisted deviation investigation for GMP manufacturing<\/h1>/);
+  assert.match(deviation, /href="\/\?item=deviation-investigator"/);
+  assert.match(await readFile(path.join(artifact, 'deviation-companion.html'), 'utf8'), /href="\/\?item=deviation-companion"/);
+  assert.match(await readFile(path.join(artifact, 'capa.html'), 'utf8'), /href="\/\?item=capa"/);
+  assert.match(await readFile(path.join(artifact, 'sop-intelligence.html'), 'utf8'), /href="\/\?item=sop-intelligence"/);
+  const data = await readFile(path.join(artifact, 'data-handling.html'), 'utf8');
+  assert.match(data, /<h1 id="legal-page-title">Data Handling Summary<\/h1>/);
+  assert.match(data, /This summary describes the intended arrangements for handling data during Verrion Systems Ltd walkthroughs and early hosted pilots\./);
+  const llms = await readFile(path.join(artifact, 'llms.txt'), 'utf8');
+  assert.match(llms, /hello@verrionsystems\.com/);
+  assert.match(llms, /https:\/\/www\.verrionsystems\.com\/\)/);
+  assert.match(llms, /data-handling\.html/);
+  assert.match(llms, /privacy\.html/);
+  assert.doesNotMatch(llms, forbidden);
+  const sitemap = await readFile(path.join(artifact, 'sitemap.xml'), 'utf8');
+  for (const loc of Object.values(expected)) {
+    assert.match(sitemap, new RegExp(`<loc>${loc.replaceAll('/', '\\/')}<\\/loc>\\s*<lastmod>\\d{4}-\\d{2}-\\d{2}<\\/lastmod>`));
+  }
+  const robots = await readFile(path.join(artifact, 'robots.txt'), 'utf8');
+  assert.equal(robots, 'User-agent: *\nAllow: /\n\nSitemap: https://www.verrionsystems.com/sitemap.xml\n');
+  const names = [];
+  async function walk(dir) {
+    for (const entry of await readdir(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) await walk(full);
+      else if (/\.(?:html|css|js|xml|txt)$/.test(entry.name)) names.push(full);
+    }
+  }
+  await walk(artifact);
+  for (const full of names) assert.doesNotMatch(await readFile(full, 'utf8'), forbidden, full);
 });
