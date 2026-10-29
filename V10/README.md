@@ -94,3 +94,15 @@ After the merge:
 3. Check the legacy links and the link preview.
 
 A real iPhone in Safari and a real Android phone are the checks this build could not make.
+
+## Logo V2 (29 October 2026)
+
+At Dawid's request, the site now uses the Verrion Systems V2 logo: the VS symbol with "Verrion Systems" set in mixed case. It changes no wording, layout or records. The files come from the V2 logo package unmodified, apart from one trim.
+
+- **Top bar** (home and legal pages): `src/assets/verrion-systems-logo.svg`. This is the package's primary logo for light backgrounds. Only its canvas was changed: the SVG's `viewBox` was trimmed from `0 0 2272 468` to the artwork (`96 96 2080 276`), as the old PNG had been. The bar itself provides the clear space. The logo is 30 px tall on desktop (226 px wide, the package's recommended 240 px once its margin is counted) and 26 px on phones (196 px).
+- **Structured data:** `src/assets/verrion-systems-bar.png` keeps its URL, but is now the package's 1600 px transparent PNG of the same logo.
+- **Favicon:** the root `favicon.png` is now the package's 32 px VS favicon (white VS on a navy tile).
+- **Link preview:** `scripts/og-card.html` uses the new SVG, and `src/assets/og-card.png` was re-rendered.
+- `scripts/artifact-policy.mjs`: `verrion-systems-logo.svg` joins the fixed asset list.
+
+Verification: `npm run build:pages` produced a clean artifact (31 approved assets), and `npm test` passed 11 of 11. `prod.mjs` found 0 console errors and 0 external requests. `functional.mjs` found no failures, and `phone-sweep.mjs` passed every size. In the browser, the bar fits down to 861 px wide (87 px between logo and navigation) and on a 320 px phone (20 px between logo and Menu).

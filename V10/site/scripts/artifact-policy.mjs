@@ -7,7 +7,8 @@ export const pageFiles = ['index.html','privacy.html','terms.html','data-handlin
 export const hostingFiles = ['.htaccess','.nojekyll','CNAME','favicon.png','robots.txt','sitemap.xml'];
 // Images and clips, copied with fixed names from src/assets by prepare-pages-artifact.mjs.
 export const staticAssets = [
-  'verrion-systems-bar.png',
+  // Logo: the SVG is shown in the top bar; the PNG is the raster copy for structured data.
+  'verrion-systems-logo.svg','verrion-systems-bar.png',
   'hero-photo.avif','hero-photo.jpg','hero-subject-v4.avif','hero-subject-v4.png',
   'peak-floor.avif','peak-floor.jpg','held-floor.avif','held-floor.jpg',
   'capa-floor.avif','capa-floor.jpg','sop-floor.avif','sop-floor.jpg',
