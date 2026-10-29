@@ -106,3 +106,15 @@ At Dawid's request, the site now uses the Verrion Systems V2 logo: the VS symbol
 - `scripts/artifact-policy.mjs`: `verrion-systems-logo.svg` joins the fixed asset list.
 
 Verification: `npm run build:pages` produced a clean artifact (31 approved assets), and `npm test` passed 11 of 11. `prod.mjs` found 0 console errors and 0 external requests. `functional.mjs` found no failures, and `phone-sweep.mjs` passed every size. In the browser, the bar fits down to 861 px wide (87 px between logo and navigation) and on a 320 px phone (20 px between logo and Menu).
+
+## Logo V3 (29 October 2026)
+
+At Dawid's request, Logo V3 replaced the V2 logo the same evening. Logo V3 is the graphite and copper package: a compact geometric VS symbol with "Verrion Systems". It changes no wording or records. The only layout change is the logo's size in the bar. The files come from the V3 package (`Verrion_Systems_Logo_Package`), unmodified apart from the same trim as before.
+
+- **Top bar** (home and legal pages): `src/assets/verrion-systems-logo.svg` is the package's `01_Verrion_Systems/SVG/Horizontal/Verrion_Systems_Horizontal_Colour_Light.svg`, the logo for light backgrounds. Only its canvas was changed: the `viewBox` was trimmed from `0 0 1547 378` to the artwork (`64 64 1419 250`). The V3 logo is more compact than V2, so it is 39 px tall on desktop (221 px wide, or 241 px with its margin, which meets the package's suggested 240 px minimum). On phones it is 34 px (193 px wide), which keeps the symbol above the package's 32 px minimum. At these sizes the lettering is about the same size as V2's was.
+- **Short screens:** the home page's short-screen layout narrows the bar to 52 px, so it uses the 34 px phone size there. This keeps the package's clear zone (a quarter of the symbol's height) above and below the logo.
+- **Structured data:** `src/assets/verrion-systems-bar.png` keeps its URL. It is now the package's 2048 px transparent PNG of the same logo.
+- **Favicon:** the root `favicon.png` is the package's 32 px favicon (white VS on a graphite tile).
+- **Link preview:** the card's logo is 39 px tall, as in the bar, and `src/assets/og-card.png` was re-rendered.
+
+Verification: `npm run build:pages` produced a clean artifact (31 approved assets), and `npm test` passed 11 of 11. `prod.mjs` found 0 console errors and 0 external requests. `functional.mjs` found no failures, and `phone-sweep.mjs` passed every size. In the browser, nothing scrolls sideways. The bar fits at 861 px wide, with 103 px between the logo and the navigation on the home page and 93 px on the legal pages. On a 320 px phone there are 21 px between the logo and Menu.

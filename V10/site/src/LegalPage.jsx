@@ -37,7 +37,7 @@ export function LegalPage({ pageId }) {
     <a className="skip" href="#main-content">Skip to main content</a>
     <header className="topbar">
       <a className="topbar__brand" href="/" aria-label="Verrion Systems home" onClick={close}>
-        <img src="/assets/verrion-systems-logo.svg" alt="Verrion Systems" width="2080" height="276"/>
+        <img src="/assets/verrion-systems-logo.svg" alt="Verrion Systems" width="1419" height="250"/>
       </a>
       <nav className={`topbar__nav${menuOpen ? ' is-open' : ''}`} id="site-nav" aria-label="Primary navigation">
         <a href="/#workflows" onClick={close}>Modules</a>

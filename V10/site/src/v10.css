@@ -105,7 +105,7 @@ button { cursor: pointer; }
   box-shadow: 0 10px 26px -18px rgba(5, 14, 16, 0.55);
 }
 .topbar__brand { display: block; flex: none; }
-.topbar__brand img { display: block; height: 30px; width: auto; }
+.topbar__brand img { display: block; height: 39px; width: auto; }
 .topbar__nav { display: flex; align-items: center; gap: clamp(14px, 2vw, 28px); }
 .topbar__nav a {
   color: var(--rec-ink); text-decoration: none; white-space: nowrap;
@@ -638,7 +638,7 @@ html:not(.sc-ready) .slip { display: none; }
   body { font-size: 1rem; }
 
   .topbar { padding-left: 14px; padding-right: 14px; }
-  .topbar__brand img { height: 26px; }
+  .topbar__brand img { height: 34px; }
   .topbar__menu { display: block; height: 38px; padding: 0 14px; }
   .topbar__nav { display: none; }
   .topbar__nav.is-open {
@@ -863,6 +863,8 @@ html:not(.sc-ready) .slip { display: none; }
     --h1: clamp(1.85rem, 1.2rem + 2vw, 2.6rem);
   }
   .topbar { padding-left: var(--pad-out); padding-right: var(--pad-out); }
+  /* The phone logo size keeps the logo's clear zone in the shorter bar. */
+  .topbar__brand img { height: 34px; }
 
   /* Unpinned: each act is as tall as its content, so its stage never sticks. */
   .sc-act--pinned { height: auto !important; }
