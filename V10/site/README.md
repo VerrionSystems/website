@@ -39,8 +39,9 @@ npm test
 - Vite builds `index.html` and the three legal pages into `root-dist/`, with `publicDir` disabled.
 - `scripts/prepare-pages-artifact.mjs` adds only:
   - the listed images (with fixed names);
-  - the repository's hosting files;
-  - the four legacy module-entry pages.
+  - the repository's hosting files, including `llms.txt`;
+  - the four module pages, as static HTML using the legal-page styling. They do not meta-refresh. Homepage `/?item=` links still open the matching module.
+- `scripts/prerender-legal.mjs` writes the current Privacy, Terms and Data handling text into those pages. The wording stays in `src/legalContent.jsx`.
 - `scripts/artifact-policy.mjs` validates the exact root-file list, the permitted assets and every referenced file. It rejects third-party font requests and non-release content.
 - The Pages workflow installs, builds, tests and uploads only this directory's `root-dist/`.
 

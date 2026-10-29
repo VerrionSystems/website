@@ -80,6 +80,15 @@ button { cursor: pointer; }
 .skip { position: fixed; left: 12px; top: -60px; z-index: 100; background: var(--mint); color: var(--floor); padding: 10px 14px; font-weight: 600; text-decoration: none; }
 .skip:focus { top: 12px; }
 
+/* One plain sentence under the bar, in normal flow, so the pinned hero keeps its own fit. */
+.site-identity {
+  position: relative; z-index: 1; margin: 0;
+  padding: calc(var(--bar) + 12px) var(--pad-out) 14px;
+  background: var(--sheet); color: var(--rec-ink);
+  border-bottom: 1px solid var(--rec-line);
+  font-size: var(--fs-small); line-height: 1.45;
+}
+
 /* Paper grounds take the dark accent for focus: mint on paper is 1.6:1. */
 .half--record :focus-visible, .col--record :focus-visible, .walk :focus-visible, .topbar :focus-visible { outline-color: var(--green); }
 
@@ -341,6 +350,7 @@ html:not(.sc-ready) .slip { display: none; }
   background: linear-gradient(var(--rec-ink), var(--rec-ink)) center / 12px 2px no-repeat, linear-gradient(var(--rec-ink), var(--rec-ink)) center / 2px 12px no-repeat; transition: rotate 200ms var(--ease); }
 .faq details[open] summary::after { rotate: 45deg; }
 .faq details p { padding: 0 0 18px; max-width: 52ch; color: var(--rec-soft); }
+.faq details a { color: var(--rec-ink); }
 
 /* ---------------------------------------------------------------- close --
    The split ends: the people take the full width, and the invitation.
@@ -972,6 +982,7 @@ html:not(.sc-ready) .slip { display: none; }
   .print-only { display: block; }
   .print-mast { margin-bottom: 7mm; padding-bottom: 3mm; border-bottom: 1.5px solid var(--rec-ink); font-size: 8.5pt; color: var(--rec-soft); }
 
+  .site-identity { padding: 0 0 5mm; background: none; border: 0; color: var(--rec-ink); font-size: 10.5pt; }
   .skip, .topbar, .slip, .threads, .seam, .seam-line, .side-labels, .hero-glow, .hero-window, .hero-subject,
   .evidence-photo, .band, .close-photo, .walk, .link-btn, .close-buttons, .close-actions > .label,
   .findings__hint, .ev-hint, .field__empty, .record-link, .module summary::after, .faq summary::after { display: none !important; }

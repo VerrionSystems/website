@@ -36,15 +36,15 @@ Open [the local preview](http://127.0.0.1:4177/). See [`V10/site/README.md`](V10
 | Route | Behaviour |
 |---|---|
 | `/` and `/index.html` | V10 homepage |
-| `/deviation-companion.html` | Compatibility entry to Deviation Companion in the module catalogue |
-| `/deviation.html` | Compatibility entry to Deviation Investigator |
-| `/capa.html` | Compatibility entry to CAPA |
-| `/sop-intelligence.html` | Compatibility entry to the independent SOP workflow |
+| `/deviation-companion.html` | Deviation Companion page. `/?item=deviation-companion` still opens it on the homepage |
+| `/deviation.html` | Deviation Investigator page. `/?item=deviation-investigator` still opens it on the homepage |
+| `/capa.html` | CAPA page. `/?item=capa` still opens it on the homepage |
+| `/sop-intelligence.html` | SOP Intelligence page. `/?item=sop-intelligence` still opens it on the homepage |
 | `/privacy.html` | Retained Privacy Notice |
 | `/terms.html` | Retained Terms of Use |
 | `/data-handling.html` | Retained Data Handling Summary |
 
-The four module HTML files forward visitors to the corresponding homepage content. Recognised legacy `?item=` values, V3 anchors (`#portfolio`, `#controls`, `#why`, `#pilot`) and V4 anchors (`#approach`, `#deviation-workflow`, `#case-study`, `#sop-workflow`, `#hp-stage-…`) remain supported. Legal text, dates and section anchors are retained unchanged from V3/V4, in V6–V10 presentation.
+The four module HTML files are static pages for those modules. Recognised legacy `?item=` values, V3 anchors (`#portfolio`, `#controls`, `#why`, `#pilot`) and V4 anchors (`#approach`, `#deviation-workflow`, `#case-study`, `#sop-workflow`, `#hp-stage-…`) remain supported. Legal text, dates and section anchors are retained unchanged from V3/V4, in V6–V10 presentation.
 
 ## Release verification
 

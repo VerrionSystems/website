@@ -4,7 +4,7 @@ import path from 'node:path';
 
 // The exact shape of the public site. Anything else in root-dist fails the build.
 export const pageFiles = ['index.html','privacy.html','terms.html','data-handling.html','deviation-companion.html','deviation.html','capa.html','sop-intelligence.html'];
-export const hostingFiles = ['.htaccess','.nojekyll','CNAME','favicon.png','robots.txt','sitemap.xml'];
+export const hostingFiles = ['.htaccess','.nojekyll','CNAME','favicon.png','robots.txt','sitemap.xml','llms.txt'];
 // Images and clips, copied with fixed names from src/assets by prepare-pages-artifact.mjs.
 export const staticAssets = [
   // Logo: the SVG is shown in the top bar; the PNG is the raster copy for structured data.
@@ -37,7 +37,7 @@ export async function checkArtifact(root) {
   assert.equal((await readFile(path.join(root,'CNAME'),'utf8')).trim(),'www.verrionsystems.com');
   for(const name of [...pageFiles,...assets.filter(e=>/\.(?:css|js)$/.test(e.name)).map(e=>`assets/${e.name}`)]){
     const content=await readFile(path.join(root,name),'utf8');
-    assert(!/AI Control Room|Verrion Systems Validate|photo-studies\.html|\/Users\/|\.openai\/|01-clearer-next-step|03-shift-handover|04-confidence-at-work|fonts\.googleapis|fonts\.gstatic/.test(content),`Non-release content found in ${name}`);
+    assert(!/AI Control Room|Verrion AI Control Room|Verrion Systems Validate|Verrion Validate|Verrion Voice|Verrion Note|Verrion Inquiry|photo-studies\.html|\/Users\/|\.openai\/|01-clearer-next-step|03-shift-handover|04-confidence-at-work|fonts\.googleapis|fonts\.gstatic/.test(content),`Non-release content found in ${name}`);
     if(name.endsWith('.html'))assert(content.includes('/favicon.png'),`Missing favicon in ${name}`);
     for(const match of content.matchAll(/["'(]\/(assets\/[A-Za-z0-9_.-]+)["')]/g))await access(path.join(root,match[1]));
   }
