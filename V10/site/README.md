@@ -16,7 +16,7 @@ V10 is V8, as released on 22 October 2026, with a short, quiet clip over three o
 
 ## Decisions that must hold
 
-- Full **Verrion Systems** name and the official logo (unmodified; `src/assets/verrion-systems-bar.png` is the official file with transparent margins trimmed). PCS-only public content.
+- Full **Verrion Systems** name and the official logo, unmodified. Since 29 October 2026 this is the V2 logo. `src/assets/verrion-systems-logo.svg` is the official primary vector for light backgrounds, with its transparent margin trimmed, and is shown in the top bar and on the link-preview card. `src/assets/verrion-systems-bar.png` is the official 1600 px PNG of the same logo, used in the structured data. The favicon (`favicon.png` at the repository root) is the official 32 px VS favicon. PCS-only public content.
 - Persistent navigation (top bar) and mild motion with reduced-motion support.
 - Deviation Companion → Deviation Investigator → Impact & Disposition → CAPA display order, without implying a compulsory workflow.
   - I&D continues from a linked DI record. Site QA owns disposition decisions and approvals.

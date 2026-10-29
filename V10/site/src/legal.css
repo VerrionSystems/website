@@ -68,7 +68,7 @@ button { cursor: pointer; font: inherit; }
   box-shadow: 0 10px 26px -18px rgba(5, 14, 16, 0.55);
 }
 .topbar__brand { display: block; flex: none; }
-.topbar__brand img { display: block; height: 32px; width: auto; }
+.topbar__brand img { display: block; height: 30px; width: auto; }
 .topbar__nav { display: flex; align-items: center; gap: clamp(14px, 2vw, 28px); }
 .topbar__nav a {
   color: var(--rec-ink); text-decoration: none; white-space: nowrap;
