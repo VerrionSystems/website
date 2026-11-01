@@ -1,21 +1,21 @@
 # Verrion Systems Website
 
-Public website for Verrion Systems and Pharma Compliance Suite. **V10** (V8 with a short, quiet clip over three of the floor photographs) replaces V8 on the live domain. Dawid's merge of its release pull request is the approval. Deployment completion must be established separately from the workflow and public-site checks.
+Public website for Verrion Systems and Pharma Compliance Suite. **V11** (V10 with an opening statement before the story, the search work from #12 and two revised photographs) replaces V10 on the live domain. Dawid's merge of its release pull request is the approval. Deployment completion must be established separately from the workflow and public-site checks.
 
 ## Production source and artifact
 
-The production source is [`V10/site/`](V10/site/). It builds a clean, ignored static artifact at `V10/site/root-dist/`. The existing [Deploy GitHub Pages workflow](.github/workflows/deploy-pages.yml) installs, builds and tests that source, then uploads **only this artifact**. GitHub Pages must use GitHub Actions as its publishing source.
+The production source is [`V11/site/`](V11/site/). It builds a clean, ignored static artifact at `V11/site/root-dist/`. The existing [Deploy GitHub Pages workflow](.github/workflows/deploy-pages.yml) installs, builds and tests that source, then uploads **only this artifact**. GitHub Pages must use GitHub Actions as its publishing source.
 
-The artifact contains eight HTML files, runtime assets, self-hosted fonts and the approved hosting files (`CNAME`, `.nojekyll`, `.htaccess`, favicon, robots and sitemap). It is a static Pages site: no server runtime is required, and the live site makes no third-party requests (fonts are self-hosted). Repository-root publication is unsupported. Historical V2/V3/V4 builds, the V5 exploration, design studies, QA records, package metadata and repository instructions must never be included in the Pages artifact. Checked-in root pages are historical compatibility snapshots, not the publishing source.
+The artifact contains eight HTML files, runtime assets, self-hosted fonts and the approved hosting files (`CNAME`, `.nojekyll`, `.htaccess`, favicon, robots, sitemap and `llms.txt`). It is a static Pages site: no server runtime is required, and the live site makes no third-party requests (fonts are self-hosted). Repository-root publication is unsupported. Historical V2/V3/V4 builds, the V5 exploration, design studies, QA records, package metadata and repository instructions must never be included in the Pages artifact. Checked-in root pages are historical compatibility snapshots, not the publishing source.
 
-V8 (`V8/site/`) is retained unchanged as the previous production source, with V7 (`V7/site/`), V6 (`V6/site/`) and V4 Human Practice (`V4/site/`) before it.
+V10 (`V10/site/`) is retained unchanged as the previous production source, with V8 (`V8/site/`), V7 (`V7/site/`), V6 (`V6/site/`) and V4 Human Practice (`V4/site/`) before it.
 
 ## Build and check
 
 From the repository root, using Node.js 22:
 
 ```bash
-cd V10/site
+cd V11/site
 npm ci
 npm run build:pages
 npm test
@@ -29,13 +29,13 @@ For a local preview of the actual artifact:
 python3 -m http.server 4177 --bind 127.0.0.1 --directory root-dist
 ```
 
-Open [the local preview](http://127.0.0.1:4177/). See [`V10/site/README.md`](V10/site/README.md) for maintenance context.
+Open [the local preview](http://127.0.0.1:4177/). See [`V11/site/README.md`](V11/site/README.md) for maintenance context.
 
 ## Public routes
 
 | Route | Behaviour |
 |---|---|
-| `/` and `/index.html` | V10 homepage |
+| `/` and `/index.html` | V11 homepage |
 | `/deviation-companion.html` | Compatibility entry to Deviation Companion in the module catalogue |
 | `/deviation.html` | Compatibility entry to Deviation Investigator |
 | `/capa.html` | Compatibility entry to CAPA |
@@ -43,9 +43,10 @@ Open [the local preview](http://127.0.0.1:4177/). See [`V10/site/README.md`](V10
 | `/privacy.html` | Retained Privacy Notice |
 | `/terms.html` | Retained Terms of Use |
 | `/data-handling.html` | Retained Data Handling Summary |
+| `/llms.txt` | Plain-text summary for language-model tools (not a page, and not in the sitemap) |
 
-The four module HTML files forward visitors to the corresponding homepage content. Recognised legacy `?item=` values, V3 anchors (`#portfolio`, `#controls`, `#why`, `#pilot`) and V4 anchors (`#approach`, `#deviation-workflow`, `#case-study`, `#sop-workflow`, `#hp-stage-…`) remain supported. Legal text, dates and section anchors are retained unchanged from V3/V4, in V6–V10 presentation.
+The four module HTML files forward visitors to the corresponding homepage content. Recognised legacy `?item=` values, V3 anchors (`#portfolio`, `#controls`, `#why`, `#pilot`) and V4 anchors (`#approach`, `#deviation-workflow`, `#case-study`, `#sop-workflow`, `#hp-stage-…`) remain supported. Legal text, dates and section anchors are retained unchanged from V3/V4, in V6–V11 presentation. Since V11 the legal text is pre-rendered into the HTML.
 
 ## Release verification
 
-The canonical domain remains [www.verrionsystems.com](https://www.verrionsystems.com/). After an authorised release, confirm that the Pages workflow succeeded for the intended commit and inspect the public homepage, all eight HTML entry points, legal pages and legacy links. Verify the hero, responsive navigation, walkthrough behaviour, link preview, the phone layouts (portrait and landscape) and the three column-photo clips on the deployed site. Build success alone does not establish deployment or public-site behaviour.
+The canonical domain remains [www.verrionsystems.com](https://www.verrionsystems.com/). After an authorised release, confirm that the Pages workflow succeeded for the intended commit and inspect the public homepage, all eight HTML entry points, legal pages and legacy links. Verify the hero, responsive navigation, walkthrough behaviour, link preview, the phone layouts (portrait and landscape), the opening statement, the three column-photo clips and `/llms.txt` on the deployed site. Build success alone does not establish deployment or public-site behaviour.
