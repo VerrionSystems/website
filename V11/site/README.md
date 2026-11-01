@@ -1,6 +1,6 @@
-# V11 site (preview)
+# V11 production site
 
-V11 is V10 as live on 30 October 2026 (with Logo V3), plus the search work from VerrionSystems/website#12: real module pages, legal text in the HTML, structured data, `llms.txt` and the approved UK-audience and pilot wording. It replaces V10 on www.verrionsystems.com only when Dawid merges a separate release pull request, and that merge is the approval. Until then `V10/site/` stays the production source. What changed, what the review of #12 found and how V11 was verified are in [`../README.md`](../README.md).
+V11 is V10 as live on 30 October 2026 (with Logo V3), plus the search work from VerrionSystems/website#12: real module pages, legal text in the HTML, structured data, `llms.txt` and the approved UK-audience and pilot wording. It replaces V10 on www.verrionsystems.com when Dawid merges its release pull request, and that merge is the approval. This directory is then the production source; V10 (`V10/site/`) is retained unchanged as the previous one. Deployment completion is recorded separately, after the Pages workflow and public-site checks. What changed, what the review of #12 found and how V11 was verified are in [`../README.md`](../README.md).
 
 ## What it is
 

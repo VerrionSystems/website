@@ -2,7 +2,7 @@
 
 Built on 30 October 2026, when Dawid asked to "review PR12 and work on V11 of the website based on it". VerrionSystems/website#12 (Cursor) adds real module pages, legal text in the HTML, structured data, `llms.txt` and the approved UK-audience and pilot wording. It was written against V10 before the logo changes in #13 and #14.
 
-**Status: preview.** V11 starts from `V10/site` as live on 30 October 2026 (with Logo V3), adds #12, and fixes what the review found. On 31 October Dawid reviewed it in a hosted preview; the changes from that review are listed under [Changes from the preview review](#changes-from-the-preview-review-31-october-2026). The Pages workflow still builds `V10/site`. Pointing the workflow at `V11/site` is a separate release pull request, and Dawid's merge of it is the approval. The one shared file V11 changes is the root `sitemap.xml` (see below), which V10 also publishes.
+**Status: proposed for release.** The release pull request points the Pages workflow at `V11/site`. Dawid's merge of it is the approval, and V10 stays live until then. V11 starts from `V10/site` as live on 30 October 2026 (with Logo V3), adds #12, and fixes what the review found. On 31 October Dawid reviewed it in a hosted preview; the changes from that review are listed under [Changes from the preview review](#changes-from-the-preview-review-31-october-2026). `V10/site` is retained unchanged as the previous source.
 
 ## Run it
 
@@ -139,14 +139,14 @@ Not verified: Safari or iOS, a real phone, a screen reader, and Google's Rich Re
 The release pull request:
 
 - changes `.github/workflows/deploy-pages.yml` from `V10/site` to `V11/site`;
-- sets each `<lastmod>` in the root `sitemap.xml`. The homepage takes the release date. The legal pages take the date their content last changed;
-- marks `V10/site/README.md` as the previous source.
+- sets each `<lastmod>` in the root `sitemap.xml`. The homepage takes 1 November 2026, when its content was settled. The legal pages take 12 July 2026, when their content last changed;
+- marks `V10/site/README.md` as the previous source, and moves the root README and V11's READMEs to production wording.
 
 After the merge:
 
 1. Check that the Pages run succeeded for the merge commit.
 2. On the live site, check that the four module addresses still open their module on the homepage. Open the legal pages and `/llms.txt`, and check the first screen on desktop and on a phone.
-3. Submit `https://www.verrionsystems.com/sitemap.xml` in Google Search Console and Bing Webmaster Tools. Dawid adds the verification tag or file himself.
+3. Submit `https://www.verrionsystems.com/sitemap.xml` in Google Search Console and Bing Webmaster Tools. Dawid adds the verification tag or file.
 
 Notes for search:
 
