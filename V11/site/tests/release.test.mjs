@@ -113,7 +113,7 @@ test('published pages are real documents with one h1 and parseable JSON-LD', asy
   assert.match(home, /<meta name="description" content="Deviation, CAPA and SOP review software for UK pharmaceutical quality teams: /);
   assert.match(home, /property="og:description" content="Deviation, CAPA and SOP review software for UK pharmaceutical quality teams\./);
   // V11: the identity sentence sits in the footer, so nothing displaces the pinned hero.
-  assert.match(home, /<footer class="site-foot">\s*<p class="site-identity">Verrion Pharma Compliance Suite \(PCS\) is GMP deviation, investigation, disposition and CAPA software for UK pharmaceutical quality teams, built by Verrion Systems Ltd\.<\/p>/);
+  assert.match(home, /<footer class="site-foot">\s*<p class="site-identity">Verrion Pharma Compliance Suite \(PCS\) is deviation, CAPA and SOP review software for UK pharmaceutical quality teams, built by Verrion Systems Ltd\.<\/p>/);
   assert.doesNotMatch(home.slice(home.indexOf('<main'), home.indexOf('id="facts"')), /site-identity/);
   assert.doesNotMatch(home, /Annex 11|MHRA/);
   assert.match(home, /<title>Verrion Systems · Verrion Pharma Compliance Suite<\/title>/);

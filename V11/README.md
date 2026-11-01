@@ -29,7 +29,7 @@ Open <http://localhost:4570/>. The browser checks in `V11/site/lab/checks/` expe
    - on a 390 × 844 phone, "What can be shown." and the whole record drop below the first screen;
    - the sentence also repeats the hero line just beneath it.
 
-   **V11:** the sentence is unchanged, but sits at the top of the homepage footer. The hero is back where V10 has it at every size checked. The sentence is still visible text in the page, and the structured data and `llms.txt` name PCS the same way.
+   **V11:** the sentence sits at the top of the homepage footer instead. (Since 1 November its wording follows the opening statement; see [Changes from the preview review](#changes-from-the-preview-review-31-october-2026).) The hero is back where V10 has it at every size checked. The sentence is still visible text in the page, and the structured data and `llms.txt` name PCS the same way.
 2. **The module pages read as fragments.** (Since 31 October V11 has no module pages; see [Changes from the preview review](#changes-from-the-preview-review-31-october-2026). Findings 2 and 3 are kept as the review's record.) #12 copies homepage strings into lists without the things they belong to. For example:
    - the Investigator page lists "Supports", "Requirement" and "Not yet provided" as bullets of their own;
    - it ends with "Open to challenge" and "Select the missing record to mark it as provided.", although the page has nothing to select;
@@ -59,6 +59,7 @@ Dawid reviewed V11 in a private hosted preview and asked for these changes in co
 - **Opening statement.** First-time visitors could not tell what the product does. The page now opens with "Deviation, CAPA and SOP review software" and a lede that covers the SOP workflow too: "For UK pharmaceutical quality teams: link deviation facts, investigation, disposition and CAPA, or review procedures against their sources. The people accountable keep every decision." Dawid chose this wording ("C") from three options.
   - At first it sat at the top of the hero's record half. Dawid then asked for it to come before the whole story, in its own block. It is now a section of its own (`.intro`) between the top bar and the hero: two columns on a desktop, lined up with the hero's halves, one column on a phone. The hero below is V10's again, with no lede, so the record sits straight under "What can be shown."
   - Trade-off: the first screen now shows the statement and the top of the hero, not the whole hero. At 1440 × 900 the statement ends 276 px down; on a 375 × 812 phone, 285 px. Once the hero pins, it fills the screen as before, and the fit checks measure it there.
+  - The footer's identity sentence now matches it too: "Verrion Pharma Compliance Suite (PCS) is deviation, CAPA and SOP review software for UK pharmaceutical quality teams, built by Verrion Systems Ltd." #12's version said "GMP deviation, investigation, disposition and CAPA software", which left out SOP review.
   - The meta description, the link-preview text (`og:description`) and `llms.txt` now say what the statement says. The meta description is the statement in full; the link preview keeps its first part and the closing sentence; `llms.txt` opens with "Verrion Pharma Compliance Suite (PCS) is deviation, CAPA and SOP review software for UK pharmaceutical quality teams, built by Verrion Systems Ltd." and goes on with the rest of the lede. The tests check all three start as the statement does.
 - **Something going wrong, unnoticed (hero photo).** An amber warning light is on, on the machine behind the operator, who keeps looking at her tablet. Only that background area changed; the operator cutout still lines up. Alt text adds "Behind her, an amber warning light is on."
 - **The consequence ("Affected material waits").** The line now has a stretch-wrapped pallet of cartons, taped off and labelled HOLD. The beacon on the machine flashes red. The clip keeps the camera still: only the beacon flashes, about once a second, five times, then stays lit when the clip rests. The still photo shows it lit. The alt text reads "Beside the packing line, a stretch-wrapped pallet of cartons, taped off and labelled HOLD. On the machine behind it, a red warning light is on."
@@ -78,7 +79,7 @@ Dawid reviewed V11 in a private hosted preview and asked for these changes in co
 
 - **The homepage `<title>`.** It becomes "Verrion Systems · Verrion Pharma Compliance Suite", which says "Verrion" twice in a search result. The link-preview title stays "Verrion Systems · Pharma Compliance Suite".
 - **The name "Verrion Pharma Compliance Suite (PCS)".** It is used in the footer sentence, `llms.txt` and the structured data. The rest of the page says "Pharma Compliance Suite".
-- **Where the identity sentence sits.** V11 puts it in the footer, for the reasons above. Since 31 October the page opens with its own statement block before the hero, which says much the same; if the identity sentence must sit near the top, it belongs in that block rather than in a strip of its own. Its wording also predates the statement: it says "GMP deviation, investigation, disposition and CAPA software" and leaves out SOP review, which the statement, the descriptions and `llms.txt` now include.
+- **Where the identity sentence sits.** V11 puts it in the footer, for the reasons above. Since 31 October the page opens with its own statement block before the hero, which says much the same; if the identity sentence must sit near the top, it belongs in that block rather than in a strip of its own.
 
 ## Code changes from V10
 
@@ -86,7 +87,7 @@ Dawid reviewed V11 in a private hosted preview and asked for these changes in co
   - the title, meta description and hero line from #12;
   - the structured data from #12;
   - the pilot sentence in the FAQ;
-  - the identity sentence at the top of the footer;
+  - the identity sentence at the top of the footer, worded to match the opening statement;
   - the opening statement in its own section before the hero (the hero lede removed), the logo link pointing to it, the meta description and link-preview text worded to match it, and the two photos' alt text (31 October).
 - `src/v11.css` (was `v10.css`): the mailto link in the FAQ and the footer sentence; the opening statement's section, on screen and in print; the hero record without a lede; no CSS filter on the held photo and clip.
 - `src/v11.js` (was `v10.js`): renamed only.
