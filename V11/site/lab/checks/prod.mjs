@@ -14,13 +14,12 @@ await page.goto(B + '/', { waitUntil: 'networkidle' }); await page.waitForTimeou
 out.fonts = await page.evaluate(async () => { await document.fonts.ready; return { archivo: document.fonts.check('640 40px "Archivo Variable"'), instrument: document.fonts.check('16px "Instrument Sans Variable"'), h1Font: getComputedStyle(document.querySelector('.hero-title__floor')).fontFamily }; });
 out.engine = await page.evaluate(() => !!(window.ScrollCraft && ScrollCraft.instances.length));
 out.companionOpen = await page.evaluate(() => document.getElementById('module-companion').open);
-// legacy links. Since V11 the four module files are pages of their own; the
-// ?item= addresses they used to forward to still open the module here.
+// legacy links
 for (const [label, url, expect] of [
-  ['capa item', '/?item=capa', ['module-actions', 'actions']],
-  ['investigator item', '/?item=deviation-investigator', ['module-investigation', 'investigation']],
-  ['companion item', '/?item=deviation-companion', ['module-companion', 'companion']],
-  ['sop item', '/?item=sop-intelligence', ['procedure', null]],
+  ['capa page', '/capa.html', ['module-actions', 'actions']],
+  ['investigator page', '/deviation.html', ['module-investigation', 'investigation']],
+  ['companion page', '/deviation-companion.html', ['module-companion', 'companion']],
+  ['sop page', '/sop-intelligence.html', ['procedure', null]],
   ['#pilot', '/#pilot', ['contact', null]],
   ['#portfolio', '/#portfolio', ['workflows', null]],
   ['#approach', '/#approach', ['investigation', null]],

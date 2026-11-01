@@ -8,8 +8,8 @@ const { chromium } = createRequire(path.join(process.cwd(), 'package.json'))('pl
 const browser = await chromium.launch({ executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true });
 const sizes = [[1024, 768], [1280, 720], [1440, 900], [1536, 760], [1440, 700], [1366, 650], [1280, 620], [1280, 560], [1024, 600], [390, 844], [375, 667], [360, 640], [360, 780], [360, 800], [375, 812], [393, 852]];
 const checks = [
-  ['facts', 1, ['.sheet--hero .sheet__status', '.sheet--hero .field:last-child', '.hero-lede']],
-  ['facts', 0, ['.hero-lede', '.slip--a', '.slip--d']],
+  ['facts', 1, ['.sheet--hero .sheet__status', '.sheet--hero .field:last-child']],
+  ['facts', 0, ['.hero-title__record', '.slip--a', '.slip--d']],
   ['investigation', 1, ['.decision', '.ev--gap', '.peak-copy']],
 ];
 let fails = 0;

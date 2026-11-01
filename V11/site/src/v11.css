@@ -126,6 +126,26 @@ button { cursor: pointer; }
 .topbar__menu[aria-expanded="true"] { border-color: var(--rec-ink); background: var(--sheet-2); }
 .topbar__cta:active, .topbar__menu:active { scale: 0.96; }
 
+/* ---------------------------------------------------------------- intro --
+   What PCS is, in plain words, before the story starts. On a desktop it keeps
+   the hero's two columns: what the software is above the floor, who it is for
+   and what it does above the record, so the lede lines up with "What can be
+   shown." below it. */
+.intro {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end;
+  padding: calc(var(--bar) + clamp(28px, 5svh, 52px)) 0 clamp(28px, 5svh, 52px);
+  background: var(--sheet); color: var(--rec-ink); border-bottom: 1px solid var(--rec-line);
+}
+.intro__what {
+  padding: 0 var(--pad-in) 0 var(--pad-out);
+  font-family: var(--display); font-weight: 640; font-stretch: 106%; letter-spacing: -0.025em;
+  font-size: clamp(1.875rem, 0.9rem + 2.2vw, 3rem); line-height: 1.04; text-wrap: balance;
+}
+.intro__lede {
+  max-width: calc(36rem + var(--pad-in) + var(--pad-out)); padding: 0 var(--pad-out) 0.2em var(--pad-in);
+  font-size: clamp(1.0625rem, 0.95rem + 0.35vw, 1.3125rem); line-height: 1.45; text-wrap: pretty;
+}
+
 /* -------------------------------------------------------- pinned stage -- */
 .stage { background: var(--floor); }
 .half { position: absolute; top: 0; bottom: 0; width: 50%; }
@@ -207,8 +227,7 @@ html:not(.sc-ready) .slip { display: none; }
   background: linear-gradient(to bottom, rgba(13, 23, 25, 0.35), transparent 30%, transparent 70%, rgba(13, 23, 25, 0.55)); }
 
 .act--hero .half--record { display: flex; flex-direction: column; padding: calc(var(--top) + var(--h1) * 2.06 + 22px) var(--pad-out) 24px var(--pad-in); }
-.half--record .hero-lede { max-width: 32rem; flex: none; font-size: clamp(1rem, 0.9rem + 0.25vw, 1.1562rem); line-height: 1.5; color: var(--rec-soft); text-wrap: pretty; }
-.sheet-stack { position: relative; flex: 1 1 auto; min-height: 0; margin-top: 28px; max-width: 40rem; }
+.sheet-stack { position: relative; flex: 1 1 auto; min-height: 0; max-width: 40rem; }
 .sheet--hero { position: relative; height: 100%; display: flex; flex-direction: column; }
 .sheet--hero .fields { flex: 1 0 auto; display: grid; grid-template-rows: repeat(4, minmax(min-content, 1fr)); gap: 6px; margin-top: 6px; }
 /* Each field is a card that takes an equal share of the record's height, with
@@ -276,11 +295,13 @@ html:not(.sc-ready) .slip { display: none; }
    stays. The photograph shows wherever the clip does not load. */
 .band__motion { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity 0.6s ease; pointer-events: none; outline: 1px solid var(--img-outline); outline-offset: -1px; }
 .band__motion.is-on { opacity: 1; }
-/* Held material looks held: cooler, lower, quieter than the live line. */
-.act--held .band img { object-position: 30% 50%; filter: saturate(0.35) brightness(0.62) contrast(1.08); }
+/* Held material looks held: cooler, lower, quieter than the live line. Its
+   photo and clip carry that grade in the files (V10 used saturate(0.35)
+   brightness(0.62) contrast(1.08) here), so the red warning light on the line
+   keeps its colour. */
+.act--held .band img { object-position: 30% 50%; }
 .band--capa img { object-position: 40% 40%; filter: saturate(0.85) brightness(0.92); }
 .band--sop img { object-position: 45% 40%; filter: saturate(0.85); }
-.act--held .band__motion { filter: saturate(0.35) brightness(0.62) contrast(1.08); }
 .band--capa .band__motion { filter: saturate(0.85) brightness(0.92); }
 .band--sop .band__motion { filter: saturate(0.85); }
 
@@ -560,7 +581,6 @@ html:not(.sc-ready) .slip { display: none; }
 @media screen and (min-width: 861px) and (max-height: 860px) {
   :root { --h1: min(clamp(2.5rem, 1.25rem + 3.3vw, 4.5rem), 6.4svh); }
   .act--hero .half--record { padding-bottom: 16px; }
-  .sheet-stack { margin-top: 20px; }
   .sheet--hero { padding: 14px 20px; }
   .sheet--hero .sheet__module { margin: 8px 0 0; }
   .sheet--hero .field, .sheet--hero .field:first-child { padding: 6px 12px; }
@@ -568,7 +588,6 @@ html:not(.sc-ready) .slip { display: none; }
   .sheet--hero .field__val { font-size: 0.9062rem; line-height: 1.32; }
   .sheet--hero .field__val small { display: inline-block; margin-left: 8px; white-space: nowrap; }
   .sheet--hero .sheet__status { margin-top: 6px; font-size: 0.6562rem; letter-spacing: 0.06em; }
-  .half--record .hero-lede { font-size: 0.9688rem; }
   /* Fields sit closer here, so the notes go wider and two lines tall. */
   .slip { width: clamp(210px, 22vw, 290px); padding: 6px 10px 7px; }
   .slip__txt { font-size: 0.8125rem; line-height: 1.26; margin-top: 2px; }
@@ -584,8 +603,6 @@ html:not(.sc-ready) .slip { display: none; }
      its normal size: only the notes on the left needed to change. */
   .hero-title > .hero-title__record { white-space: nowrap; }
   .act--hero .half--record { padding-top: calc(var(--top) + var(--h1) * 1.04 + 16px); padding-bottom: 14px; }
-  .half--record .hero-lede { line-height: 1.45; max-width: 38rem; }
-  .sheet-stack { margin-top: 16px; }
   .slip { width: clamp(220px, 22vw, 300px); padding: 5px 9px 6px; }
   .slip__txt { font-size: 0.7812rem; line-height: 1.25; margin-top: 1px; }
   .slip__src { font-size: 0.625rem; }
@@ -664,6 +681,12 @@ html:not(.sc-ready) .slip { display: none; }
   .seam span:first-child { bottom: 5px; color: var(--floor-soft); }
   .seam span:last-child { top: 5px; color: var(--rec-soft); }
 
+  /* intro: one column */
+  .intro { grid-template-columns: minmax(0, 1fr); row-gap: 10px; padding: calc(var(--bar) + 22px) var(--pad-out) 24px; }
+  .intro__what, .intro__lede { max-width: 36rem; padding: 0; }
+  .intro__what { font-size: clamp(1.625rem, 1.2rem + 2vw, 2.25rem); }
+  .intro__lede { font-size: 1rem; }
+
   /* hero (the floor label would sit on the last note; the headline says it) */
   .act--hero { --mf: 46svh; }
   .act--hero .seam span:first-child { display: none; }
@@ -676,8 +699,6 @@ html:not(.sc-ready) .slip { display: none; }
   .hero-plate { top: -1.5svh; }
   .hero-subject { --sub-top: calc(var(--bar) + 18px + var(--h1) + 40px - 1.5svh); }
   .act--hero .half--record { padding: calc(var(--h1) * 1.02 + 36px) 12px 10px; }
-  .half--record .hero-lede { padding: 0 6px; font-size: 0.875rem; line-height: 1.42; }
-  .sheet-stack { margin-top: 16px; }
   .sheet { padding: 10px 12px; }
   .sheet--hero { padding-bottom: 14px; }
   .sheet--hero .fields { gap: 4px; margin-top: 4px; }
@@ -785,8 +806,6 @@ html:not(.sc-ready) .slip { display: none; }
   .hero-title > .hero-title__floor { top: calc(var(--bar) + 12px); }
   .hero-title > .hero-title__record { top: calc(var(--mf) + 16px); }
   .act--hero .half--record { padding-top: calc(var(--h1) * 1.02 + 28px); }
-  .half--record .hero-lede { font-size: 0.8125rem; line-height: 1.36; }
-  .sheet-stack { margin-top: 8px; }
   .sheet--hero { padding-top: 7px; padding-bottom: 9px; }
   .sheet--hero .sheet__head { padding-bottom: 4px; }
   .sheet--hero .sheet__module { margin-top: 4px; }
@@ -883,7 +902,7 @@ html:not(.sc-ready) .slip { display: none; }
   .pin { --po: 1 !important; --ps: 1 !important; }
 
   /* Hero: the headline, the photograph (her head still breaking out of its
-     frame), then the lede and the filled record. */
+     frame), then the filled record. */
   .hero-title { position: static; grid-row: 1; display: grid; font-size: var(--h1); padding: 22px var(--pad-out) 0; background: var(--floor); }
   .hero-title > span, .hero-title > .hero-title__floor, .hero-title > .hero-title__record {
     position: static; width: auto; white-space: normal; line-height: 1.02; color: var(--floor-ink); }
@@ -896,8 +915,6 @@ html:not(.sc-ready) .slip { display: none; }
   .hero-plate, .hero-subject { position: relative; left: auto; top: auto; width: 100%; height: auto; transform: none !important; }
   .hero-subject { aspect-ratio: 1950 / 1176; }
   .act--hero .half--record { grid-row: 3; display: block; padding: 22px var(--pad-out) 32px; }
-  .half--record .hero-lede { padding: 0; font-size: var(--fs-small); line-height: 1.45; }
-  .sheet-stack { margin-top: 16px; }
   .sheet--hero { height: auto; padding: 12px 14px 14px; }
   .sheet--hero .fields { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
   .sheet--hero .field, .sheet--hero .field:first-child { padding: 6px 10px; }
@@ -1011,7 +1028,10 @@ html:not(.sc-ready) .slip { display: none; }
   .display, .display--floor { color: var(--rec-ink); font-size: 17pt; }
   .display--lg { font-size: 20pt; }
   .label--floor { color: var(--green); }
-  .floor-note, .peak-sub, .close-lede, .close-note, .hero-lede { color: var(--rec-soft); font-size: 10.5pt; max-width: none; }
+  .intro { display: block; margin-bottom: 7mm; padding: 0; background: none; border: 0; }
+  .intro__what { padding: 0; font-size: 20pt; }
+  .intro__lede { max-width: none; margin-top: 2mm; padding: 0; font-size: 11pt; }
+  .floor-note, .peak-sub, .close-lede, .close-note { color: var(--rec-soft); font-size: 10.5pt; max-width: none; }
   h1, h2, .sheet__head, .module summary, .faq summary { break-after: avoid; }
   .sheet, .module, .faq details, .disposition tr { break-inside: avoid; }
   .sheet { box-shadow: none; border-color: #b9c4c1; padding: 4mm 5mm; }

@@ -71,7 +71,7 @@ for (const [w, h, kind] of sizes) {
     // Hero, first screen: notes, headline and record.
     await go('facts', 0);
     const hero = document.querySelector('#facts [data-sc-stage]');
-    inStage(hero, ['.hero-title__floor', '.hero-title__record', '.hero-lede', '.slip--a', '.slip--b', '.slip--c', '.slip--d'], 'hero start');
+    inStage(hero, ['.hero-title__floor', '.hero-title__record', '.slip--a', '.slip--b', '.slip--c', '.slip--d'], 'hero start');
     const slips = [...document.querySelectorAll('.slip')].filter(vis);
     for (let i = 0; i < slips.length; i++) for (let j = i + 1; j < slips.length; j++)
       if (hit(R(slips[i]), R(slips[j]), 1)) out.push(`overlap: hero notes ${slips[i].classList[1]} and ${slips[j].classList[1]}`);
@@ -79,7 +79,7 @@ for (const [w, h, kind] of sizes) {
       if (hit(R(t), R(s), 1)) out.push(`overlap: hero note ${s.classList[1]} over the headline`);
     // Hero, record filled.
     await go('facts', 1);
-    inStage(hero, ['.sheet--hero .sheet__status', '.sheet--hero .field:last-child', '.hero-lede'], 'hero end');
+    inStage(hero, ['.sheet--hero .sheet__status', '.sheet--hero .field:last-child'], 'hero end');
     for (const c of clipped(hero)) out.push(`clip: hero record ${c}`);
     // Investigation, resolved.
     await go('investigation', 1);

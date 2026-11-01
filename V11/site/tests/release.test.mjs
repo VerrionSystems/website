@@ -91,10 +91,6 @@ test('published pages are real documents with one h1 and parseable JSON-LD', asy
   const forbidden = /Verrion Validate|Verrion AI Control Room|AI Control Room|Verrion Voice|Verrion Note|Verrion Inquiry/;
   const expected = {
     'index.html': 'https://www.verrionsystems.com/',
-    'deviation.html': 'https://www.verrionsystems.com/deviation.html',
-    'deviation-companion.html': 'https://www.verrionsystems.com/deviation-companion.html',
-    'capa.html': 'https://www.verrionsystems.com/capa.html',
-    'sop-intelligence.html': 'https://www.verrionsystems.com/sop-intelligence.html',
     'privacy.html': 'https://www.verrionsystems.com/privacy.html',
     'terms.html': 'https://www.verrionsystems.com/terms.html',
     'data-handling.html': 'https://www.verrionsystems.com/data-handling.html',
@@ -112,6 +108,10 @@ test('published pages are real documents with one h1 and parseable JSON-LD', asy
   assert.match(home, />What was seen\.</);
   assert.match(home, />What can be shown\.</);
   assert.match(home, /property="og:title" content="Verrion Systems · Pharma Compliance Suite"/);
+  // The descriptions say what the opening statement says (31 October).
+  assert.match(home, /<p class="intro__what">Deviation, CAPA and SOP review software<\/p>/);
+  assert.match(home, /<meta name="description" content="Deviation, CAPA and SOP review software for UK pharmaceutical quality teams: /);
+  assert.match(home, /property="og:description" content="Deviation, CAPA and SOP review software for UK pharmaceutical quality teams\./);
   // V11: the identity sentence sits in the footer, so nothing displaces the pinned hero.
   assert.match(home, /<footer class="site-foot">\s*<p class="site-identity">Verrion Pharma Compliance Suite \(PCS\) is GMP deviation, investigation, disposition and CAPA software for UK pharmaceutical quality teams, built by Verrion Systems Ltd\.<\/p>/);
   assert.doesNotMatch(home.slice(home.indexOf('<main'), home.indexOf('id="facts"')), /site-identity/);
@@ -146,28 +146,31 @@ test('published pages are real documents with one h1 and parseable JSON-LD', asy
   }
   assert.equal(faq[0].acceptedAnswer.text, 'Choose the Deviation/CAPA workflow or the SOP workflow. We agree the scope and availability for your chosen pilot. Pilots are scoped and priced per site. They run on synthetic or customer-approved data within agreed boundaries. Contact hello@verrionsystems.com to discuss.');
   assert.match(home, /<a href="mailto:hello@verrionsystems\.com">hello@verrionsystems\.com<\/a> to discuss\./);
-  const deviation = await readFile(path.join(artifact, 'deviation.html'), 'utf8');
-  assert.match(deviation, /<h1 id="module-title">Deviation Investigator: AI-assisted deviation investigation for GMP manufacturing<\/h1>/);
-  assert.match(deviation, /href="\/\?item=deviation-investigator"/);
-  assert.match(await readFile(path.join(artifact, 'deviation-companion.html'), 'utf8'), /href="\/\?item=deviation-companion"/);
-  assert.match(await readFile(path.join(artifact, 'capa.html'), 'utf8'), /href="\/\?item=capa"/);
-  assert.match(await readFile(path.join(artifact, 'sop-intelligence.html'), 'utf8'), /href="\/\?item=sop-intelligence"/);
+  // The module addresses forward to their module on the homepage, as in V10,
+  // so old links keep working; they are not pages to index.
+  const modules = { 'deviation.html': 'deviation-investigator', 'deviation-companion.html': 'deviation-companion', 'capa.html': 'capa', 'sop-intelligence.html': 'sop-intelligence' };
+  for (const [file, item] of Object.entries(modules)) {
+    const html = await readFile(path.join(artifact, file), 'utf8');
+    assert.match(html, new RegExp(`<meta http-equiv="refresh" content="0; url=/\\?item=${item}">`), file);
+    assert.match(html, /<link rel="canonical" href="https:\/\/www\.verrionsystems\.com\/">/, file);
+  }
   const data = await readFile(path.join(artifact, 'data-handling.html'), 'utf8');
   assert.match(data, /<h1 id="legal-page-title">Data Handling Summary<\/h1>/);
   assert.match(data, /This summary describes the intended arrangements for handling data during Verrion Systems Ltd walkthroughs and early hosted pilots\./);
   const llms = await readFile(path.join(artifact, 'llms.txt'), 'utf8');
-  assert.match(llms, /for UK pharmaceutical quality teams, built by Verrion Systems Ltd\./);
+  assert.match(llms, /is deviation, CAPA and SOP review software for UK pharmaceutical quality teams, built by Verrion Systems Ltd\./);
   assert.match(llms, /hello@verrionsystems\.com/);
   assert.match(llms, /https:\/\/www\.verrionsystems\.com\/\)/);
   assert.match(llms, /data-handling\.html/);
   assert.match(llms, /privacy\.html/);
   assert.doesNotMatch(llms, forbidden);
-  // Every page is listed, with a valid date wherever one is given. llms.txt is
-  // found at its own address and is not a page to index.
+  // Every page is listed, with a valid date wherever one is given. The module
+  // redirects and llms.txt are not pages to index.
   const sitemap = await readFile(path.join(artifact, 'sitemap.xml'), 'utf8');
   for (const loc of Object.values(expected)) {
     assert.match(sitemap, new RegExp(`<loc>${loc.replaceAll('/', '\\/')}<\\/loc>\\s*(?:<lastmod>\\d{4}-\\d{2}-\\d{2}<\\/lastmod>\\s*)?<\\/url>`));
   }
+  assert.equal((sitemap.match(/<loc>/g) ?? []).length, Object.keys(expected).length);
   assert.doesNotMatch(sitemap, /llms\.txt/);
   const robots = await readFile(path.join(artifact, 'robots.txt'), 'utf8');
   assert.equal(robots, 'User-agent: *\nAllow: /\n\nSitemap: https://www.verrionsystems.com/sitemap.xml\n');
@@ -181,37 +184,6 @@ test('published pages are real documents with one h1 and parseable JSON-LD', asy
   }
   await walk(artifact);
   for (const full of names) assert.doesNotMatch(await readFile(full, 'utf8'), forbidden, full);
-});
-
-test('module pages show whole records, not homepage fragments', async () => {
-  const pages = {
-    'deviation-companion.html': ['Deviation record', 'DEV-0417', 'Fill weight below target on three in-process checks <small>Reporter · 10:52</small>'],
-    'deviation.html': ['Investigation', 'DI-0417', 'Batch record shows an adjustment at 10:40 <small>Electronic batch record</small></span><b>Supports</b>'],
-    'capa.html': ['CAPA', 'CAPA-0212', 'Source: <a href="/deviation.html">DI-0417</a>'],
-    'sop-intelligence.html': ['Procedure under review', 'SOP-QA-031', 'The clearance check is assigned to two different roles. <small>Sources: 3.2, 5.1</small>'],
-  };
-  for (const [file, [title, ref, row]] of Object.entries(pages)) {
-    const html = await readFile(path.join(artifact, file), 'utf8');
-    // The trimmed V3 logo, as on the homepage and legal pages.
-    assert.match(html, /<img src="\/assets\/verrion-systems-logo\.svg" alt="Verrion Systems" width="1419" height="250">/, file);
-    assert.match(html, new RegExp(`<p class="module-record__title">${title} <span class="ref">${ref}</span></p>`), file);
-    assert.ok(html.includes(row), `${file}: ${row}`);
-    // Static pages have nothing to select, and no label stands on its own.
-    assert.doesNotMatch(html, /Select the missing record|Select a finding/, file);
-    assert.doesNotMatch(html, /<li>(?:Supports|Requirement|Not yet provided)<\/li>|<p>(?:Batch review|Line records|Open to challenge)<\/p>/, file);
-    // Every module page links to the others, and to the homepage module.
-    for (const other of Object.keys(pages)) assert.ok(html.includes(`href="/${other}"`), `${file} links ${other}`);
-    assert.ok(html.includes('href="/?item=impact-disposition"'), `${file} links Impact & Disposition`);
-    assert.match(html, new RegExp(`href="/${file.replace('.', '\\.')}" aria-current="page"`), file);
-    const [ld] = jsonLdBlocks(html);
-    assert.equal(ld['@type'], 'WebPage');
-    assert.equal(ld.url, `https://www.verrionsystems.com/${file}`);
-    assert.equal(ld.about['@id'], 'https://www.verrionsystems.com/#pcs');
-    assert.equal(ld.publisher['@id'], 'https://www.verrionsystems.com/#organization');
-  }
-  const home = jsonLdBlocks(await readFile(path.join(artifact, 'index.html'), 'utf8'))[0]['@graph'];
-  assert.ok(home.some((node) => node['@id'] === 'https://www.verrionsystems.com/#pcs'));
-  assert.ok(home.some((node) => node['@id'] === 'https://www.verrionsystems.com/#organization'));
 });
 
 test('legal pages are pre-rendered and keep their wording and date', async () => {
