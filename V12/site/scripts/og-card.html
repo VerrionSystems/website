@@ -1,0 +1,52 @@
+<!doctype html>
+<!-- Share card (1200 × 630) for link previews in email, Teams and LinkedIn.
+     Rendered once by scripts/render-og-card.mjs into src/assets/og-card.png;
+     this page itself is never published. -->
+<html lang="en-GB"><head><meta charset="utf-8">
+<style>
+@font-face { font-family: "Archivo Variable"; src: url("../node_modules/@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; }
+@font-face { font-family: "Instrument Sans Variable"; src: url("../node_modules/@fontsource-variable/instrument-sans/files/instrument-sans-latin-wdth-normal.woff2") format("woff2"); font-weight: 400 700; font-stretch: 75% 100%; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 1200px; height: 630px; overflow: hidden; background: #0d1719; -webkit-font-smoothing: antialiased; }
+body { position: relative; display: grid; grid-template-columns: 600px 600px; grid-template-rows: 64px 566px; font-family: "Instrument Sans Variable", sans-serif; }
+.floor { position: relative; height: 566px; background: #0d1719; color: #e9efeb; overflow: hidden; }
+.floor h2, .record h2 { position: absolute; top: 40px; font-family: "Archivo Variable", sans-serif; font-weight: 640; font-stretch: 106%; font-size: 58px; letter-spacing: -0.03em; line-height: 0.98; }
+.floor h2 { left: 56px; }
+/* Plate and cutout share one box, as on the site: her head breaks out of the
+   photograph's frame. The cutout carries 90/1086 extra above the plate. */
+.photo { position: absolute; left: 0; right: 0; top: 190px; bottom: 0; overflow: hidden; border-top: 1px solid rgba(233,239,235,.14); }
+.photo img, .subject { position: absolute; height: 440px; left: -150px; top: -6px; }
+.subject { z-index: 3; height: calc(440px * 1176 / 1086); top: calc(190px - 6px - 440px * 90 / 1086); }
+.photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(13,23,25,.35), transparent 35%, transparent 70%, rgba(13,23,25,.5)); }
+.record { position: relative; height: 566px; background: #e6eae5; color: #10303a; }
+.record h2 { left: 64px; width: 470px; }
+.bar { grid-column: 1 / -1; height: 64px; display: flex; align-items: center; padding: 0 56px; background: #f8faf6; border-bottom: 1px solid rgba(16,48,58,.16); }
+.bar img { height: 39px; }
+.sheet { position: absolute; left: 64px; right: 56px; top: 226px; padding: 16px 20px; background: #f8faf6; border: 1px solid rgba(16,48,58,.16); border-radius: 3px; box-shadow: 0 22px 44px -22px rgba(16,48,58,.32); }
+.head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 8px; border-bottom: 1.5px solid #10303a; }
+.title { font-family: "Archivo Variable"; font-stretch: 112%; font-weight: 680; font-size: 15px; letter-spacing: .02em; text-transform: uppercase; }
+.meta { font-size: 11px; color: #4a5e63; }
+.row { padding: 9px 12px; margin-top: 6px; background: #eef2ec; border: 1px solid rgba(16,48,58,.16); border-radius: 2px; }
+.row b { display: block; font-family: "Archivo Variable"; font-stretch: 112%; font-weight: 650; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: #4a5e63; }
+.row span { font-size: 15px; font-weight: 520; }
+.seam { position: absolute; left: 600px; top: 64px; height: 566px; width: 1px; background: rgba(138,216,178,.35); }
+.label { position: absolute; left: 64px; bottom: 34px; font-family: "Archivo Variable"; font-stretch: 118%; font-weight: 650; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: #1b6f4d; }
+</style></head>
+<body>
+  <div class="bar"><img src="../src/assets/verrion-systems-logo.svg" alt=""></div>
+  <div class="floor">
+    <h2>What was seen.</h2>
+    <div class="photo"><img src="../src/assets/hero-photo.jpg" alt=""></div>
+    <img class="subject" src="../src/assets/hero-subject-v4.png" alt="">
+  </div>
+  <div class="record">
+    <h2>What can be shown.</h2>
+    <div class="sheet">
+      <div class="head"><span class="title">Deviation record</span><span class="meta">Illustrative · synthetic scenario</span></div>
+      <div class="row"><b>Observation</b><span>Fill weight below target on three in-process checks</span></div>
+      <div class="row"><b>Affected scope</b><span>Line 3 · Batch B-0417 · from 10:40</span></div>
+    </div>
+    <p class="label">Pharma Compliance Suite</p>
+  </div>
+  <div class="seam"></div>
+</body></html>
