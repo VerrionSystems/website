@@ -2,7 +2,7 @@
 
 Started on 2 November 2026, when Dawid asked to start V12: "I am not a fan of the first animated portion to be partially cut off when opening the website in the desktop browser (half of the lady with hairnet is visible and we need to scroll down first to start interacting with the scrollable animations)." Phones were not affected.
 
-**Status: preview.** V11 stays live. A release pull request would point the Pages workflow at `V12/site`; Dawid's merge of it is the approval. V12 starts from `V11/site` as live on 1 November 2026. `V11/site` is kept unchanged as the previous source.
+**Status: proposed for release.** The release pull request points the Pages workflow at `V12/site`. Dawid's merge of it is the approval, and V11 stays live until then. V12 starts from `V11/site` as live on 1 November 2026. `V11/site` is kept unchanged as the previous source.
 
 ## Run it
 
