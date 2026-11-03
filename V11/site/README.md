@@ -1,4 +1,6 @@
-# V11 production site
+# V11 production site (superseded)
+
+> V12 (`V12/site/`), V11 with the whole hero on the first desktop screen, replaces V11 on the live site when its release pull request is merged, and the Pages workflow then builds V12. This directory is retained unchanged as the previous production source.
 
 V11 is V10 as live on 30 October 2026 (with Logo V3), plus the search work from VerrionSystems/website#12: real module pages, legal text in the HTML, structured data, `llms.txt` and the approved UK-audience and pilot wording. It replaces V10 on www.verrionsystems.com when Dawid merges its release pull request, and that merge is the approval. This directory is then the production source; V10 (`V10/site/`) is retained unchanged as the previous one. Deployment completion is recorded separately, after the Pages workflow and public-site checks. What changed, what the review of #12 found and how V11 was verified are in [`../README.md`](../README.md).
 
