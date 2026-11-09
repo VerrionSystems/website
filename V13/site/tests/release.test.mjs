@@ -1,0 +1,225 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { access, cp, mkdtemp, readFile, readdir, rm, symlink, writeFile, unlink } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { checkArtifact } from '../scripts/artifact-policy.mjs';
+import { resolveLegacyLocation, canonicalLegacyUrl, moduleAtLocation, followLegacyLinks } from '../src/legacyLinks.js';
+const artifact=fileURLToPath(new URL('../root-dist',import.meta.url));
+
+test('legacy entry points reach the right part of V13',()=>{
+  assert.equal(resolveLegacyLocation({search:'?item=deviation-companion'}).module,'companion');
+  assert.equal(resolveLegacyLocation({search:'?item=deviation-investigator'}).module,'investigation');
+  assert.equal(resolveLegacyLocation({search:'?item=capa'}).module,'actions');
+  assert.deepEqual(resolveLegacyLocation({search:'?item=sop-intelligence'}),{section:'procedure',item:'sop-intelligence'});
+  assert.equal(resolveLegacyLocation({search:'?item=pharma-compliance-suite'}).section,'workflows');
+  assert.equal(resolveLegacyLocation({hash:'#pilot'}).section,'contact');
+  assert.equal(resolveLegacyLocation({hash:'#portfolio'}).section,'workflows');
+  assert.equal(resolveLegacyLocation({hash:'#approach'}).section,'investigation');
+  assert.equal(resolveLegacyLocation({hash:'#sop-workflow'}).section,'procedure');
+  assert.equal(resolveLegacyLocation({search:'?item=__proto__'}),null);
+  assert.equal(resolveLegacyLocation({search:'?item=withdrawn-family'}),null);
+  assert.equal(resolveLegacyLocation({}),null);
+  assert.equal(moduleAtLocation({hash:'#hp-stage-actions'}),'actions');
+  assert.equal(moduleAtLocation({hash:'#module-disposition'}),'disposition');
+  assert.equal(moduleAtLocation({hash:'#hp-stage-nonsense'}),undefined);
+  const location=new URL('https://www.verrionsystems.com/?item=capa&utm_source=bookmark');
+  assert.equal(canonicalLegacyUrl(location,resolveLegacyLocation(location)),'/?utm_source=bookmark#module-actions');
+});
+
+test('a legacy hash still scrolls when popstate and hashchange both fire',()=>{
+  // Fragment navigation fires popstate, then hashchange. The second call sees
+  // the already-rewritten hash, resolves nothing, and must leave the pending
+  // scroll alone.
+  const frames=new Map();let next=1;const listeners={};const scrolled=[];
+  const location=new URL('https://www.verrionsystems.com/#pilot');
+  const win={location,
+    history:{state:null,replaceState:(_s,_t,url)=>{const u=new URL(url,location.href);location.hash=u.hash;location.search=u.search;}},
+    requestAnimationFrame:cb=>{frames.set(next,cb);return next++;},
+    cancelAnimationFrame:id=>frames.delete(id),
+    addEventListener:(type,fn)=>{listeners[type]=fn;}};
+  const el=id=>({id,open:false,scrollIntoView(){scrolled.push(id);}});
+  const els=Object.fromEntries(['contact','module-companion','module-investigation','module-disposition','module-actions'].map(id=>[id,el(id)]));
+  const doc={getElementById:id=>els[id]??null,documentElement:{setAttribute(){},removeAttribute(){}}};
+  followLegacyLinks(doc,win);
+  assert.equal(location.hash,'#contact');
+  listeners.hashchange();
+  for(let i=0;i<3&&frames.size;i++){const pending=[...frames.values()];frames.clear();pending.forEach(cb=>cb());}
+  assert.deepEqual(scrolled,['contact']);
+});
+
+test('every V13 anchor a legacy link can resolve to exists on the page',async()=>{
+  const html=await readFile(fileURLToPath(new URL('../index.html',import.meta.url)),'utf8');
+  for(const id of ['facts','investigation','workflows','procedure','questions','contact','module-companion','module-investigation','module-disposition','module-actions'])
+    assert(html.includes(`id="${id}"`),`missing #${id}`);
+  // A fresh load opens Capture the facts / Deviation Companion.
+  assert.match(html,/<details class="module" id="module-companion" open>/);
+});
+
+test('clean production artifact passes',async()=>{await checkArtifact(artifact);});
+
+test('the link preview and in-page record links point at things that exist',async()=>{
+  const html=await readFile(path.join(artifact,'index.html'),'utf8');
+  const card=html.match(/property="og:image" content="https:\/\/www\.verrionsystems\.com\/(assets\/[^"]+)"/);
+  assert(card,'og:image missing');
+  await access(path.join(artifact,card[1]));
+  for(const [,id] of html.matchAll(/href="#([\w-]+)"/g))assert(html.includes(`id="${id}"`),`in-page link to missing #${id}`);
+});
+for(const [name,mutate] of [
+  ['repository file at root',root=>writeFile(path.join(root,'README.md'),'private')],
+  ['comparison page',root=>writeFile(path.join(root,'photo-studies.html'),'review only')],
+  ['unexpected source map',root=>writeFile(path.join(root,'assets','index-extra.js.map'),'{}')],
+  ['third-party font request',root=>writeFile(path.join(root,'assets','index-extra.css'),'@import url(https://fonts.googleapis.com/css2?family=Archivo);')],
+  ['asset symlink',async root=>{await unlink(path.join(root,'assets','hero-photo.jpg'));await symlink('/etc/passwd',path.join(root,'assets','hero-photo.jpg'));}],
+  ['missing hero',root=>unlink(path.join(root,'assets','hero-subject-v4.png'))],
+])test(`publication guard rejects ${name}`,async()=>{
+  const root=await mkdtemp(path.join(tmpdir(),'verrion-artifact-check-'));
+  try{await cp(artifact,root,{recursive:true});await mutate(root);await assert.rejects(checkArtifact(root));}
+  finally{await rm(root,{recursive:true,force:true});}
+});
+
+function decodeEntities(value) {
+  return value.replaceAll('&amp;', '&').replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&quot;', '"');
+}
+
+function jsonLdBlocks(html) {
+  return [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((match) => JSON.parse(match[1]));
+}
+
+test('published pages are real documents with one h1 and parseable JSON-LD', async () => {
+  const forbidden = /Verrion Validate|Verrion AI Control Room|AI Control Room|Verrion Voice|Verrion Note|Verrion Inquiry/;
+  const expected = {
+    'index.html': 'https://www.verrionsystems.com/',
+    'privacy.html': 'https://www.verrionsystems.com/privacy.html',
+    'terms.html': 'https://www.verrionsystems.com/terms.html',
+    'data-handling.html': 'https://www.verrionsystems.com/data-handling.html',
+  };
+  for (const [file, canonical] of Object.entries(expected)) {
+    const html = await readFile(path.join(artifact, file), 'utf8');
+    assert.doesNotMatch(html, /http-equiv\s*=\s*["']refresh/i, `${file} meta refresh`);
+    assert.match(html, new RegExp(`<link rel="canonical" href="${canonical.replaceAll('/', '\\/')}"\\s*/?>`), `${file} canonical`);
+    assert.equal((html.match(/<h1\b/g) ?? []).length, 1, `${file} h1 count`);
+    for (const block of jsonLdBlocks(html)) JSON.parse(JSON.stringify(block));
+    assert.doesNotMatch(html, forbidden, file);
+  }
+  const home = await readFile(path.join(artifact, 'index.html'), 'utf8');
+  assert.match(home, /<h1 class="hero-title" id="hero-title">/);
+  assert.match(home, />What was seen\.</);
+  assert.match(home, />What can be shown\.</);
+  assert.match(home, /property="og:title" content="Verrion Systems · Pharma Compliance Suite"/);
+  // The descriptions say what the opening statement says (31 October).
+  assert.match(home, /<p class="intro__what">Deviation, CAPA and SOP review software<\/p>/);
+  assert.match(home, /<meta name="description" content="Deviation, CAPA and SOP review software for UK pharmaceutical quality teams: /);
+  assert.match(home, /property="og:description" content="Deviation, CAPA and SOP review software for UK pharmaceutical quality teams\./);
+  // V11: the identity sentence sits in the footer, so nothing displaces the pinned hero.
+  assert.match(home, /<footer class="site-foot">\s*<p class="site-identity">Verrion Pharma Compliance Suite \(PCS\) is deviation, CAPA and SOP review software for UK pharmaceutical quality teams, built by Verrion Systems Ltd\.<\/p>/);
+  assert.doesNotMatch(home.slice(home.indexOf('<main'), home.indexOf('id="facts"')), /site-identity/);
+  assert.doesNotMatch(home, /Annex 11|MHRA/);
+  assert.match(home, /<title>Verrion Systems · Verrion Pharma Compliance Suite<\/title>/);
+  const graph = jsonLdBlocks(home)[0]['@graph'];
+  const org = graph.find((node) => node['@type'] === 'Organization');
+  assert.equal(org.legalName, 'Verrion Systems Ltd');
+  assert.equal(org.identifier, '17265988');
+  assert.equal(org.founder.name, 'Dawid Pysznik');
+  assert.equal(org.sameAs, undefined);
+  const app = graph.find((node) => node['@type'] === 'SoftwareApplication');
+  assert.equal(app.name, 'Verrion Pharma Compliance Suite (PCS)');
+  assert.deepEqual(app.featureList, [
+    'Deviation Companion',
+    'Deviation Investigator',
+    'Impact & Disposition (no AI)',
+    'CAPA',
+    'SOP Intelligence',
+  ]);
+  assert.equal(app.publisher.name, 'Verrion Systems Ltd');
+  const faq = graph.find((node) => node['@type'] === 'FAQPage').mainEntity;
+  const visible = [...home.matchAll(/<details><summary>([\s\S]*?)<\/summary>([\s\S]*?)<\/details>/g)].map((match) => ({
+    question: decodeEntities(match[1].trim()),
+    answer: decodeEntities(match[2].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim(),
+  }));
+  assert.equal(faq.length, visible.length);
+  assert.equal(visible.length, 3);
+  for (let i = 0; i < faq.length; i += 1) {
+    assert.equal(faq[i].name, visible[i].question);
+    assert.equal(faq[i].acceptedAnswer.text, visible[i].answer);
+  }
+  assert.equal(faq[0].acceptedAnswer.text, 'Choose the Deviation/CAPA workflow or the SOP workflow. We agree the scope and availability for your chosen pilot. Pilots are scoped and priced per site. They run on synthetic or customer-approved data within agreed boundaries. Contact hello@verrionsystems.com to discuss.');
+  assert.match(home, /<a href="mailto:hello@verrionsystems\.com">hello@verrionsystems\.com<\/a> to discuss\./);
+  // The module addresses forward to their module on the homepage, as in V10,
+  // so old links keep working; they are not pages to index.
+  const modules = { 'deviation.html': 'deviation-investigator', 'deviation-companion.html': 'deviation-companion', 'capa.html': 'capa', 'sop-intelligence.html': 'sop-intelligence' };
+  for (const [file, item] of Object.entries(modules)) {
+    const html = await readFile(path.join(artifact, file), 'utf8');
+    assert.match(html, new RegExp(`<meta http-equiv="refresh" content="0; url=/\\?item=${item}">`), file);
+    assert.match(html, /<link rel="canonical" href="https:\/\/www\.verrionsystems\.com\/">/, file);
+  }
+  const data = await readFile(path.join(artifact, 'data-handling.html'), 'utf8');
+  assert.match(data, /<h1 id="legal-page-title">Data Handling Summary<\/h1>/);
+  assert.match(data, /This summary describes the intended arrangements for handling data during Verrion Systems Ltd walkthroughs and early hosted pilots\./);
+  const llms = await readFile(path.join(artifact, 'llms.txt'), 'utf8');
+  assert.match(llms, /is deviation, CAPA and SOP review software for UK pharmaceutical quality teams, built by Verrion Systems Ltd\./);
+  assert.match(llms, /hello@verrionsystems\.com/);
+  assert.match(llms, /https:\/\/www\.verrionsystems\.com\/\)/);
+  assert.match(llms, /data-handling\.html/);
+  assert.match(llms, /privacy\.html/);
+  assert.doesNotMatch(llms, forbidden);
+  // Every page is listed, with a valid date wherever one is given. The module
+  // redirects and llms.txt are not pages to index.
+  const sitemap = await readFile(path.join(artifact, 'sitemap.xml'), 'utf8');
+  for (const loc of Object.values(expected)) {
+    assert.match(sitemap, new RegExp(`<loc>${loc.replaceAll('/', '\\/')}<\\/loc>\\s*(?:<lastmod>\\d{4}-\\d{2}-\\d{2}<\\/lastmod>\\s*)?<\\/url>`));
+  }
+  assert.equal((sitemap.match(/<loc>/g) ?? []).length, Object.keys(expected).length);
+  assert.doesNotMatch(sitemap, /llms\.txt/);
+  const robots = await readFile(path.join(artifact, 'robots.txt'), 'utf8');
+  assert.equal(robots, 'User-agent: *\nAllow: /\n\nSitemap: https://www.verrionsystems.com/sitemap.xml\n');
+  const names = [];
+  async function walk(dir) {
+    for (const entry of await readdir(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name);
+      if (entry.isDirectory()) await walk(full);
+      else if (/\.(?:html|css|js|xml|txt)$/.test(entry.name)) names.push(full);
+    }
+  }
+  await walk(artifact);
+  for (const full of names) assert.doesNotMatch(await readFile(full, 'utf8'), forbidden, full);
+});
+
+test('legal pages are pre-rendered and keep their wording and date', async () => {
+  for (const [file, title] of [['privacy.html', 'Privacy Notice'], ['terms.html', 'Terms of Use'], ['data-handling.html', 'Data Handling Summary']]) {
+    const html = await readFile(path.join(artifact, file), 'utf8');
+    assert.match(html, new RegExp(`<h1 id="legal-page-title">${title}</h1>`), file);
+    assert.match(html.replaceAll('<!-- -->', ''), /<p class="legal-updated">Last updated: 12 July 2026<\/p>/, file);
+    assert.match(html, /<img src="\/assets\/verrion-systems-logo\.svg"/, file);
+  }
+});
+
+// V13
+test('the pinned scenes are sized in the HTML, before the script runs', async () => {
+  const html = await readFile(path.join(artifact, 'index.html'), 'utf8');
+  for (const id of ['facts', 'investigation']) {
+    const tag = html.match(new RegExp(`<section[^>]*id="${id}"[^>]*>\\s*<div[^>]*>`))?.[0] ?? '';
+    const span = Number(tag.match(/data-sc-span="([\d.]+)"/)?.[1]);
+    assert(span > 0, `${id} has no span`);
+    assert(/class="[^"]*\bsc-act--pinned\b/.test(tag), `${id} lacks the pinned class`);
+    assert(tag.includes(`style="height:${Math.round(span * 100)}vh"`), `${id} height does not match its span`);
+    assert(/<div class="[^"]*\bsc-stage\b[^"]*" data-sc-stage>/.test(tag), `${id} stage lacks the stage class`);
+  }
+  assert(/<script>document\.documentElement\.classList\.add\('js'\)<\/script>/.test(html), 'scripting marker missing');
+});
+
+test('the homepage names the home-screen icon, and no page preloads fonts', async () => {
+  const home = await readFile(path.join(artifact, 'index.html'), 'utf8');
+  assert(home.includes('<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">'));
+  await access(path.join(artifact, 'assets/apple-touch-icon.png'));
+  // Tried in V13 and measured: on a slow phone connection the preloads delayed
+  // the first paint by about 0.3 s to bring the fonts in about 0.25 s sooner.
+  for (const name of ['index', 'privacy', 'terms', 'data-handling']) {
+    assert(!/rel="preload" as="font"/.test(await readFile(path.join(artifact, `${name}.html`), 'utf8')), `${name}.html preloads a font`);
+  }
+});
+
+test('the artifact carries no server file that GitHub Pages ignores', async () => {
+  assert(!(await readdir(artifact)).includes('.htaccess'));
+});
