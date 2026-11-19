@@ -8,6 +8,13 @@ import { checkArtifact } from '../scripts/artifact-policy.mjs';
 import { resolveLegacyLocation, canonicalLegacyUrl, moduleAtLocation, followLegacyLinks } from '../src/legacyLinks.js';
 const artifact=fileURLToPath(new URL('../root-dist',import.meta.url));
 
+test('pull-request validation is isolated from the production deployment queue',async()=>{
+  const workflow=await readFile(fileURLToPath(new URL('../../../.github/workflows/deploy-pages.yml',import.meta.url)),'utf8');
+  assert.match(workflow,/^  group: \$\{\{ github\.event_name == 'pull_request' && format\('github-pages-pr-\{0\}', github\.event\.pull_request\.number\) \|\| 'github-pages' \}\}$/m);
+  assert.match(workflow,/^  cancel-in-progress: \$\{\{ github\.event_name == 'pull_request' \}\}$/m);
+  assert.match(workflow,/^  build:\n    runs-on: ubuntu-latest\n    timeout-minutes: 30$/m);
+});
+
 test('legacy entry points reach the right part of V12',()=>{
   assert.equal(resolveLegacyLocation({search:'?item=deviation-companion'}).module,'companion');
   assert.equal(resolveLegacyLocation({search:'?item=deviation-investigator'}).module,'investigation');
